@@ -5,13 +5,17 @@ import { SimplePresentView } from './components/SimplePresentView';
 import { PresentContinuousView } from './components/PresentContinuousView';
 import { PastSimpleView } from './components/PastSimpleView';
 import { ArthurChatBot } from './components/ArthurChatBot';
+import { GeminiApiKeyModal } from './components/GeminiApiKeyModal';
 import { soundManager } from './utils/soundEffects';
+import { hasGeminiApiKey } from './utils/geminiService';
 import { GraduationCap, Heart, Code, Sparkles, BookOpen, History, ExternalLink } from 'lucide-react';
 
 export function App() {
   const [activeSection, setActiveSection] = useState('exam');
   const [isDark, setIsDark] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [isGeminiModalOpen, setIsGeminiModalOpen] = useState(false);
+  const [hasAiKey, setHasAiKey] = useState(() => hasGeminiApiKey());
 
   // Sincronizar tema con elemento HTML
   useEffect(() => {
@@ -51,12 +55,17 @@ export function App() {
         onToggleTheme={handleToggleTheme}
         soundEnabled={soundEnabled}
         onToggleSound={handleToggleSound}
+        hasAiKey={hasAiKey}
+        onOpenGeminiModal={() => setIsGeminiModalOpen(true)}
       />
 
       {/* Main Content Area (padding-top for fixed navbar) */}
       <main className="flex-1 pt-20 pb-16">
         {activeSection === 'exam' && (
-          <ExamSimulator onNavigateToTheory={handleNavigate} />
+          <ExamSimulator 
+            onNavigateToTheory={handleNavigate}
+            onOpenGeminiModal={() => setIsGeminiModalOpen(true)}
+          />
         )}
 
         {activeSection === 'present-simple' && (
@@ -73,7 +82,14 @@ export function App() {
       </main>
 
       {/* Arthur AI Interactive Tutor Bot */}
-      <ArthurChatBot />
+      <ArthurChatBot onOpenGeminiModal={() => setIsGeminiModalOpen(true)} />
+
+      {/* Modal de Configuración de Google Gemini AI */}
+      <GeminiApiKeyModal
+        isOpen={isGeminiModalOpen}
+        onClose={() => setIsGeminiModalOpen(false)}
+        onKeyUpdated={(active) => setHasAiKey(active)}
+      />
 
       {/* Modern Footer */}
       <footer className="border-t border-slate-900 light:border-slate-200 bg-slate-950/80 light:bg-white/80 py-8 text-xs text-slate-400">

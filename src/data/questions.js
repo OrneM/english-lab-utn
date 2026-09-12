@@ -514,5 +514,693 @@ export const EXAM_QUESTIONS = [
     correctAnswer: "a",
     explanation: "Clase 6: Initial Public Offering (IPO) es la primera venta de acciones de una empresa al público general.",
     source: "Unidad 2 Clase 6 Vocabulary"
+  },
+  // --- PREGUNTAS EXPANDIDAS (CLASES 1 A 6) ---
+  {
+    id: 37,
+    topic: "Simple Present vs Present Continuous",
+    question: "Listen! The server alarm _____ . We need to check the logs immediately.",
+    options: [
+      { id: "a", text: "rings" },
+      { id: "b", text: "is ringing" },
+      { id: "c", text: "rang" },
+      { id: "d", text: "ring" }
+    ],
+    correctAnswer: "b",
+    explanation: "El llamado de atención 'Listen!' indica una acción que está sucediendo en este preciso momento, por lo que se utiliza Present Continuous: 'is ringing'.",
+    source: "Unidad 1 Clase 4 Contrast"
+  },
+  {
+    id: 38,
+    topic: "Simple Present vs Present Continuous",
+    question: "I _____ how this algorithm works, but I am still testing edge cases.",
+    options: [
+      { id: "a", text: "am understanding" },
+      { id: "b", text: "understand" },
+      { id: "c", text: "understood" },
+      { id: "d", text: "understands" }
+    ],
+    correctAnswer: "b",
+    explanation: "'Understand' es un Stative Verb (verbo de estado/pensamiento) y NO se utiliza con terminación -ing en tiempos continuos.",
+    source: "Unidad 1 Clase 4 Stative Verbs"
+  },
+  {
+    id: 39,
+    topic: "Simple Present",
+    question: "The junior developer _____ the database backup every Friday afternoon.",
+    options: [
+      { id: "a", text: "run" },
+      { id: "b", text: "runs" },
+      { id: "c", text: "is running" },
+      { id: "d", text: "running" }
+    ],
+    correctAnswer: "b",
+    explanation: "'The junior developer' es 3ra persona singular (He/She) y 'every Friday' indica hábito/rutina, por lo que el verbo lleva '-s': 'runs'.",
+    source: "Unidad 1 Clase 1 Grammar"
+  },
+  {
+    id: 40,
+    topic: "Past Simple",
+    question: "Where _____ Grace Hopper invent the first compiler?",
+    options: [
+      { id: "a", text: "did" },
+      { id: "b", text: "was" },
+      { id: "c", text: "does" },
+      { id: "d", text: "had" }
+    ],
+    correctAnswer: "a",
+    explanation: "En preguntas de Pasado Simple con verbo principal de acción ('invent'), el auxiliar correcto es 'did'.",
+    source: "Unidad 2 Clase 5 Grammar"
+  },
+  {
+    id: 41,
+    topic: "Past Simple",
+    question: "They _____ the new version to production because the automated tests failed.",
+    options: [
+      { id: "a", text: "didn't deployed" },
+      { id: "b", text: "didn't deploy" },
+      { id: "c", text: "not deploy" },
+      { id: "d", text: "weren't deploy" }
+    ],
+    correctAnswer: "b",
+    explanation: "Regla fundamental del Pasado Simple: después del auxiliar 'didn't', el verbo principal SIEMPRE va en su forma base/infinitivo ('deploy').",
+    source: "Unidad 2 Clase 5 Grammar"
+  },
+  {
+    id: 42,
+    topic: "Irregular Verbs",
+    question: "What is the past simple form of the verb 'TEACH'?",
+    options: [
+      { id: "a", text: "teached" },
+      { id: "b", text: "taught" },
+      { id: "c", text: "thought" },
+      { id: "d", text: "took" }
+    ],
+    correctAnswer: "b",
+    explanation: "El verbo irregular 'teach' (enseñar) conjuga en Pasado Simple como 'taught'.",
+    source: "Unidad 2 Clase 5 Irregular Verbs"
+  },
+  {
+    id: 43,
+    topic: "Irregular Verbs",
+    question: "What is the past simple form of the verb 'BUILD'?",
+    options: [
+      { id: "a", text: "builded" },
+      { id: "b", text: "built" },
+      { id: "c", text: "bolted" },
+      { id: "d", text: "bought" }
+    ],
+    correctAnswer: "b",
+    explanation: "El verbo irregular 'build' (construir/compilar) cambia la 'd' por 't' en Pasado Simple: 'built'.",
+    source: "Unidad 2 Clase 5 Irregular Verbs"
+  },
+  {
+    id: 44,
+    topic: "Irregular Verbs",
+    question: "What is the past simple form of the verb 'BECOME'?",
+    options: [
+      { id: "a", text: "becomed" },
+      { id: "b", text: "became" },
+      { id: "c", text: "becoming" },
+      { id: "d", text: "began" }
+    ],
+    correctAnswer: "b",
+    explanation: "El verbo 'become' (convertirse en/llegar a ser) conjuga en Pasado Simple como 'became'.",
+    source: "Unidad 2 Clase 6 Reading"
+  },
+  {
+    id: 45,
+    topic: "Present Continuous",
+    question: "Select the correct spelling of 'RUN' with the -ing ending:",
+    options: [
+      { id: "a", text: "runing" },
+      { id: "b", text: "running" },
+      { id: "c", text: "runneing" },
+      { id: "d", text: "runnying" }
+    ],
+    correctAnswer: "b",
+    explanation: "Regla CVC (Consonante-Vocal-Consonante): un verbo monosilábico terminado en CVC duplica la consonante final antes de -ing: run -> running.",
+    source: "Unidad 1 Clase 4 Grammar"
+  },
+  {
+    id: 46,
+    topic: "Present Continuous",
+    question: "Select the correct spelling of 'DIE' with the -ing ending:",
+    options: [
+      { id: "a", text: "dieing" },
+      { id: "b", text: "dying" },
+      { id: "c", text: "dyeing" },
+      { id: "d", text: "diing" }
+    ],
+    correctAnswer: "b",
+    explanation: "Los verbos terminados en '-ie' cambian esa terminación por 'y' antes de agregar '-ing': die -> dying, lie -> lying.",
+    source: "Unidad 1 Clase 4 Grammar"
+  },
+  {
+    id: 47,
+    topic: "Present Continuous",
+    question: "Select the correct spelling of 'DEVELOP' with the -ing ending:",
+    options: [
+      { id: "a", text: "developping" },
+      { id: "b", text: "developing" },
+      { id: "c", text: "developying" },
+      { id: "d", text: "developin" }
+    ],
+    correctAnswer: "b",
+    explanation: "En 'develop', el acento recae en la segunda sílaba (de-VE-lop), no en la última; por lo tanto, NO se duplica la 'p' final: 'developing'.",
+    source: "Unidad 1 Clase 4 Grammar"
+  },
+  {
+    id: 48,
+    topic: "IT Reading (Apollo 11)",
+    question: "Why was Margaret Hamilton's software described as 'asynchronous'?",
+    options: [
+      { id: "a", text: "Because it ran without any electricity" },
+      { id: "b", text: "Because tasks could run independently based on priority rather than a fixed order" },
+      { id: "c", text: "Because it only operated when the astronauts were asleep" },
+      { id: "d", text: "Because it was written in Python" }
+    ],
+    correctAnswer: "b",
+    explanation: "Clase 5: El software asíncrono permitía ejecutar tareas en función de su prioridad en tiempo real en lugar de esperar una secuencia rígida.",
+    source: "Unidad 2 Clase 5 Reading"
+  },
+  {
+    id: 49,
+    topic: "IT Reading (Apollo 11)",
+    question: "What happened to the radar during Apollo 11's lunar descent in 1969?",
+    options: [
+      { id: "a", text: "It broke down completely and caught fire" },
+      { id: "b", text: "It was in the wrong switch position, overloading the computer with unwanted data" },
+      { id: "c", text: "It lost connection with the Earth station" },
+      { id: "d", text: "It deleted the navigation program" }
+    ],
+    correctAnswer: "b",
+    explanation: "Clase 5: El interruptor del radar de aproximación estaba en una posición incorrecta, enviando datos innecesarios y sobrecargando el ordenador.",
+    source: "Unidad 2 Clase 5 Reading"
+  },
+  {
+    id: 50,
+    topic: "IT Reading (Apollo 11)",
+    question: "What award did President Barack Obama give to Margaret Hamilton in 2016?",
+    options: [
+      { id: "a", text: "The Nobel Prize in Physics" },
+      { id: "b", text: "The Presidential Medal of Freedom" },
+      { id: "c", text: "The Turing Award" },
+      { id: "d", text: "The Apollo Gold Trophy" }
+    ],
+    correctAnswer: "b",
+    explanation: "Clase 5: En 2016, Margaret Hamilton recibió la Presidential Medal of Freedom por sus aportes pioneros al alunizaje y a la ingeniería de software.",
+    source: "Unidad 2 Clase 5 Reading"
+  },
+  {
+    id: 51,
+    topic: "IT Reading (Google)",
+    question: "Where were Larry Page and Sergey Brin studying when they conceived the idea of Google?",
+    options: [
+      { id: "a", text: "MIT" },
+      { id: "b", text: "Harvard University" },
+      { id: "c", text: "Stanford University" },
+      { id: "d", text: "University of Oxford" }
+    ],
+    correctAnswer: "c",
+    explanation: "Clase 6: Brin y Page eran estudiantes de posgrado en Stanford University (California) cuando desarrollaron el motor de búsqueda.",
+    source: "Unidad 2 Clase 6 Reading"
+  },
+  {
+    id: 52,
+    topic: "IT Reading (Google)",
+    question: "What was the initial name of Google's search engine project before adopting the name Google?",
+    options: [
+      { id: "a", text: "Backrub" },
+      { id: "b", text: "PageRanker" },
+      { id: "c", text: "WebCrawler" },
+      { id: "d", text: "StanfordSearch" }
+    ],
+    correctAnswer: "a",
+    explanation: "Clase 6: El proyecto inicial se llamó 'Backrub' porque analizaba los enlaces hacia atrás (backlinks) de las páginas web.",
+    source: "Unidad 2 Clase 6 Reading"
+  },
+  {
+    id: 53,
+    topic: "IT Reading (Google)",
+    question: "How much initial money did Brin and Page raise from investors, family, and friends in 1998?",
+    options: [
+      { id: "a", text: "$100,000" },
+      { id: "b", text: "$1 million" },
+      { id: "c", text: "$50 million" },
+      { id: "d", text: "$1.65 billion" }
+    ],
+    correctAnswer: "b",
+    explanation: "Clase 6: Recaudaron aproximadamente $1 millón de dólares (incluyendo el famoso cheque de Andy Bechtolsheim) para fundar Google Inc.",
+    source: "Unidad 2 Clase 6 Reading"
+  },
+  {
+    id: 54,
+    topic: "IT Reading (Google)",
+    question: "In 2015, Google restructured its operations and created a parent company called...",
+    options: [
+      { id: "a", text: "Meta" },
+      { id: "b", text: "Alphabet" },
+      { id: "c", text: "Omnicom" },
+      { id: "d", text: "Silicon Holdings" }
+    ],
+    correctAnswer: "b",
+    explanation: "Clase 6: En 2015, Google creó 'Alphabet Inc.' como empresa matriz de Google y sus subsidiarias de innovación.",
+    source: "Unidad 2 Clase 6 Reading"
+  },
+  {
+    id: 55,
+    topic: "IT Roles & Vocabulary",
+    question: "A professional whose main responsibility is designing user interfaces, mockups, and wireframes is a...",
+    options: [
+      { id: "a", text: "Database Administrator" },
+      { id: "b", text: "UX/UI Designer" },
+      { id: "c", text: "Network Engineer" },
+      { id: "d", text: "Systems Analyst" }
+    ],
+    correctAnswer: "b",
+    explanation: "Clase 2: El UX/UI Designer es el encargado de la experiencia visual y diseño de interfaz de usuario.",
+    source: "Unidad 1 Clase 2 Vocabulary"
+  },
+  {
+    id: 56,
+    topic: "IT Roles & Vocabulary",
+    question: "Who is responsible for organizing daily standup meetings, tracking deadlines, and coordinating team tasks?",
+    options: [
+      { id: "a", text: "Project Manager" },
+      { id: "b", text: "Junior Developer" },
+      { id: "c", text: "IT Support Technician" },
+      { id: "d", text: "QA Intern" }
+    ],
+    correctAnswer: "a",
+    explanation: "Clase 2: El Project Manager gestiona el cronograma, entregables y asignación de tareas del equipo.",
+    source: "Unidad 1 Clase 2 Vocabulary"
+  },
+  {
+    id: 57,
+    topic: "Greetings & Register",
+    question: "Which greeting is the most appropriate and formal when addressing a professor or prospective client?",
+    options: [
+      { id: "a", text: "What's up, bro?" },
+      { id: "b", text: "Dear Professor Johnson," },
+      { id: "c", text: "Hey there!" },
+      { id: "d", text: "See ya later!" }
+    ],
+    correctAnswer: "b",
+    explanation: "Clase 2: 'Dear + Título/Apellido' es el saludo formal estándar por escrito para ámbitos académicos y profesionales.",
+    source: "Unidad 1 Clase 2 Register"
+  },
+  {
+    id: 58,
+    topic: "Greetings & Register",
+    question: "Which informal phrase is commonly used by developers to say goodbye on Slack or Discord?",
+    options: [
+      { id: "a", text: "Yours faithfully," },
+      { id: "b", text: "Catch you later!" },
+      { id: "c", text: "To whom it may concern," },
+      { id: "d", text: "Sincerely," }
+    ],
+    correctAnswer: "b",
+    explanation: "Clase 2: 'Catch you later!' es una despedida casual e informal entre colegas de trabajo.",
+    source: "Unidad 1 Clase 2 Register"
+  },
+  {
+    id: 59,
+    topic: "Simple Present",
+    question: "The software tester _____ bugs before the sprint deadline.",
+    options: [
+      { id: "a", text: "report" },
+      { id: "b", text: "reports" },
+      { id: "c", text: "is reporting" },
+      { id: "d", text: "reported" }
+    ],
+    correctAnswer: "b",
+    explanation: "'The software tester' (3ra persona singular) requiere la desinencia '-s' en Presente Simple: 'reports'.",
+    source: "Unidad 1 Clase 1 Grammar"
+  },
+  {
+    id: 60,
+    topic: "Simple Present",
+    question: "He _____ his work computer every evening before leaving the office.",
+    options: [
+      { id: "a", text: "locks" },
+      { id: "b", text: "lock" },
+      { id: "c", text: "locking" },
+      { id: "d", text: "is locking" }
+    ],
+    correctAnswer: "a",
+    explanation: "Para 'He' en Presente Simple afirmativo añadimos '-s': 'locks'.",
+    source: "Unidad 1 Clase 1 Grammar"
+  },
+  {
+    id: 61,
+    topic: "Simple Present",
+    question: "She _____ multiple servers using Docker containers.",
+    options: [
+      { id: "a", text: "manage" },
+      { id: "b", text: "manages" },
+      { id: "c", text: "managing" },
+      { id: "d", text: "are manage" }
+    ],
+    correctAnswer: "b",
+    explanation: "Sujeto 'She' + verbo terminado en 'e' (manage) -> agrega '-s': 'manages'.",
+    source: "Unidad 1 Clase 1 Grammar"
+  },
+  {
+    id: 62,
+    topic: "Simple Present",
+    question: "Why _____ the application crash when handling large datasets?",
+    options: [
+      { id: "a", text: "is" },
+      { id: "b", text: "does" },
+      { id: "c", text: "do" },
+      { id: "d", text: "are" }
+    ],
+    correctAnswer: "b",
+    explanation: "'The application' es 'It' (3ra persona singular), por lo que la pregunta en Presente Simple utiliza 'does'.",
+    source: "Unidad 1 Clase 1 Grammar"
+  },
+  {
+    id: 63,
+    topic: "Present Continuous",
+    question: "Right now, our team _____ the legacy database to PostgreSQL.",
+    options: [
+      { id: "a", text: "migrates" },
+      { id: "b", text: "is migrating" },
+      { id: "c", text: "migrated" },
+      { id: "d", text: "migrate" }
+    ],
+    correctAnswer: "b",
+    explanation: "'Right now' expresa una acción en desarrollo actual: 'is migrating' (Present Continuous).",
+    source: "Unidad 1 Clase 4 Grammar"
+  },
+  {
+    id: 64,
+    topic: "Present Continuous",
+    question: "Why are you _____ at your monitor with that confused face?",
+    options: [
+      { id: "a", text: "look" },
+      { id: "b", text: "looking" },
+      { id: "c", text: "looks" },
+      { id: "d", text: "looked" }
+    ],
+    correctAnswer: "b",
+    explanation: "La estructura interrogativa en Present Continuous es: 'Wh + are + sujeto + verbo-ing': 'Why are you looking...'.",
+    source: "Unidad 1 Clase 4 Grammar"
+  },
+  {
+    id: 65,
+    topic: "Past Simple",
+    question: "In 1998, Google _____ only a few queries per day from a small garage.",
+    options: [
+      { id: "a", text: "processed" },
+      { id: "b", text: "processes" },
+      { id: "c", text: "is processing" },
+      { id: "d", text: "process" }
+    ],
+    correctAnswer: "a",
+    explanation: "'In 1998' es una fecha pasada específica que exige Pasado Simple: 'processed' (verbo regular + ed).",
+    source: "Unidad 2 Clase 6 Grammar"
+  },
+  {
+    id: 66,
+    topic: "Past Simple",
+    question: "We _____ that our unit tests would catch all memory leaks, but we were wrong.",
+    options: [
+      { id: "a", text: "thinked" },
+      { id: "b", text: "thought" },
+      { id: "c", text: "thinks" },
+      { id: "d", text: "thinking" }
+    ],
+    correctAnswer: "b",
+    explanation: "El pasado irregular de 'think' (pensar/creer) es 'thought'. 'Thinked' no existe en inglés.",
+    source: "Unidad 2 Clase 5 Irregular Verbs"
+  },
+  {
+    id: 67,
+    topic: "Past Simple",
+    question: "The engineer _____ the pull request after reviewing the code changes.",
+    options: [
+      { id: "a", text: "merged" },
+      { id: "b", text: "merge" },
+      { id: "c", text: "merging" },
+      { id: "d", text: "merges" }
+    ],
+    correctAnswer: "a",
+    explanation: "Verbo regular terminado en 'e' (merge) -> solo agrega '-d' para formar el pasado simple: 'merged'.",
+    source: "Unidad 2 Clase 5 Regular Verbs"
+  },
+  {
+    id: 68,
+    topic: "Past Simple",
+    question: "Did you _____ the error message in the console before restarting the server?",
+    options: [
+      { id: "a", text: "saw" },
+      { id: "b", text: "see" },
+      { id: "c", text: "seen" },
+      { id: "d", text: "seeing" }
+    ],
+    correctAnswer: "b",
+    explanation: "En preguntas con 'Did', el verbo principal siempre vuelve a su forma base 'see'.",
+    source: "Unidad 2 Clase 5 Grammar"
+  },
+  {
+    id: 69,
+    topic: "Irregular Verbs",
+    question: "What is the past simple form of 'FIND'?",
+    options: [
+      { id: "a", text: "finded" },
+      { id: "b", text: "found" },
+      { id: "c", text: "founded" },
+      { id: "d", text: "fond" }
+    ],
+    correctAnswer: "b",
+    explanation: "El verbo irregular 'find' (encontrar) conjuga en Pasado Simple como 'found'. ('Founded' es el pasado de 'found', que significa fundar).",
+    source: "Unidad 2 Clase 5 Irregular Verbs"
+  },
+  {
+    id: 70,
+    topic: "Irregular Verbs",
+    question: "What is the past simple form of 'SELL'?",
+    options: [
+      { id: "a", text: "selled" },
+      { id: "b", text: "sold" },
+      { id: "c", text: "sale" },
+      { id: "d", text: "saled" }
+    ],
+    correctAnswer: "b",
+    explanation: "El verbo irregular 'sell' (vender) conjuga en Pasado Simple como 'sold'.",
+    source: "Unidad 2 Clase 6 Irregular Verbs"
+  },
+  {
+    id: 71,
+    topic: "Irregular Verbs",
+    question: "What is the past simple form of 'RUN'?",
+    options: [
+      { id: "a", text: "runned" },
+      { id: "b", text: "ran" },
+      { id: "c", text: "run" },
+      { id: "d", text: "ron" }
+    ],
+    correctAnswer: "b",
+    explanation: "El verbo irregular 'run' (ejecutar/correr) conjuga en Pasado Simple como 'ran'.",
+    source: "Unidad 2 Clase 5 Irregular Verbs"
+  },
+  {
+    id: 72,
+    topic: "Irregular Verbs",
+    question: "What is the past simple form of 'SPEAK'?",
+    options: [
+      { id: "a", text: "speaked" },
+      { id: "b", text: "spoke" },
+      { id: "c", text: "spoken" },
+      { id: "d", text: "spaked" }
+    ],
+    correctAnswer: "b",
+    explanation: "El verbo irregular 'speak' (hablar) conjuga en Pasado Simple como 'spoke'.",
+    source: "Unidad 2 Clase 5 Irregular Verbs"
+  },
+  {
+    id: 73,
+    topic: "Irregular Verbs",
+    question: "What is the past simple form of 'HOLD'?",
+    options: [
+      { id: "a", text: "holded" },
+      { id: "b", text: "held" },
+      { id: "c", text: "halt" },
+      { id: "d", text: "hold" }
+    ],
+    correctAnswer: "b",
+    explanation: "El verbo irregular 'hold' (llevar a cabo / sostener / 'hold an IPO') conjuga en Pasado Simple como 'held'.",
+    source: "Unidad 2 Clase 6 Irregular Verbs"
+  },
+  {
+    id: 74,
+    topic: "Stative Verbs",
+    question: "Which of the following verbs is a STATIVE VERB (does NOT take -ing)?",
+    options: [
+      { id: "a", text: "program" },
+      { id: "b", text: "belong" },
+      { id: "c", text: "type" },
+      { id: "d", text: "deploy" }
+    ],
+    correctAnswer: "b",
+    explanation: "'Belong' (pertenecer) es un verbo de posesión/estado y no se conjuga en tiempos continuos.",
+    source: "Unidad 1 Clase 4 Stative Verbs"
+  },
+  {
+    id: 75,
+    topic: "Stative Verbs",
+    question: "Which sentence is grammatically CORRECT according to English rules?",
+    options: [
+      { id: "a", text: "I am knowing the answer to this exam question." },
+      { id: "b", text: "I know the answer to this exam question." },
+      { id: "c", text: "I knowing the answer to this exam question." },
+      { id: "d", text: "I am know the answer to this exam question." }
+    ],
+    correctAnswer: "b",
+    explanation: "'Know' es un Stative Verb de conocimiento y nunca lleva forma continua: 'I know' es la forma correcta.",
+    source: "Unidad 1 Clase 4 Stative Verbs"
+  },
+  {
+    id: 76,
+    topic: "Adverbs of Frequency",
+    question: "Select the sentence with the CORRECT adverb placement:",
+    options: [
+      { id: "a", text: "She tests always her code before committing." },
+      { id: "b", text: "She always tests her code before committing." },
+      { id: "c", text: "Always she tests her code before committing." },
+      { id: "d", text: "She tests her code always before committing." }
+    ],
+    correctAnswer: "b",
+    explanation: "Los adverbios de frecuencia (always, usually, often, never) se colocan ANTES del verbo principal: 'She always tests...'.",
+    source: "Unidad 1 Clase 1 Grammar"
+  },
+  {
+    id: 77,
+    topic: "Adverbs of Frequency",
+    question: "Where does the adverb 'often' go when the main verb is 'TO BE'?",
+    options: [
+      { id: "a", text: "Before 'to be' (He often is late)" },
+      { id: "b", text: "AFTER 'to be' (He is often late)" },
+      { id: "c", text: "At the beginning of the question only" },
+      { id: "d", text: "Frequency adverbs cannot be used with 'to be'" }
+    ],
+    correctAnswer: "b",
+    explanation: "Con el verbo 'to be' (am, is, are, was, were), el adverbio de frecuencia se coloca DESPUÉS del verbo: 'The server is often overloaded'.",
+    source: "Unidad 1 Clase 1 Grammar"
+  },
+  {
+    id: 78,
+    topic: "Business Vocabulary",
+    question: "The Google Glass wearable project failed with everyday consumers due to a _____ clear everyday purpose.",
+    options: [
+      { id: "a", text: "step down of" },
+      { id: "b", text: "lack of" },
+      { id: "c", text: "raise of" },
+      { id: "d", text: "purchase of" }
+    ],
+    correctAnswer: "b",
+    explanation: "Clase 6: 'Lack of' significa falta o carencia de algo ('lack of clear purpose').",
+    source: "Unidad 2 Clase 6 Reading"
+  },
+  {
+    id: 79,
+    topic: "Business Vocabulary",
+    question: "Although consumer sales were discontinued, Google Glass found practical applications in...",
+    options: [
+      { id: "a", text: "Space rocket launches" },
+      { id: "b", text: "Healthcare and factory manufacturing" },
+      { id: "c", text: "Undersea cable maintenance" },
+      { id: "d", text: "Video game consoles" }
+    ],
+    correctAnswer: "b",
+    explanation: "Clase 6: El texto señala que Google Glass encontró un nicho productivo en 'healthcare' (medicina) e industrias manufactureras.",
+    source: "Unidad 2 Clase 6 Reading"
+  },
+  {
+    id: 80,
+    topic: "IT Reading (Google)",
+    question: "Who were the largest individual shareholders when Google went public in 2004?",
+    options: [
+      { id: "a", text: "Bill Gates and Steve Jobs" },
+      { id: "b", text: "Larry Page and Sergey Brin" },
+      { id: "c", text: "Andy Bechtolsheim and Eric Schmidt" },
+      { id: "d", text: "Stanford University Board" }
+    ],
+    correctAnswer: "b",
+    explanation: "Clase 6: Brin y Page eran y continuaron siendo los mayores accionistas individuales tras la IPO de 2004.",
+    source: "Unidad 2 Clase 6 Reading"
+  },
+  {
+    id: 81,
+    topic: "Simple Present",
+    question: "_____ your company provide health insurance for software developers?",
+    options: [
+      { id: "a", text: "Do" },
+      { id: "b", text: "Does" },
+      { id: "c", text: "Is" },
+      { id: "d", text: "Are" }
+    ],
+    correctAnswer: "b",
+    explanation: "'Your company' es singular (It), por lo que la pregunta en Presente Simple se construye con el auxiliar 'Does'.",
+    source: "Unidad 1 Clase 1 Grammar"
+  },
+  {
+    id: 82,
+    topic: "Past Simple",
+    question: "When Margaret Hamilton _____ the software, she created prioritized task management.",
+    options: [
+      { id: "a", text: "design" },
+      { id: "b", text: "designed" },
+      { id: "c", text: "designing" },
+      { id: "d", text: "is designing" }
+    ],
+    correctAnswer: "b",
+    explanation: "Relato histórico en Pasado Simple: verbo regular 'design' + 'ed' -> 'designed'.",
+    source: "Unidad 2 Clase 5 Reading"
+  },
+  {
+    id: 83,
+    topic: "Simple Present vs Present Continuous",
+    question: "I usually _____ coffee while coding, but today I _____ green tea.",
+    options: [
+      { id: "a", text: "drink / am drinking" },
+      { id: "b", text: "am drinking / drink" },
+      { id: "c", text: "drinks / drinks" },
+      { id: "d", text: "drank / drink" }
+    ],
+    correctAnswer: "a",
+    explanation: "'Usually' marca rutina en Present Simple ('I drink'), mientras que 'today' marca la excepción temporal en Present Continuous ('I am drinking').",
+    source: "Unidad 1 Clase 4 Contrast"
+  },
+  {
+    id: 84,
+    topic: "IT Roles & Vocabulary",
+    question: "An engineer who sets up routers, switches, firewalls, and subnets is called a...",
+    options: [
+      { id: "a", text: "UX Designer" },
+      { id: "b", text: "Network Engineer" },
+      { id: "c", text: "Frontend Developer" },
+      { id: "d", text: "Scrum Master" }
+    ],
+    correctAnswer: "b",
+    explanation: "Clase 2: El Network Engineer (ingeniero de redes) se encarga de la infraestructura de conectividad y seguridad de red.",
+    source: "Unidad 1 Clase 2 Vocabulary"
+  },
+  {
+    id: 85,
+    topic: "Past Simple",
+    question: "Sergey Brin and Larry Page _____ in 1995 during a campus tour at Stanford.",
+    options: [
+      { id: "a", text: "meet" },
+      { id: "b", text: "met" },
+      { id: "c", text: "meeting" },
+      { id: "d", text: "meeted" }
+    ],
+    correctAnswer: "b",
+    explanation: "El verbo irregular 'meet' (conocerse/reunirse) conjuga en Pasado Simple como 'met'.",
+    source: "Unidad 2 Clase 6 Reading"
   }
 ];
+

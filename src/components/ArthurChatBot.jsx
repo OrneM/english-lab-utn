@@ -8,14 +8,18 @@ import {
   Square,
   RotateCcw, 
   HelpCircle,
-  Languages
+  Languages,
+  Zap,
+  Bot
 } from 'lucide-react';
 import { ArthurAvatar } from './ArthurAvatar';
 import { getArthurResponse } from '../utils/arthurBrain';
+import { askArthurWithGemini, hasGeminiApiKey } from '../utils/geminiService';
 import { soundManager } from '../utils/soundEffects';
 
-export function ArthurChatBot() {
+export function ArthurChatBot({ onOpenGeminiModal }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasAi, setHasAi] = useState(() => hasGeminiApiKey());
   const [messages, setMessages] = useState([
     {
       sender: 'arthur',
@@ -39,6 +43,13 @@ export function ArthurChatBot() {
 
   const messagesEndRef = useRef(null);
 
+  // Actualizar estado de IA cuando se abre el chat
+  useEffect(() => {
+    if (isOpen) {
+      setHasAi(hasGeminiApiKey());
+    }
+  }, [isOpen]);
+
   // Auto scroll al último mensaje
   useEffect(() => {
     if (isOpen) {
@@ -55,7 +66,7 @@ export function ArthurChatBot() {
     };
   }, []);
 
-  const handleSendMessage = (textToSend) => {
+  const handleSendMessage = async (textToSend) => {
     const text = (textToSend || inputValue).trim();
     if (!text) return;
 
@@ -68,28 +79,50 @@ export function ArthurChatBot() {
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
-    setMessages(prev => [...prev, userMsg]);
+    const nextHistory = [...messages, userMsg];
+    setMessages(nextHistory);
     setInputValue('');
     setIsTyping(true);
 
     // Detener cualquier audio previo
     handleStopSpeech();
 
-    // Simular respuesta inteligente de Arthur con pequeño delay natural
-    setTimeout(() => {
-      const response = getArthurResponse(text);
+    try {
+      let response = null;
+
+      // Intentar primero con Gemini AI si hay clave
+      if (hasGeminiApiKey()) {
+        response = await askArthurWithGemini(text, nextHistory);
+      }
+
+      // Si no hay clave de Gemini o falló la consulta, usar motor local
+      if (!response) {
+        response = getArthurResponse(text);
+      }
+
       soundManager.playClick();
       
       const arthurMsg = {
         sender: 'arthur',
         text: response.text,
         suggestedQuestions: response.suggestedQuestions,
+        isAI: Boolean(response.isAI),
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
 
       setMessages(prev => [...prev, arthurMsg]);
+    } catch (err) {
+      console.error("Error generating response:", err);
+      const fallback = getArthurResponse(text);
+      setMessages(prev => [...prev, {
+        sender: 'arthur',
+        text: fallback.text,
+        suggestedQuestions: fallback.suggestedQuestions,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }]);
+    } finally {
       setIsTyping(false);
-    }, 500);
+    }
   };
 
   const handleClearChat = () => {
@@ -251,9 +284,20 @@ export function ArthurChatBot() {
               <div>
                 <div className="flex items-center space-x-1.5">
                   <h3 className="font-extrabold text-sm text-slate-100">Arthur</h3>
-                  <span className="text-[10px] uppercase font-extrabold px-1.5 py-0.5 rounded bg-brand-500/20 text-brand-300 border border-brand-500/30">
-                    Tutor & Traductor
-                  </span>
+                  <button
+                    onClick={() => {
+                      if (onOpenGeminiModal) onOpenGeminiModal();
+                    }}
+                    title={hasAi ? "Gemini 2.5 Flash Activo - Clic para configurar" : "Modo Local - Clic para conectar Gemini AI"}
+                    className={`text-[10px] uppercase font-black px-2 py-0.5 rounded-full border transition-all flex items-center space-x-1 ${
+                      hasAi 
+                        ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40 hover:bg-cyan-500/30' 
+                        : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-cyan-300 hover:border-cyan-500/30'
+                    }`}
+                  >
+                    <Sparkles className={`w-3 h-3 ${hasAi ? 'text-cyan-400 animate-pulse' : 'text-slate-400'}`} />
+                    <span>{hasAi ? 'Gemini AI' : 'Conectar IA'}</span>
+                  </button>
                 </div>
                 <p className="text-[11px] text-slate-400 flex items-center space-x-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse"></span>

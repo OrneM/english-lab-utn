@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { soundManager } from '../utils/soundEffects';
 
-export function Navbar({ activeSection, onNavigate, isDark, onToggleTheme, soundEnabled, onToggleSound }) {
+export function Navbar({ activeSection, onNavigate, isDark, onToggleTheme, soundEnabled, onToggleSound, hasAiKey, onOpenGeminiModal }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
@@ -86,6 +86,24 @@ export function Navbar({ activeSection, onNavigate, isDark, onToggleTheme, sound
 
           {/* Right Controls */}
           <div className="flex items-center space-x-2">
+            {/* Gemini AI Settings Button */}
+            <button
+              id="btn-gemini-settings"
+              onClick={() => {
+                soundManager.playClick();
+                if (onOpenGeminiModal) onOpenGeminiModal();
+              }}
+              title={hasAiKey ? 'Google Gemini Activo (Configurar)' : 'Activar Google Gemini AI Gratuito'}
+              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                hasAiKey
+                  ? 'bg-gradient-to-r from-cyan-500/20 to-brand-500/20 border-cyan-400/50 text-cyan-300 hover:border-cyan-300 shadow-sm'
+                  : 'bg-slate-800/60 text-slate-300 border-slate-700 hover:border-brand-500 hover:text-brand-300'
+              }`}
+            >
+              <Sparkles className={`w-3.5 h-3.5 ${hasAiKey ? 'text-cyan-400 animate-pulse' : 'text-amber-400'}`} />
+              <span className="hidden sm:inline">{hasAiKey ? 'Gemini IA' : 'Configurar IA'}</span>
+            </button>
+
             {/* Sound Toggle */}
             <button
               id="btn-toggle-sound"

@@ -35,13 +35,32 @@ import {
   getEvolutionMetrics,
   clearExamHistory 
 } from '../utils/storageHistory';
+import {
+  generateExamQuestionsWithAI,
+  getSavedAIQuestions,
+  hasGeminiApiKey
+} from '../utils/geminiService';
 
-export function ExamSimulator({ onNavigateToTheory }) {
+export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
   // Configuración
   const [questionCount, setQuestionCount] = useState(20);
   const [timerMinutes, setTimerMinutes] = useState(20);
   const [examMode, setExamMode] = useState('exam'); // 'exam' | 'practice'
   
+  // Banco extendido con preguntas generadas por IA
+  const [extraAiQuestions, setExtraAiQuestions] = useState(() => getSavedAIQuestions());
+  const [isGeneratingAI, setIsGeneratingAI] = useState(false);
+  const [aiGenMessage, setAiGenMessage] = useState(null); // { type: 'success'|'error', text: string }
+  const [selectedAITopic, setSelectedAITopic] = useState('all');
+
+  const fullQuestionsBank = useMemo(() => {
+    // Evitar duplicados por id
+    const map = new Map();
+    EXAM_QUESTIONS.forEach(q => map.set(q.id, q));
+    extraAiQuestions.forEach(q => map.set(q.id, q));
+    return Array.from(map.values());
+  }, [extraAiQuestions]);
+
   // Estado del Examen
   const [gameState, setGameState] = useState('setup'); // 'setup' | 'active' | 'results'
   const [currentQuestions, setCurrentQuestions] = useState([]);
@@ -62,19 +81,55 @@ export function ExamSimulator({ onNavigateToTheory }) {
   // Filtro de revisión
   const [resultsFilter, setResultsFilter] = useState('all'); // 'all' | 'incorrect' | 'correct'
 
-  // Refrescar métricas al entrar en setup o results
+  // Refrescar métricas y banco IA al entrar en setup o results
   useEffect(() => {
     if (gameState === 'setup' || gameState === 'results') {
       setMetricsState(getEvolutionMetrics());
+      setExtraAiQuestions(getSavedAIQuestions());
     }
   }, [gameState]);
+
+  // Generador de preguntas con IA
+  const handleGenerateAIQuestions = async () => {
+    soundManager.playClick();
+    if (!hasGeminiApiKey()) {
+      if (onOpenGeminiModal) onOpenGeminiModal();
+      return;
+    }
+
+    setIsGeneratingAI(true);
+    setAiGenMessage(null);
+
+    try {
+      const newQuestions = await generateExamQuestionsWithAI({
+        topic: selectedAITopic,
+        count: 5
+      });
+
+      setExtraAiQuestions(getSavedAIQuestions());
+      setAiGenMessage({
+        type: 'success',
+        text: `¡Se generaron ${newQuestions.length} preguntas inéditas con Gemini y se añadieron al banco!`
+      });
+      soundManager.playFanfare();
+    } catch (err) {
+      console.error("Error generating AI questions:", err);
+      setAiGenMessage({
+        type: 'error',
+        text: err.message || 'Error al conectar con la API de Gemini.'
+      });
+      soundManager.playIncorrect();
+    } finally {
+      setIsGeneratingAI(false);
+    }
+  };
 
   // Iniciar Examen
   const handleStartExam = () => {
     soundManager.playClick();
     
-    // Mezclar y seleccionar preguntas
-    const shuffled = [...EXAM_QUESTIONS].sort(() => 0.5 - Math.random());
+    // Mezclar y seleccionar preguntas del banco completo
+    const shuffled = [...fullQuestionsBank].sort(() => 0.5 - Math.random());
     const count = questionCount === 'all' ? shuffled.length : Math.min(questionCount, shuffled.length);
     const selected = shuffled.slice(0, count);
     
@@ -514,14 +569,16 @@ export function ExamSimulator({ onNavigateToTheory }) {
                 <HelpCircle className="w-4 h-4 text-brand-400" />
                 <span>1. Cantidad de Preguntas</span>
               </label>
-              <span className="text-xs text-slate-400">Banco total: +40 preguntas</span>
+              <span className="text-xs text-slate-400">
+                Banco total: <strong>{fullQuestionsBank.length} preguntas</strong> {extraAiQuestions.length > 0 && <span className="text-cyan-400">({extraAiQuestions.length} con IA ✨)</span>}
+              </span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
                 { val: 10, label: '10 Preguntas', sub: 'Práctica Rápida (~8 min)' },
                 { val: 20, label: '20 Preguntas', sub: 'Formato Estándar (~15 min)' },
                 { val: 30, label: '30 Preguntas', sub: 'Examen Completo (~25 min)' },
-                { val: 'all', label: 'Todas (+40)', sub: 'Maratón de Estudio' },
+                { val: 'all', label: `Todas (+${fullQuestionsBank.length})`, sub: 'Maratón de Estudio' },
               ].map((item) => (
                 <button
                   key={item.val}
@@ -547,6 +604,69 @@ export function ExamSimulator({ onNavigateToTheory }) {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Generador de Preguntas Inéditas con Gemini AI */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-brand-950/40 via-indigo-950/40 to-cyanBrand-950/40 border border-brand-500/30 space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center space-x-2">
+                <Sparkles className="w-5 h-5 text-cyanBrand-400 animate-pulse" />
+                <div>
+                  <h4 className="font-extrabold text-sm text-slate-100 flex items-center space-x-1.5">
+                    <span>¿Quieres practicar con preguntas nunca antes vistas?</span>
+                    <span className="text-[10px] uppercase font-black px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                      Gemini AI
+                    </span>
+                  </h4>
+                  <p className="text-xs text-slate-400">
+                    Genera un lote de 5 preguntas inéditas basadas estrictamente en las Clases 1 a 6 de la UTN.
+                  </p>
+                </div>
+              </div>
+
+              {/* Selector de tema */}
+              <div className="flex items-center space-x-2">
+                <select
+                  value={selectedAITopic}
+                  onChange={(e) => setSelectedAITopic(e.target.value)}
+                  className="py-2 px-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-xs font-semibold focus:border-cyanBrand-400 focus:outline-none"
+                >
+                  <option value="all">🎲 Mezcla de Todos los Temas</option>
+                  <option value="Simple Present">Presente Simple (3ra persona/negación)</option>
+                  <option value="Present Continuous">Presente Continuo & Stative Verbs</option>
+                  <option value="Simple Present vs Continuous">Contraste Simple vs Continuous</option>
+                  <option value="Past Simple">Pasado Simple (Regulares & Irregulares)</option>
+                  <option value="Lectura Apollo 11 & Margaret Hamilton">Lectura Margaret Hamilton (Apollo 11)</option>
+                  <option value="Lectura Google & Sergey Brin">Lectura Sergey Brin & Google</option>
+                  <option value="Vocabulario IT & Roles">Vocabulario & Roles IT</option>
+                </select>
+
+                <button
+                  onClick={handleGenerateAIQuestions}
+                  disabled={isGeneratingAI}
+                  className="py-2 px-4 rounded-xl bg-gradient-to-r from-brand-600 to-cyanBrand-600 hover:from-brand-500 hover:to-cyanBrand-500 text-white font-extrabold text-xs shadow-md shadow-brand-500/20 flex items-center space-x-1.5 transition-all disabled:opacity-50 flex-shrink-0"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-cyan-200" />
+                  <span>{isGeneratingAI ? 'Generando...' : 'Generar 5 Preguntas'}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* AI Feedback message */}
+            {aiGenMessage && (
+              <div className={`p-2.5 rounded-xl border text-xs flex items-center space-x-2 animate-fade-in ${
+                aiGenMessage.type === 'success'
+                  ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300'
+                  : 'bg-rose-950/40 border-rose-500/30 text-rose-300'
+              }`}>
+                {aiGenMessage.type === 'success' ? (
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                ) : (
+                  <AlertCircle className="w-4 h-4 text-rose-400 flex-shrink-0" />
+                )}
+                <span>{aiGenMessage.text}</span>
+              </div>
+            )}
           </div>
 
           {/* Opción 2: Temporizador */}
