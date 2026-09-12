@@ -16,10 +16,30 @@ import {
 import { THEORY_DATA } from '../data/theoryData';
 import { soundManager } from '../utils/soundEffects';
 
+function shuffleArray(arr) {
+  const newArr = [...arr];
+  for (let i = newArr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+  }
+  return newArr;
+}
+
 function getRandomQuestions(pool, count = 5) {
   if (!pool || pool.length === 0) return [];
-  const shuffled = [...pool].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, Math.min(count, shuffled.length));
+  const shuffledQuestions = shuffleArray(pool).slice(0, Math.min(count, pool.length));
+
+  return shuffledQuestions.map(q => {
+    const correctAnswerText = q.options[q.correct];
+    const shuffledOptions = shuffleArray(q.options);
+    const newCorrectIndex = shuffledOptions.indexOf(correctAnswerText);
+
+    return {
+      ...q,
+      options: shuffledOptions,
+      correct: newCorrectIndex
+    };
+  });
 }
 
 export function SimplePresentView({ onGoToExam }) {
