@@ -2,8 +2,86 @@ import { IRREGULAR_VERBS } from '../data/irregularVerbs';
 import { THEORY_DATA } from '../data/theoryData';
 import { EXAM_QUESTIONS } from '../data/questions';
 
+// Diccionario bilingüe amplio enfocado en IT, Programación e Inglés General
+const TRANSLATION_DICTIONARY = [
+  // --- ROLES & PUESTOS IT ---
+  { en: "software developer", es: "desarrollador de software / programador", cat: "Sustantivo (Rol IT)", ex: "The software developer creates and tests code." },
+  { en: "developer", es: "desarrollador / programador", cat: "Sustantivo", ex: "She is a talented React developer." },
+  { en: "programmer", es: "programador / programadora", cat: "Sustantivo", ex: "Grace Hopper inspired generations of programmers." },
+  { en: "ux designer", es: "diseñador de experiencia de usuario (UX)", cat: "Sustantivo (Rol IT)", ex: "A UX designer builds intuitive interfaces." },
+  { en: "it support", es: "soporte técnico / soporte IT", cat: "Sustantivo (Rol IT)", ex: "IT support helps resolve network issues." },
+  { en: "project manager", es: "gerente / líder de proyecto", cat: "Sustantivo (Rol IT)", ex: "The project manager coordinates daily standups." },
+  { en: "web developer", es: "desarrollador web", cat: "Sustantivo (Rol IT)", ex: "A web developer maintains responsive sites." },
+  { en: "systems analyst", es: "analista de sistemas", cat: "Sustantivo (Rol IT)", ex: "The systems analyst designs system architecture." },
+  { en: "data analyst", es: "analista de datos", cat: "Sustantivo (Rol IT)", ex: "The data analyst processes SQL records." },
+  { en: "network engineer", es: "ingeniero de redes", cat: "Sustantivo (Rol IT)", ex: "The network engineer configured the firewall." },
+
+  // --- CONCEPTOS TÉCNICOS & CÓDIGO ---
+  { en: "debug", es: "depurar / corregir errores en el código", cat: "Verbo / Sustantivo", ex: "To debug means to find and fix errors." },
+  { en: "compile", es: "compilar (traducir a lenguaje máquina)", cat: "Verbo", ex: "The compiler translates source code into machine language." },
+  { en: "compiler", es: "compilador", cat: "Sustantivo", ex: "Grace Hopper created one of the first compilers." },
+  { en: "database", es: "base de datos", cat: "Sustantivo", ex: "We connected the backend to a PostgreSQL database." },
+  { en: "server", es: "servidor", cat: "Sustantivo", ex: "The cloud server handled thousands of requests." },
+  { en: "server farm", es: "granja de servidores / centro de datos", cat: "Sustantivo", ex: "There are two big servers in the server farm." },
+  { en: "code", es: "código / programar", cat: "Sustantivo / Verbo", ex: "She wrote clean, modular code." },
+  { en: "bug", es: "error / fallo de software", cat: "Sustantivo", ex: "They are fixing bugs at the moment." },
+  { en: "feature", es: "funcionalidad / característica", cat: "Sustantivo", ex: "We deployed a new search feature." },
+  { en: "asynchronous", es: "asíncrono (procesos independientes que no se bloquean)", cat: "Adjetivo", ex: "Margaret Hamilton designed asynchronous software." },
+  { en: "synchronous", es: "síncrono (procesos secuenciales que esperan)", cat: "Adjetivo", ex: "Early software ran in synchronous order." },
+  { en: "fail-safe", es: "a prueba de fallos / seguro ante desastres", cat: "Adjetivo / Sustantivo", ex: "A fail-safe mechanism stops systems safely." },
+  { en: "overload", es: "sobrecarga / sobrecargar", cat: "Sustantivo / Verbo", ex: "The Apollo computer avoided radar overload." },
+  { en: "array", es: "arreglo / vector / lista", cat: "Sustantivo", ex: "The array contains 50 items." },
+  { en: "function", es: "función", cat: "Sustantivo", ex: "The print function displays information on screen." },
+  { en: "variable", es: "variable", cat: "Sustantivo", ex: "Declare a constant variable." },
+  { en: "loop", es: "bucle / ciclo", cat: "Sustantivo", ex: "An infinite loop was causing the lag." },
+  { en: "query", es: "consulta / petición a base de datos", cat: "Sustantivo / Verbo", ex: "The SQL query returned fast results." },
+  { en: "deploy", es: "desplegar / publicar en producción", cat: "Verbo", ex: "We deployed the web application to Vercel." },
+  { en: "commit", es: "confirmación de cambios en Git", cat: "Sustantivo / Verbo", ex: "Make a git commit before pushing." },
+  { en: "branch", es: "rama (en Git)", cat: "Sustantivo", ex: "Switch to the main branch." },
+  { en: "interface", es: "interfaz", cat: "Sustantivo", ex: "She takes care of the user interface." },
+  { en: "keyboard", es: "teclado", cat: "Sustantivo", ex: "He typed quickly on his mechanical keyboard." },
+  { en: "screen", es: "pantalla", cat: "Sustantivo", ex: "The print function shows output on the screen." },
+  { en: "file", es: "archivo", cat: "Sustantivo", ex: "Save the configuration file." },
+  { en: "folder", es: "carpeta / directorio", cat: "Sustantivo", ex: "Open the project folder." },
+  { en: "library", es: "biblioteca / librería de código", cat: "Sustantivo", ex: "React is a popular UI library." },
+  { en: "framework", es: "marco de trabajo / framework", cat: "Sustantivo", ex: "Next.js is a fullstack React framework." },
+
+  // --- NEGOCIOS & EVOLUCIÓN IT (CLASE 6) ---
+  { en: "launch", es: "lanzar / estreno / fundar una empresa", cat: "Verbo / Sustantivo", ex: "Brin and Page launched Google in 1998." },
+  { en: "raise money", es: "recaudar fondos / juntar dinero", cat: "Frase Verbal", ex: "They raised $1 million from investors." },
+  { en: "step down", es: "renunciar / retirarse de un cargo de liderazgo", cat: "Phrasal Verb", ex: "The CEO stepped down from his daily role." },
+  { en: "purchase", es: "comprar / adquirir", cat: "Verbo / Sustantivo", ex: "Google purchased YouTube for $1.65 billion." },
+  { en: "restructure", es: "reestructurar / reorganizar", cat: "Verbo", ex: "The divisions were restructured under Alphabet." },
+  { en: "headquarters", es: "sede central / oficina principal", cat: "Sustantivo", ex: "Google's headquarters are in Silicon Valley." },
+  { en: "initial public offering", es: "oferta pública inicial (IPO / salida a bolsa)", cat: "Sustantivo", ex: "Google held its Initial Public Offering in 2004." },
+  { en: "ipo", es: "oferta pública inicial en bolsa", cat: "Sustantivo", ex: "The IPO made the founders billionaires." },
+  { en: "shareholder", es: "accionista", cat: "Sustantivo", ex: "They remain the largest individual shareholders." },
+  { en: "investor", es: "inversor / inversionista", cat: "Sustantivo", ex: "The startup secured backing from angel investors." },
+  { en: "billionaire", es: "multimillonario (poseedor de +1.000 millones)", cat: "Sustantivo", ex: "The success turned the founders into billionaires." },
+  { en: "lack of", es: "falta de / carencia de", cat: "Frase", ex: "The product had a lack of clear purpose." },
+  { en: "success", es: "éxito", cat: "Sustantivo", ex: "Python achieved worldwide success." },
+  { en: "parent company", es: "empresa matriz / casa matriz", cat: "Sustantivo", ex: "Alphabet is Google's parent company." },
+  { en: "healthcare", es: "cuidado de la salud / sector sanitario", cat: "Sustantivo", ex: "Google Glass was applied in healthcare." },
+
+  // --- ADJETIVOS & VOCABULARIO GENERAL ---
+  { en: "dull", es: "aburrido / monótono / apagado", cat: "Adjetivo", ex: "Old languages have duller interfaces than modern ones." },
+  { en: "safe", es: "seguro / confiable", cat: "Adjetivo", ex: "She wrote reliable and safe software." },
+  { en: "reliable", es: "confiable / estable", cat: "Adjetivo", ex: "The server is fast and reliable." },
+  { en: "simplicity", es: "simplicidad / sencillez", cat: "Sustantivo", ex: "Python became popular due to its simplicity." },
+  { en: "expensive", es: "costoso / caro", cat: "Adjetivo", ex: "The new cloud instances are too expensive." },
+  { en: "cheap", es: "económico / barato", cat: "Adjetivo", ex: "Open source tools are cheap and accessible." },
+  { en: "routine", es: "rutina", cat: "Sustantivo", ex: "He described his daily routine as a developer." },
+  { en: "meeting", es: "reunión", cat: "Sustantivo", ex: "We have a daily standup meeting at 9 a.m." },
+  { en: "task", es: "tarea / asignación", cat: "Sustantivo", ex: "Each task had a unique priority." },
+  { en: "assign", es: "asignar / encomendar", cat: "Verbo", ex: "The lead assigned jobs to team members." },
+  { en: "warn", es: "advertir / avisar de peligro", cat: "Verbo", ex: "The display warned astronauts of emergencies." },
+  { en: "ensure", es: "asegurar / garantizar", cat: "Verbo", ex: "We ran unit tests to ensure high quality." },
+  { en: "regardless", es: "a pesar de / sin importar", cat: "Adverbio", ex: "The task executes regardless of network latency." },
+];
+
 export function getArthurResponse(userInput) {
-  const text = userInput.trim().toLowerCase();
+  const rawText = userInput.trim();
+  const text = rawText.toLowerCase();
   
   if (!text) {
     return {
@@ -11,7 +89,7 @@ export function getArthurResponse(userInput) {
       suggestedQuestions: [
         "¿Cómo sé cuándo usar Present Simple o Continuous?",
         "¿Cuál es el pasado del verbo 'meet'?",
-        "¿Qué hizo Margaret Hamilton en Apollo 11?",
+        "Traducir 'software developer' o 'debug'",
         "Dame un ejercicio de práctica"
       ]
     };
@@ -20,11 +98,11 @@ export function getArthurResponse(userInput) {
   // 1. SALUDOS / IDENTIDAD
   if (/^(hola|buenas|hey|hi|hello|buenos d[ií]as|buenas tardes|buenas noches)/i.test(text)) {
     return {
-      text: "¡Un gusto saludarte! Soy **Arthur**, tu asistente y tutor de inglés para la carrera de Programación (UTN). Conozco a la perfección todos los temas de las unidades 1 y 2. Puedes preguntarme sobre gramática, verbos irregulares, vocabulario IT o pedirme ejercicios.",
+      text: "¡Un gusto saludarte! Soy **Arthur**, tu asistente y tutor de inglés para la carrera de Programación (UTN). Conozco a la perfección todos los temas de las unidades 1 y 2. Puedes preguntarme sobre gramática, pedirme traducciones de palabras, consultar verbos irregulares o realizar ejercicios.",
       suggestedQuestions: [
+        "Traducir 'step down' o 'raise money'",
         "Diferencia entre Present Simple y Continuous",
         "Reglas de 3ra persona singular (-s, -es, -ies)",
-        "¿Qué significa 'step down' o 'raise money'?",
         "Ponme a prueba con una pregunta"
       ]
     };
@@ -32,23 +110,89 @@ export function getArthurResponse(userInput) {
 
   if (/(qui[eé]n eres|tu nombre|qui[eé]n sos|presentate|arthur)/i.test(text) && !text.includes("margaret")) {
     return {
-      text: "Soy **Arthur**, tu tutor virtual de inglés técnico en **EnglishLab**. Mi misión es ayudarte a promocionar el parcial de inglés de la UTN TUP explicándote cualquier regla gramatical con ejemplos claros de código y desarrollo de software. 🎩✨",
+      text: "Soy **Arthur**, tu tutor virtual de inglés técnico en **EnglishLab**. Mi misión es ayudarte a promocionar el parcial de inglés de la UTN TUP explicándote cualquier regla gramatical, traduciendo términos de programación y dándote ejemplos claros de código y desarrollo de software. 🎩✨",
       suggestedQuestions: [
+        "Traducir palabras de IT",
         "¿Cómo se forman las preguntas en Pasado Simple?",
         "Verbos de estado (Stative Verbs)",
-        "Historia de Google y Sergey Brin",
         "Dame un ejercicio de examen"
       ]
     };
   }
 
-  // 2. CONSULTAS ESPECÍFICAS DE VERBOS IRREGULARES
-  // Ej: "pasado de sell", "past of find", "como es el pasado de write", "buy en pasado"
-  const verbMatch = text.match(/(?:pasado|past|conjugaci[oó]n|forma)\s*(?:de|del|of)?\s*([a-zA-Z]+)/i) ||
-                    text.match(/([a-zA-Z]+)\s*(?:en pasado|in past)/i);
+  // 2. MÓDULO DE TRADUCCIÓN DE PALABRAS Y TÉRMINOS (ESPAÑOL <-> INGLÉS)
+  const isTranslationIntent = 
+    /(?:traduce|traducir|traducci[oó]n|c[oó]mo se dice|c[oó]mo traduzco|qu[eé] significa|meaning of|translate|what does .* mean)/i.test(text);
+
+  let wordToSearch = '';
+
+  if (isTranslationIntent) {
+    // Extraer la palabra a traducir limpiando los patrones comunes
+    wordToSearch = text
+      .replace(/(?:por favor|arthur|puedes|podr[ií]as|me ayudas a)/gi, '')
+      .replace(/(?:traduce|traducir|traducci[oó]n de|c[oó]mo se dice|c[oó]mo traduzco|qu[eé] significa|meaning of|translate|what does|mean|en ingl[eé]s|en espa[nñ]ol|al ingl[eé]s|al espa[nñ]ol)/gi, '')
+      .replace(/["'¿?¡!:]/g, '')
+      .trim();
+  }
+
+  // Si hubo intención explícita o si el usuario escribió solo 1 o 2 palabras que pueden ser un término
+  const searchCandidate = wordToSearch || (text.split(' ').length <= 3 ? text.replace(/["'¿?¡!:]/g, '').trim() : '');
+
+  if (searchCandidate) {
+    // 1. Buscar en diccionario de traducciones
+    const dictMatch = TRANSLATION_DICTIONARY.find(item => 
+      item.en.toLowerCase() === searchCandidate ||
+      item.es.toLowerCase().includes(searchCandidate) ||
+      searchCandidate.includes(item.en.toLowerCase())
+    );
+
+    if (dictMatch) {
+      return {
+        text: `🎩 **Traducción de Término IT:**\n\n` +
+              `🇬🇧 **Inglés:** \`${dictMatch.en}\`\n` +
+              `🇪🇸 **Español:** **${dictMatch.es}**\n` +
+              `📌 **Categoría:** *${dictMatch.cat}*\n\n` +
+              `💻 **Ejemplo de uso:**\n` +
+              `*"${dictMatch.ex}"*`,
+        suggestedQuestions: [
+          `¿Cómo uso '${dictMatch.en}' en una oración?`,
+          "Dame otro término relacionado",
+          "Dame un ejercicio de vocabulario"
+        ]
+      };
+    }
+
+    // 2. Buscar en verbos irregulares
+    const verbMatch = IRREGULAR_VERBS.find(v => 
+      v.base.toLowerCase() === searchCandidate ||
+      v.past.toLowerCase().includes(searchCandidate) ||
+      v.translation.toLowerCase().includes(searchCandidate)
+    );
+
+    if (verbMatch) {
+      return {
+        text: `🎩 **Traducción de Verbo: ${verbMatch.base.toUpperCase()}**\n\n` +
+              `• **Infinitivo (Forma Base):** \`${verbMatch.base}\`\n` +
+              `• **Pasado Simple:** \`${verbMatch.past}\`\n` +
+              `• **Participio Pasado:** \`${verbMatch.participle}\`\n` +
+              `• **Traducción al Español:** **${verbMatch.translation}**\n\n` +
+              `💻 **Ejemplo en programación:**\n` +
+              `*"${verbMatch.example}"*`,
+        suggestedQuestions: [
+          `¿Cómo formulo una pregunta con '${verbMatch.base}'?`,
+          "¿Cuál es la regla de 'didn't'?",
+          "Dame otro verbo irregular"
+        ]
+      };
+    }
+  }
+
+  // 3. CONSULTAS ESPECÍFICAS DE VERBOS IRREGULARES
+  const verbQueryMatch = text.match(/(?:pasado|past|conjugaci[oó]n|forma)\s*(?:de|del|of)?\s*([a-zA-Z]+)/i) ||
+                         text.match(/([a-zA-Z]+)\s*(?:en pasado|in past)/i);
   
-  if (verbMatch && verbMatch[1]) {
-    const candidate = verbMatch[1].toLowerCase();
+  if (verbQueryMatch && verbQueryMatch[1]) {
+    const candidate = verbQueryMatch[1].toLowerCase();
     const foundVerb = IRREGULAR_VERBS.find(v => v.base.toLowerCase() === candidate || v.past.toLowerCase().includes(candidate));
     if (foundVerb) {
       return {
@@ -56,7 +200,7 @@ export function getArthurResponse(userInput) {
               `• **Infinitivo / Forma Base:** \`${foundVerb.base}\`\n` +
               `• **Pasado Simple:** \`${foundVerb.past}\`\n` +
               `• **Participio Pasado:** \`${foundVerb.participle}\`\n` +
-              `• **Traducción:** ${foundVerb.translation}\n\n` +
+              `• **Traducción:** **${foundVerb.translation}**\n\n` +
               `💻 **Ejemplo en contexto IT:**\n` +
               `*"${foundVerb.example}"*`,
         suggestedQuestions: [
@@ -68,25 +212,7 @@ export function getArthurResponse(userInput) {
     }
   }
 
-  // Búsqueda directa si el usuario ingresó solo el verbo (ej: "found", "sold", "met", "write")
-  const directVerb = IRREGULAR_VERBS.find(v => v.base.toLowerCase() === text || v.past.toLowerCase() === text);
-  if (directVerb) {
-    return {
-      text: `🎩 **Verbo Irregular: ${directVerb.base.toUpperCase()}**\n\n` +
-            `• **Forma Base:** \`${directVerb.base}\`\n` +
-            `• **Pasado Simple:** \`${directVerb.past}\`\n` +
-            `• **Participio:** \`${directVerb.participle}\`\n` +
-            `• **Significado:** ${directVerb.translation}\n\n` +
-            `💻 **Ejemplo:** *"${directVerb.example}"*`,
-      suggestedQuestions: [
-        "¿Cómo se formula una pregunta con este verbo?",
-        "Verbos regulares terminados en -ED",
-        "Dame un ejercicio de pasado simple"
-      ]
-    };
-  }
-
-  // 3. CONTRASTE: SIMPLE PRESENT VS PRESENT CONTINUOUS
+  // 4. CONTRASTE: SIMPLE PRESENT VS PRESENT CONTINUOUS
   if (/(diferencia|vs|versus|cuando usar|cu[aá]ndo uso|comparaci[oó]n|diferencias).*(presente|simple|continuo|continuous)/i.test(text) ||
       /(simple vs continuo|present simple vs present continuous)/i.test(text)) {
     return {
@@ -108,7 +234,7 @@ export function getArthurResponse(userInput) {
     };
   }
 
-  // 4. VERBOS DE ESTADO (STATIVE VERBS)
+  // 5. VERBOS DE ESTADO (STATIVE VERBS)
   if (/(stative|verbos de estado|no llevan ing|sin ing|know|understand|need|want)/i.test(text)) {
     return {
       text: `🎩 **Verbos de Estado (Stative Verbs)**\n\n` +
@@ -127,7 +253,7 @@ export function getArthurResponse(userInput) {
     };
   }
 
-  // 5. REGLAS DE 3RA PERSONA (-s, -es, -ies) EN PRESENTE SIMPLE
+  // 6. REGLAS DE 3RA PERSONA (-s, -es, -ies) EN PRESENTE SIMPLE
   if (/(3ra persona|tercera persona|he she it|reglas de s|cuando lleva s|-es|-ies|terminaci[oó]n s)/i.test(text)) {
     return {
       text: `🎩 **Reglas de Ortografía para 3ra Persona Singular (He / She / It):**\n\n` +
@@ -144,7 +270,7 @@ export function getArthurResponse(userInput) {
     };
   }
 
-  // 6. NEGACIÓN Y PREGUNTAS EN PASADO SIMPLE (DID / DIDN'T)
+  // 7. NEGACIÓN Y PREGUNTAS EN PASADO SIMPLE (DID / DIDN'T)
   if (/(didn't|did not|preguntas en pasado|did|negativo en pasado|c[oó]mo negar en pasado)/i.test(text)) {
     return {
       text: `🎩 **Estructura Negativa e Interrogativa en Pasado Simple**\n\n` +
@@ -163,7 +289,7 @@ export function getArthurResponse(userInput) {
     };
   }
 
-  // 7. LECTURAS Y PERSONAJES IT: MARGARET HAMILTON (APOLLO 11)
+  // 8. LECTURAS Y PERSONAJES IT: MARGARET HAMILTON (APOLLO 11)
   if (/(margaret hamilton|apollo|apollo 11|luna|moon|nasa|mit|asynchronous|as[ií]ncrono)/i.test(text)) {
     return {
       text: `🎩 **Margaret Hamilton & Apollo 11 (Clase 5):**\n\n` +
@@ -179,7 +305,7 @@ export function getArthurResponse(userInput) {
     };
   }
 
-  // 8. LECTURAS IT: GRACE HOPPER & COBOL
+  // 9. LECTURAS IT: GRACE HOPPER & COBOL
   if (/(grace hopper|cobol|compilador|compiler|uss hopper)/i.test(text)) {
     return {
       text: `🎩 **Grace Hopper: 'The Queen of Code' (Clase 5):**\n\n` +
@@ -195,7 +321,7 @@ export function getArthurResponse(userInput) {
     };
   }
 
-  // 9. LECTURAS IT: GOOGLE, SERGEY BRIN & LARRY PAGE
+  // 10. LECTURAS IT: GOOGLE, SERGEY BRIN & LARRY PAGE
   if (/(sergey brin|larry page|google|alphabet|ipo|stanford|youtube|1998)/i.test(text)) {
     return {
       text: `🎩 **Historia de Google & Vocabulario Empresarial (Clase 6):**\n\n` +
@@ -211,47 +337,7 @@ export function getArthurResponse(userInput) {
     };
   }
 
-  // 10. VOCABULARIO IT Y GLOSARIO DE NEGOCIOS
-  if (/(step down|raise money|launch|restructure|headquarters|ipo|purchase|shareholder|lack of)/i.test(text)) {
-    return {
-      text: `🎩 **Glosario de Negocios y Evolución IT (Clase 6):**\n\n` +
-            `• **To launch:** Lanzar un producto o fundar una empresa al mercado.\n` +
-            `• **To raise money:** Recaudar fondos o capital de inversores.\n` +
-            `• **To step down:** Renunciar o retirarse de un puesto de liderazgo (CEO).\n` +
-            `• **To purchase:** Comprar o adquirir formalmente activos o compañías.\n` +
-            `• **To restructure:** Reorganizar la estructura de una compañía.\n` +
-            `• **Initial Public Offering (IPO):** Salida a la bolsa de valores por primera vez.\n` +
-            `• **Headquarters:** Sede central u oficina principal.\n` +
-            `• **Shareholders:** Accionistas.`,
-      suggestedQuestions: [
-        "Roles y puestos IT (Clase 2)",
-        "Diferencia entre saludos formales e informales",
-        "Dame un ejercicio de vocabulario"
-      ]
-    };
-  }
-
-  // 11. ROLES IT & SALUDOS FORMALES / INFORMALES
-  if (/(roles it|puestos|software developer|ux designer|it support|project manager|greetings|saludos|good morning|what's up)/i.test(text)) {
-    return {
-      text: `🎩 **Roles IT & Saludos (Clase 2):**\n\n` +
-            `• **Software Developer:** *Creates and tests code*.\n` +
-            `• **UX Designer:** *Designs easy-to-use, intuitive interfaces*.\n` +
-            `• **IT Support:** *Helps with computer and hardware problems*.\n` +
-            `• **Project Manager:** *Manages and plans tech projects*.\n` +
-            `• **Web Developer:** *Builds and maintains websites*.\n\n` +
-            `💬 **Saludos:**\n` +
-            `• **Formales:** *"Good morning, Mr. Smith"* (con tu jefe), *"Hello, how can I help you?"* (en soporte).\n` +
-            `• **Informales:** *"Hey, what's up?"*, *"Hi there!"* (con amigos o compañeros).`,
-      suggestedQuestions: [
-        "¿Cómo describo la rutina diaria de un programador?",
-        "Preguntas en Presente Simple",
-        "Dame un ejercicio de práctica"
-      ]
-    };
-  }
-
-  // 12. GENERADOR DE EJERCICIO / RETO INTERACTIVO
+  // 11. GENERADOR DE EJERCICIO / RETO INTERACTIVO
   if (/(ejercicio|practicar|prueba|test|pregunta|retame|evaluame|quiz|examen)/i.test(text)) {
     const randomQ = EXAM_QUESTIONS[Math.floor(Math.random() * EXAM_QUESTIONS.length)];
     const optionsText = randomQ.options.map(o => `   **${o.id.toUpperCase()})** ${o.text}`).join('\n');
@@ -266,34 +352,22 @@ export function getArthurResponse(userInput) {
         "¿Cuál es la respuesta correcta?",
         "Dame otro ejercicio",
         "Explícame la regla de este tema"
-      ],
-      activeChallenge: randomQ
-    };
-  }
-
-  // 13. RESPUESTA A OPCIONES (A, B, C, D)
-  if (/^[a-d]$/i.test(text) || /^(opcion|opción|letra|la)\s*([a-d])/i.test(text)) {
-    return {
-      text: `¡Excelente intento! Para comprobar tus respuestas en un entorno cronometrado y con scoring oficial (0-10), te sugiero abrir la pestaña **"Práctica de Examen"** en la barra superior. ¿Te gustaría que repasemos la teoría de este tema antes?`,
-      suggestedQuestions: [
-        "Dame otro ejercicio de práctica",
-        "Reglas de Presente Simple vs Continuo",
-        "Buscador de verbos irregulares"
       ]
     };
   }
 
-  // 14. DEFAULT / FALLBACK INTELIGENTE
+  // 12. DEFAULT / FALLBACK INTELIGENTE
   return {
-    text: `Entiendo tu consulta sobre **"${userInput}"**. En el programa de Inglés Técnico I evaluamos:\n\n` +
-          `1. **Presente Simple:** Rutinas, 3ra persona (\`-s\`, \`-es\`, \`-ies\`), \`don't / doesn't\` y preguntas con \`do / does\`.\n` +
-          `2. **Presente Continuo:** Acciones temporales (\`am/is/are + ing\`), excepciones y contraste vs Simple.\n` +
-          `3. **Pasado Simple:** Verbos regulares (\`-ed\`), irregulares (\`found, sold, met, bought\`), \`didn't\` y las historias de Margaret Hamilton y Google.\n\n` +
-          `¿Sobre cuál de estos puntos te gustaría que te dé una explicación o ejercicio?`,
+    text: `Entiendo tu consulta sobre **"${userInput}"**. Como tu tutor de Inglés Técnico I, puedo ayudarte con:\n\n` +
+          `1. **Traducción de palabras y términos:** Pregúntame *"traduce developer"*, *"qué significa step down"*, etc.\n` +
+          `2. **Presente Simple vs Continuo:** Cuándo usar cada uno, reglas de 3ra persona (\`-s, -es, -ies\`) y verbos de estado.\n` +
+          `3. **Pasado Simple:** Verbos irregulares (\`found, sold, met, bought\`), auxiliares (\`didn't / did\`) e historias de Margaret Hamilton y Google.\n` +
+          `4. **Práctica Interactiva:** Pídeme *"dame un ejercicio"* para ponerte a prueba.\n\n` +
+          `¿Qué te gustaría consultar?`,
     suggestedQuestions: [
+      "Traducir 'database' o 'debug'",
       "¿Cómo sé cuándo usar Present Simple o Continuous?",
       "Buscar pasado de un verbo irregular",
-      "Historia de Apollo 11 y Margaret Hamilton",
       "Dame un ejercicio de práctica"
     ]
   };

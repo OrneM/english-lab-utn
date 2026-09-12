@@ -5,12 +5,10 @@ import {
   Send, 
   Sparkles, 
   Volume2, 
+  Square,
   RotateCcw, 
-  Minimize2, 
-  Maximize2, 
   HelpCircle,
-  Code,
-  BookOpen
+  Languages
 } from 'lucide-react';
 import { ArthurAvatar } from './ArthurAvatar';
 import { getArthurResponse } from '../utils/arthurBrain';
@@ -21,12 +19,12 @@ export function ArthurChatBot() {
   const [messages, setMessages] = useState([
     {
       sender: 'arthur',
-      text: "¡Hola! Soy **Arthur**, tu tutor virtual de inglés técnico. 🎩✨\n\nPuedes hacerme cualquier pregunta sobre las Clases 1 a 6: **Presente Simple, Presente Continuo, Pasado Simple, Verbos Irregulares** o las historias de **Margaret Hamilton y Google**. ¿Qué tema te gustaría repasar?",
+      text: "¡Hola! Soy **Arthur**, tu tutor virtual de inglés técnico. 🎩✨\n\nPuedo ayudarte con **traducciones de palabras y términos IT**, explicarte **gramática** (Presente Simple, Continuo, Pasado Simple, verbos irregulares) o ponerte a prueba con ejercicios. ¿En qué te ayudo hoy?",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       suggestedQuestions: [
+        "Traducir 'software developer' o 'debug'",
+        "¿Qué significa 'step down' o 'raise money'?",
         "¿Cuándo uso Present Simple vs Continuous?",
-        "¿Cuál es el pasado de 'find' y 'sell'?",
-        "¿Quién fue Margaret Hamilton?",
         "Dame un ejercicio de práctica"
       ]
     }
@@ -34,6 +32,10 @@ export function ArthurChatBot() {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showGreetingBadge, setShowGreetingBadge] = useState(true);
+
+  // Estado del reproductor de voz
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [speakingMessageIdx, setSpeakingMessageIdx] = useState(null);
 
   const messagesEndRef = useRef(null);
 
@@ -43,6 +45,15 @@ export function ArthurChatBot() {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, isTyping, isOpen]);
+
+  // Detener voz al desmontar o cerrar chat
+  useEffect(() => {
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
 
   const handleSendMessage = (textToSend) => {
     const text = (textToSend || inputValue).trim();
@@ -61,6 +72,9 @@ export function ArthurChatBot() {
     setInputValue('');
     setIsTyping(true);
 
+    // Detener cualquier audio previo
+    handleStopSpeech();
+
     // Simular respuesta inteligente de Arthur con pequeño delay natural
     setTimeout(() => {
       const response = getArthurResponse(text);
@@ -75,19 +89,20 @@ export function ArthurChatBot() {
 
       setMessages(prev => [...prev, arthurMsg]);
       setIsTyping(false);
-    }, 600);
+    }, 500);
   };
 
   const handleClearChat = () => {
     soundManager.playClick();
+    handleStopSpeech();
     setMessages([
       {
         sender: 'arthur',
-        text: "¡Conversación reiniciada! ¿En qué otra duda o ejercicio de inglés técnico te puedo colaborar? 🎩",
+        text: "¡Conversación reiniciada! ¿En qué otra duda, traducción o ejercicio de inglés técnico te puedo colaborar? 🎩",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         suggestedQuestions: [
+          "Traducir 'database' o 'server farm'",
           "Reglas de 3ra persona (-s, -es, -ies)",
-          "Verbos de estado (Stative Verbs)",
           "¿Cómo se formula una pregunta con 'didn't'?",
           "Ponme a prueba con un ejercicio"
         ]
@@ -95,21 +110,58 @@ export function ArthurChatBot() {
     ]);
   };
 
-  // Función de Text to Speech para pronunciar inglés en voz alta
-  const handleSpeakText = (text) => {
+  // Función de Text to Speech para pronunciar inglés en voz alta con botón de STOP
+  const handleSpeakText = (text, idx) => {
+    if (!('speechSynthesis' in window)) return;
+
+    // Si ya está reproduciendo este mismo mensaje, detenerlo (toggle stop)
+    if (isSpeaking && speakingMessageIdx === idx) {
+      handleStopSpeech();
+      return;
+    }
+
+    soundManager.playClick();
+    window.speechSynthesis.cancel();
+
+    // Limpiar caracteres especiales de markdown para pronunciación natural
+    const cleanText = text
+      .replace(/[*#`•]/g, '')
+      .replace(/🎩|✨|💻|⚠️|✅|❌|💬|📌|💡|🇬🇧|🇪🇸/g, '');
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    
+    // Configurar voz natural (preferentemente en-US)
+    utterance.lang = 'en-US';
+    utterance.rate = 0.95;
+    utterance.pitch = 1.0;
+
+    utterance.onstart = () => {
+      setIsSpeaking(true);
+      setSpeakingMessageIdx(idx);
+    };
+
+    utterance.onend = () => {
+      setIsSpeaking(false);
+      setSpeakingMessageIdx(null);
+    };
+
+    utterance.onerror = () => {
+      setIsSpeaking(false);
+      setSpeakingMessageIdx(null);
+    };
+
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const handleStopSpeech = () => {
     if ('speechSynthesis' in window) {
-      soundManager.playClick();
       window.speechSynthesis.cancel();
-      // Extraer solo fragmentos en inglés o texto limpio
-      const cleanText = text.replace(/[*#`•]/g, '');
-      const utterance = new SpeechSynthesisUtterance(cleanText);
-      utterance.lang = 'en-US';
-      utterance.rate = 0.95;
-      window.speechSynthesis.speak(utterance);
+      setIsSpeaking(false);
+      setSpeakingMessageIdx(null);
     }
   };
 
-  // Renderizar texto formateado simple
+  // Renderizar texto formateado simple con soporte para negrita, código y cursiva
   const renderFormattedText = (rawText) => {
     const lines = rawText.split('\n');
     return (
@@ -117,7 +169,6 @@ export function ArthurChatBot() {
         {lines.map((line, idx) => {
           if (!line.trim()) return <div key={idx} className="h-1" />;
 
-          // Procesar negrita (**texto**) y código (`código`)
           const parts = line.split(/(\*\*.*?\*\*|`.*?`|\*.*?\*)/g);
 
           return (
@@ -153,10 +204,10 @@ export function ArthurChatBot() {
               setIsOpen(true);
               setShowGreetingBadge(false);
             }}
-            className="hidden sm:flex items-center space-x-2 px-3.5 py-2 rounded-2xl bg-slate-900/90 text-slate-200 border border-brand-500/40 shadow-2xl backdrop-blur-md cursor-pointer hover:border-brand-400 animate-slide-up"
+            className="hidden sm:flex items-center space-x-2 px-3.5 py-2 rounded-2xl bg-slate-900/95 text-slate-200 border border-brand-500/40 shadow-2xl backdrop-blur-md cursor-pointer hover:border-brand-400 animate-slide-up"
           >
             <Sparkles className="w-4 h-4 text-cyanBrand-400 animate-pulse" />
-            <span className="text-xs font-semibold">¿Dudas con inglés? ¡Pregúntale a **Arthur**!</span>
+            <span className="text-xs font-semibold">¿Traducir o dudas de inglés? ¡Pregúntale a **Arthur**!</span>
             <button 
               onClick={(e) => {
                 e.stopPropagation();
@@ -191,28 +242,41 @@ export function ArthurChatBot() {
 
       {/* VENTANA DE CHAT FLOTANTE */}
       {isOpen && (
-        <div className="fixed bottom-20 right-4 sm:right-6 z-50 w-[92vw] sm:w-[410px] h-[580px] max-h-[85vh] rounded-3xl glass-card border border-slate-700/80 shadow-2xl flex flex-col overflow-hidden animate-slide-up backdrop-blur-xl">
+        <div className="fixed bottom-20 right-4 sm:right-6 z-50 w-[92vw] sm:w-[420px] h-[590px] max-h-[85vh] rounded-3xl glass-card border border-slate-700/80 shadow-2xl flex flex-col overflow-hidden animate-slide-up backdrop-blur-xl">
           
           {/* HEADER DEL CHAT */}
-          <div className="p-4 border-b border-slate-800 bg-slate-950/80 flex items-center justify-between">
+          <div className="p-4 border-b border-slate-800 bg-slate-950/85 flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <ArthurAvatar size="sm" />
               <div>
                 <div className="flex items-center space-x-1.5">
                   <h3 className="font-extrabold text-sm text-slate-100">Arthur</h3>
-                  <span className="text-[10px] uppercase font-extrabold px-1.5 py-0.2 rounded bg-brand-500/20 text-brand-300 border border-brand-500/30">
-                    Tutor IA
+                  <span className="text-[10px] uppercase font-extrabold px-1.5 py-0.5 rounded bg-brand-500/20 text-brand-300 border border-brand-500/30">
+                    Tutor & Traductor
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-400 flex items-center space-x-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse"></span>
-                  <span>Inglés Técnico I · Clases 1 a 6</span>
+                  <span>Inglés Técnico I · Gramática & Vocabulario</span>
                 </p>
               </div>
             </div>
 
             {/* Controles del header */}
             <div className="flex items-center space-x-1 text-slate-400">
+              
+              {/* Botón de Parar Audio Global si está hablando */}
+              {isSpeaking && (
+                <button
+                  onClick={handleStopSpeech}
+                  title="Detener audio en reproducción"
+                  className="px-2 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/40 text-[11px] font-bold flex items-center space-x-1 animate-pulse mr-1 hover:bg-rose-500/30"
+                >
+                  <Square className="w-3 h-3 fill-current" />
+                  <span>Detener</span>
+                </button>
+              )}
+
               <button
                 onClick={handleClearChat}
                 title="Reiniciar conversación"
@@ -220,9 +284,11 @@ export function ArthurChatBot() {
               >
                 <RotateCcw className="w-4 h-4" />
               </button>
+              
               <button
                 onClick={() => {
                   soundManager.playClick();
+                  handleStopSpeech();
                   setIsOpen(false);
                 }}
                 title="Cerrar chat"
@@ -237,6 +303,7 @@ export function ArthurChatBot() {
           <div className="flex-1 p-4 overflow-y-auto space-y-4 text-slate-200">
             {messages.map((msg, idx) => {
               const isArthur = msg.sender === 'arthur';
+              const isThisSpeaking = isSpeaking && speakingMessageIdx === idx;
 
               return (
                 <div 
@@ -255,22 +322,36 @@ export function ArthurChatBot() {
                     {/* Burbuja de mensaje */}
                     <div className={`p-3.5 rounded-2xl shadow-md border ${
                       isArthur 
-                        ? 'bg-slate-900/90 border-slate-800 text-slate-100 rounded-tl-none' 
+                        ? `bg-slate-900/90 border-slate-800 text-slate-100 rounded-tl-none ${isThisSpeaking ? 'ring-2 ring-cyanBrand-400/50' : ''}` 
                         : 'bg-brand-600 border-brand-500 text-white rounded-tr-none'
                     }`}>
                       {renderFormattedText(msg.text)}
 
-                      {/* Botón de pronunciación en voz alta */}
+                      {/* Botón de pronunciación en voz alta con STOP */}
                       {isArthur && (
                         <div className="flex items-center justify-between pt-2 mt-1 border-t border-slate-800/80 text-[10px] text-slate-400">
                           <span>{msg.timestamp}</span>
+                          
                           <button
-                            onClick={() => handleSpeakText(msg.text)}
-                            title="Escuchar pronunciación en inglés"
-                            className="flex items-center space-x-1 hover:text-cyanBrand-400 transition-colors"
+                            onClick={() => handleSpeakText(msg.text, idx)}
+                            title={isThisSpeaking ? "Detener pronunciación" : "Escuchar pronunciación en inglés"}
+                            className={`flex items-center space-x-1.5 px-2 py-0.5 rounded-md transition-colors ${
+                              isThisSpeaking 
+                                ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' 
+                                : 'hover:text-cyanBrand-400 hover:bg-slate-800'
+                            }`}
                           >
-                            <Volume2 className="w-3 h-3" />
-                            <span>Escuchar</span>
+                            {isThisSpeaking ? (
+                              <>
+                                <Square className="w-3 h-3 fill-current text-rose-400" />
+                                <span className="font-bold text-rose-300">Detener</span>
+                              </>
+                            ) : (
+                              <>
+                                <Volume2 className="w-3 h-3 text-cyanBrand-400" />
+                                <span>Escuchar</span>
+                              </>
+                            )}
                           </button>
                         </div>
                       )}
@@ -325,7 +406,7 @@ export function ArthurChatBot() {
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Pregúntale a Arthur sobre gramática o verbos..."
+              placeholder="Traduce una palabra (ej: 'debug') o haz una pregunta..."
               className="flex-1 py-2.5 px-3.5 rounded-xl bg-slate-900 border border-slate-800 focus:border-cyanBrand-400 focus:ring-1 focus:ring-cyanBrand-400 text-slate-100 placeholder-slate-500 text-xs sm:text-sm transition-all"
             />
             <button
