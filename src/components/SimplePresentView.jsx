@@ -16,12 +16,19 @@ import {
 import { THEORY_DATA } from '../data/theoryData';
 import { soundManager } from '../utils/soundEffects';
 
+function getRandomQuestions(pool, count = 5) {
+  if (!pool || pool.length === 0) return [];
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, Math.min(count, shuffled.length));
+}
+
 export function SimplePresentView({ onGoToExam }) {
   const data = THEORY_DATA.simplePresent;
   const [activeTab, setActiveTab] = useState('structures'); // 'structures' | 'vocabulary' | 'miniquiz'
   const [openAccordions, setOpenAccordions] = useState({ 0: true, 1: true });
   
-  // Estado del mini quiz
+  // Estado del mini quiz con preguntas aleatorias
+  const [activeQuestions, setActiveQuestions] = useState(() => getRandomQuestions(data.miniQuiz, 5));
   const [quizAnswers, setQuizAnswers] = useState({});
   const [quizChecked, setQuizChecked] = useState(false);
 
@@ -43,7 +50,7 @@ export function SimplePresentView({ onGoToExam }) {
 
   const handleCheckQuiz = () => {
     let allCorrect = true;
-    data.miniQuiz.forEach((q, idx) => {
+    activeQuestions.forEach((q, idx) => {
       if (quizAnswers[idx] !== q.correct) allCorrect = false;
     });
 
@@ -53,6 +60,13 @@ export function SimplePresentView({ onGoToExam }) {
       soundManager.playIncorrect();
     }
     setQuizChecked(true);
+  };
+
+  const handleResetQuiz = () => {
+    soundManager.playClick();
+    setQuizAnswers({});
+    setQuizChecked(false);
+    setActiveQuestions(getRandomQuestions(data.miniQuiz, 5));
   };
 
   return (
@@ -285,16 +299,26 @@ export function SimplePresentView({ onGoToExam }) {
       {/* TAB 3: MINI QUIZ */}
       {activeTab === 'miniquiz' && (
         <div className="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6 animate-fade-in">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-bold text-slate-100 flex items-center space-x-2">
-              <Sparkles className="w-5 h-5 text-amber-400" />
-              <span>Mini-Quiz Rápido de Presente Simple</span>
-            </h3>
-            <span className="text-xs text-slate-400">3 ejercicios de comprobación</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h3 className="text-lg font-bold text-slate-100 flex items-center space-x-2">
+                <Sparkles className="w-5 h-5 text-amber-400" />
+                <span>Mini-Quiz Rápido de Presente Simple</span>
+              </h3>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Preguntas seleccionadas aleatoriamente del banco temático ({activeQuestions.length} ejercicios)
+              </p>
+            </div>
+            <button
+              onClick={handleResetQuiz}
+              className="text-xs text-brand-400 hover:text-brand-300 font-medium underline self-start sm:self-auto"
+            >
+              Cargar otras preguntas
+            </button>
           </div>
 
           <div className="space-y-5">
-            {data.miniQuiz.map((q, qIdx) => {
+            {activeQuestions.map((q, qIdx) => {
               const selected = quizAnswers[qIdx];
               const isCorrect = selected === q.correct;
 
@@ -347,9 +371,9 @@ export function SimplePresentView({ onGoToExam }) {
             {!quizChecked ? (
               <button
                 onClick={handleCheckQuiz}
-                disabled={Object.keys(quizAnswers).length < data.miniQuiz.length}
+                disabled={Object.keys(quizAnswers).length < activeQuestions.length}
                 className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${
-                  Object.keys(quizAnswers).length >= data.miniQuiz.length
+                  Object.keys(quizAnswers).length >= activeQuestions.length
                     ? 'bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-500/25'
                     : 'bg-slate-800 text-slate-500 cursor-not-allowed'
                 }`}
@@ -358,14 +382,10 @@ export function SimplePresentView({ onGoToExam }) {
               </button>
             ) : (
               <button
-                onClick={() => {
-                  soundManager.playClick();
-                  setQuizAnswers({});
-                  setQuizChecked(false);
-                }}
+                onClick={handleResetQuiz}
                 className="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm border border-slate-700"
               >
-                Reiniciar Mini-Quiz
+                Reiniciar con Nuevas Preguntas
               </button>
             )}
           </div>

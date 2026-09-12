@@ -109,13 +109,85 @@ export const THEORY_DATA = {
         q: "_____ you usually work from home on Fridays?",
         options: ["Do", "Does", "Are", "Did"],
         correct: 0,
-        exp: "Con el pronombre 'you' en preguntas de Presente Simple usamos 'Do'."
+        exp: "Con el pronombre 'you' en preguntas de Presente Simple usamos el auxiliar 'Do'."
       },
       {
         q: "A frontend developer _____ (not / manage) physical database cables.",
         options: ["doesn't manage", "don't manage", "isn't manage", "not manages"],
         correct: 0,
         exp: "'A developer' es 3ra persona singular, por lo que lleva 'doesn't manage'."
+      },
+      {
+        q: "Our team _____ (catch) bugs during unit testing every sprint.",
+        options: ["catches", "catchs", "catching", "catched"],
+        correct: 0,
+        exp: "Verbos terminados en -ch (como catch) agregan '-es' en 3ra persona: catches."
+      },
+      {
+        q: "The senior architect always _____ (study) new cloud patterns on weekends.",
+        options: ["studies", "studys", "study", "is studying"],
+        correct: 0,
+        exp: "Verbos terminados en consonante + 'y' cambian a '-ies': study -> studies."
+      },
+      {
+        q: "Where _____ the DevOps engineer store the SSL certificates?",
+        options: ["does", "do", "is", "has"],
+        correct: 0,
+        exp: "El sujeto 'the DevOps engineer' es singular (he/she), usamos el auxiliar 'does'."
+      },
+      {
+        q: "We _____ (not / deploy) new updates to production on Friday afternoons.",
+        options: ["don't deploy", "doesn't deploy", "aren't deploy", "not deploy"],
+        correct: 0,
+        exp: "Para el pronombre 'We' en Presente Simple se usa 'don't' + verbo base."
+      },
+      {
+        q: "What time _____ the daily stand-up meeting start?",
+        options: ["does", "do", "is", "are"],
+        correct: 0,
+        exp: "'The daily meeting' es 'It' (3ra persona singular), por lo tanto el auxiliar correcto es 'does'."
+      },
+      {
+        q: "Mark and Sarah _____ (write) clean documentation for the API.",
+        options: ["write", "writes", "writing", "are write"],
+        correct: 0,
+        exp: "'Mark and Sarah' es plural (They), por lo que el verbo va en forma base sin '-s'."
+      },
+      {
+        q: "Which greeting is most appropriate when answering a formal business call?",
+        options: ["Hello, how can I help you?", "Hey, what's up?", "Hi dude!", "Yo!"],
+        correct: 0,
+        exp: "'Hello, how can I help you?' es la fórmula formal y profesional adecuada."
+      },
+      {
+        q: "A Database Administrator (DBA) _____ backups every midnight.",
+        options: ["runs", "run", "running", "is run"],
+        correct: 0,
+        exp: "Sujeto singular en presente de rutina ('every midnight') requiere '-s': runs."
+      },
+      {
+        q: "How often _____ your company organize tech talks?",
+        options: ["does", "do", "is", "are"],
+        correct: 0,
+        exp: "'Your company' es una entidad singular (it), por lo que lleva el auxiliar 'does'."
+      },
+      {
+        q: "He never _____ (fix) CSS bugs without checking mobile viewports.",
+        options: ["fixes", "fix", "fixs", "fixing"],
+        correct: 0,
+        exp: "Verbos terminados en -x añaden '-es' en tercera persona singular: fixes."
+      },
+      {
+        q: "QA Testers _____ (test) the software to ensure there are no critical errors.",
+        options: ["test", "tests", "testing", "are test"],
+        correct: 0,
+        exp: "'QA Testers' es plural (They), usamos la forma base del verbo: test."
+      },
+      {
+        q: "_____ your server crash when traffic spikes?",
+        options: ["Does", "Do", "Is", "Are"],
+        correct: 0,
+        exp: "'Your server' es singular (it), usamos 'Does' para formular la pregunta."
       }
     ]
   },
@@ -250,6 +322,78 @@ export const THEORY_DATA = {
         options: ["drink / am drinking", "am drinking / drink", "drinks / drink", "drinking / is drinking"],
         correct: 0,
         exp: "Rutina ('usually') -> drink (Simple Present); excepción hoy ('today') -> am drinking (Present Continuous)."
+      },
+      {
+        q: "Be quiet! The lead developer _____ (debug) a critical production issue.",
+        options: ["is debugging", "is debuging", "debugs", "are debugging"],
+        correct: 0,
+        exp: "'Debug' duplica la consonante final 'g' antes de -ing: is debugging."
+      },
+      {
+        q: "Right now, we _____ (migrate) our microservices to Kubernetes.",
+        options: ["are migrating", "is migrating", "migrate", "are migrateing"],
+        correct: 0,
+        exp: "'Migrate' elimina la '-e' muda final: are migrating."
+      },
+      {
+        q: "Listen! Why _____ the alarm in the server room _____ (ring)?",
+        options: ["is / ringing", "are / ringing", "does / ring", "is / ring"],
+        correct: 0,
+        exp: "'The alarm' es singular, por lo que usamos 'is' + sujeto + 'ringing'."
+      },
+      {
+        q: "I _____ (understand) the technical requirements clearly now.",
+        options: ["understand", "am understanding", "understands", "am understand"],
+        correct: 0,
+        exp: "'Understand' es un Stative Verb (verbo de estado/mente) y no se usa en tiempos continuos."
+      },
+      {
+        q: "What _____ you _____ (do) at the moment?",
+        options: ["are / doing", "do / do", "is / doing", "did / do"],
+        correct: 0,
+        exp: "'At the moment' requiere Present Continuous con 'you': 'are you doing'."
+      },
+      {
+        q: "The security team _____ (investigate) a suspicious login attempt today.",
+        options: ["is investigating", "investigates", "are investigate", "is investigate"],
+        correct: 0,
+        exp: "Situación temporal ('today') en progreso: 'is investigating'."
+      },
+      {
+        q: "She _____ (not / write) code today because she is attending a conference.",
+        options: ["isn't writing", "doesn't write", "not writing", "aren't writing"],
+        correct: 0,
+        exp: "Acción temporal negativa para 'she': 'isn't writing'."
+      },
+      {
+        q: "They _____ (plan) the new release roadmap right now.",
+        options: ["are planning", "are planing", "plans", "is planning"],
+        correct: 0,
+        exp: "'Plan' tiene estructura consonante-vocal-consonante (CVC), por lo que duplica la 'n': planning."
+      },
+      {
+        q: "Currently, the company _____ (hire) junior cloud architects.",
+        options: ["is hiring", "hires", "are hiring", "is hireing"],
+        correct: 0,
+        exp: "'Currently' señala un proceso temporal en curso con sujeto 'company' (it): is hiring."
+      },
+      {
+        q: "I _____ (need) access to the repository right now.",
+        options: ["need", "am needing", "needs", "am need"],
+        correct: 0,
+        exp: "'Need' es un stative verb de necesidad/deseo; no lleva -ing aunque sea 'right now'."
+      },
+      {
+        q: "_____ the frontend devs _____ (test) the dark mode layout at this time?",
+        options: ["Are / testing", "Do / test", "Is / testing", "Were / testing"],
+        correct: 0,
+        exp: "'The frontend devs' es plural (they), requiere 'Are ... testing'."
+      },
+      {
+        q: "The database latency _____ (increase) every minute.",
+        options: ["is increasing", "increases", "are increasing", "increase"],
+        correct: 0,
+        exp: "Un cambio gradual o tendencia en progreso se expresa con Present Continuous: is increasing."
       }
     ]
   },
@@ -393,6 +537,78 @@ export const THEORY_DATA = {
         options: ["did / meet", "did / met", "were / met", "do / meet"],
         correct: 0,
         exp: "En preguntas de pasado usamos 'did' + sujeto + verbo en base (meet)."
+      },
+      {
+        q: "Margaret Hamilton _____ (be) the director of software engineering for Apollo 11.",
+        options: ["was", "were", "is", "been"],
+        correct: 0,
+        exp: "El pasado del verbo To Be para 3ra persona singular (She) es 'was'."
+      },
+      {
+        q: "In 2006, Google _____ (purchase) YouTube for $1.65 billion.",
+        options: ["purchased", "purchase", "purchases", "purchaised"],
+        correct: 0,
+        exp: "Verbo regular que termina en -e sólo añade '-d': purchased."
+      },
+      {
+        q: "The startup _____ (raise) $1 million from angel investors in 1998.",
+        options: ["raised", "rose", "raise", "raising"],
+        correct: 0,
+        exp: "'To raise money' es regular y en pasado toma '-d': raised."
+      },
+      {
+        q: "She _____ (write) the flight operating software that prevented an abort.",
+        options: ["wrote", "written", "writed", "did write"],
+        correct: 0,
+        exp: "'Write' es un verbo irregular cuyo pasado simple es 'wrote'."
+      },
+      {
+        q: "_____ the team _____ (find) the memory leak during yesterday's stress test?",
+        options: ["Did / find", "Did / found", "Were / find", "Do / find"],
+        correct: 0,
+        exp: "Con el auxiliar 'Did' en preguntas, el verbo principal siempre va en forma base: find."
+      },
+      {
+        q: "The founders _____ (step) down from their daily roles in 2019.",
+        options: ["stepped", "steped", "stept", "stepping"],
+        correct: 0,
+        exp: "'Step' duplica la 'p' por ser monosílabo consonante-vocal-consonante: stepped."
+      },
+      {
+        q: "We _____ (not / know) the API password last week.",
+        options: ["didn't know", "didn't knew", "weren't know", "don't knew"],
+        correct: 0,
+        exp: "Negativo en pasado simple: 'didn't' + forma base 'know'."
+      },
+      {
+        q: "Grace Hopper _____ (earn) a PhD in mathematics from Yale University.",
+        options: ["earned", "earnt", "earns", "was earn"],
+        correct: 0,
+        exp: "'Earn' es un verbo regular: earned."
+      },
+      {
+        q: "Google _____ (hold) its Initial Public Offering (IPO) in August 2004.",
+        options: ["held", "holded", "hold", "holding"],
+        correct: 0,
+        exp: "'Hold' es un verbo irregular con pasado simple 'held'."
+      },
+      {
+        q: "Why _____ the production servers _____ (fail) last night?",
+        options: ["did / fail", "did / failed", "were / failed", "do / fail"],
+        correct: 0,
+        exp: "Wh- question en pasado: 'Why did' + sujeto + verbo base 'fail'."
+      },
+      {
+        q: "In 2015, Google _____ (restructure) its operations under Alphabet Inc.",
+        options: ["restructured", "restructed", "restructuring", "restruct"],
+        correct: 0,
+        exp: "Verbo regular que termina en -e añade '-d': restructured."
+      },
+      {
+        q: "They _____ (spend) two years optimizing the compiler algorithm.",
+        options: ["spent", "spended", "spend", "spending"],
+        correct: 0,
+        exp: "'Spend' es un verbo irregular cuyo pasado simple es 'spent'."
       }
     ]
   }

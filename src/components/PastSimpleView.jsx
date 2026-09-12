@@ -20,10 +20,50 @@ import { THEORY_DATA } from '../data/theoryData';
 import { IRREGULAR_VERBS } from '../data/irregularVerbs';
 import { soundManager } from '../utils/soundEffects';
 
+function getRandomQuestions(pool, count = 5) {
+  if (!pool || pool.length === 0) return [];
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, Math.min(count, shuffled.length));
+}
+
 export function PastSimpleView({ onGoToExam }) {
   const data = THEORY_DATA.pastSimple;
-  const [activeTab, setActiveTab] = useState('verbs'); // 'verbs' | 'structures' | 'readings' | 'glossary'
+  const [activeTab, setActiveTab] = useState('verbs'); // 'verbs' | 'structures' | 'readings' | 'glossary' | 'miniquiz'
   const [openAccordions, setOpenAccordions] = useState({ 0: true, 1: true });
+
+  // Mini Quiz state con rotación aleatoria
+  const [activeQuestions, setActiveQuestions] = useState(() => getRandomQuestions(data.miniQuiz, 5));
+  const [quizAnswers, setQuizAnswers] = useState({});
+  const [quizChecked, setQuizChecked] = useState(false);
+
+  const handleQuizSelect = (qIdx, optIdx) => {
+    soundManager.playClick();
+    setQuizAnswers(prev => ({
+      ...prev,
+      [qIdx]: optIdx
+    }));
+  };
+
+  const handleCheckQuiz = () => {
+    let allCorrect = true;
+    activeQuestions.forEach((q, idx) => {
+      if (quizAnswers[idx] !== q.correct) allCorrect = false;
+    });
+
+    if (allCorrect) {
+      soundManager.playCorrect();
+    } else {
+      soundManager.playIncorrect();
+    }
+    setQuizChecked(true);
+  };
+
+  const handleResetQuiz = () => {
+    soundManager.playClick();
+    setQuizAnswers({});
+    setQuizChecked(false);
+    setActiveQuestions(getRandomQuestions(data.miniQuiz, 5));
+  };
 
   // Buscador de Verbos Irregulares
   const [searchQuery, setSearchQuery] = useState('');
@@ -120,6 +160,7 @@ export function PastSimpleView({ onGoToExam }) {
           { id: 'structures', label: 'Estructuras & Verbos Regulares', icon: BookOpen },
           { id: 'readings', label: 'Historias IT (Apollo 11 / Google)', icon: Sparkles },
           { id: 'glossary', label: 'Glosario Empresarial IT', icon: Building2 },
+          { id: 'miniquiz', label: 'Mini-Quiz Pasado & Verbos', icon: CheckCircle2 },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -556,6 +597,103 @@ export function PastSimpleView({ onGoToExam }) {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {/* TAB 5: MINI QUIZ */}
+      {activeTab === 'miniquiz' && (
+        <div className="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6 animate-fade-in">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h3 className="text-lg font-bold text-slate-100 flex items-center space-x-2">
+                <Sparkles className="w-5 h-5 text-amber-400" />
+                <span>Mini-Quiz Rápido de Pasado Simple & Verbos</span>
+              </h3>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Preguntas seleccionadas aleatoriamente del banco temático ({activeQuestions.length} ejercicios)
+              </p>
+            </div>
+            <button
+              onClick={handleResetQuiz}
+              className="text-xs text-amber-400 hover:text-amber-300 font-medium underline self-start sm:self-auto"
+            >
+              Cargar otras preguntas
+            </button>
+          </div>
+
+          <div className="space-y-5">
+            {activeQuestions.map((q, qIdx) => {
+              const selected = quizAnswers[qIdx];
+              const isCorrect = selected === q.correct;
+
+              return (
+                <div key={qIdx} className="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-3">
+                  <p className="font-bold text-slate-100 text-sm">
+                    {qIdx + 1}. {q.q}
+                  </p>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {q.options.map((opt, optIdx) => {
+                      const isOptSelected = selected === optIdx;
+                      let btnStyle = 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700';
+
+                      if (quizChecked) {
+                        if (optIdx === q.correct) {
+                          btnStyle = 'bg-emerald-500/20 border-emerald-500 text-emerald-300 font-bold';
+                        } else if (isOptSelected && !isCorrect) {
+                          btnStyle = 'bg-rose-500/20 border-rose-500 text-rose-300';
+                        }
+                      } else if (isOptSelected) {
+                        btnStyle = 'bg-amber-600/30 border-amber-400 text-white font-bold ring-2 ring-amber-500/30';
+                      }
+
+                      return (
+                        <button
+                          key={optIdx}
+                          disabled={quizChecked}
+                          onClick={() => handleQuizSelect(qIdx, optIdx)}
+                          className={`p-2.5 rounded-lg text-xs border text-left transition-all ${btnStyle}`}
+                        >
+                          {opt}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {quizChecked && (
+                    <div className={`text-xs p-2.5 rounded-lg border ${
+                      isCorrect ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300' : 'bg-rose-950/40 border-rose-500/30 text-rose-300'
+                    }`}>
+                      <strong>{isCorrect ? '¡Correcto!' : 'Atención:'}</strong> {q.exp}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex justify-end pt-2">
+            {!quizChecked ? (
+              <button
+                onClick={handleCheckQuiz}
+                disabled={Object.keys(quizAnswers).length < activeQuestions.length}
+                className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${
+                  Object.keys(quizAnswers).length >= activeQuestions.length
+                    ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/25'
+                    : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                }`}
+              >
+                Comprobar Respuestas
+              </button>
+            ) : (
+              <button
+                onClick={handleResetQuiz}
+                className="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm border border-slate-700"
+              >
+                Reiniciar con Nuevas Preguntas
+              </button>
+            )}
+          </div>
+
         </div>
       )}
 
