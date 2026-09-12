@@ -41,7 +41,7 @@ export function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 transition-colors duration-200">
-      
+
       {/* Fixed Navbar */}
       <Navbar
         activeSection={activeSection}
@@ -74,7 +74,7 @@ export function App() {
       {/* Modern Footer */}
       <footer className="border-t border-slate-900 light:border-slate-200 bg-slate-950/80 light:bg-white/80 py-8 text-xs text-slate-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          
+
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 rounded-md bg-brand-600 flex items-center justify-center text-white">
               <Code className="w-3.5 h-3.5" />
@@ -84,26 +84,26 @@ export function App() {
           </div>
 
           <div className="flex items-center space-x-6 text-slate-400">
-            <button 
-              onClick={() => handleNavigate('exam')} 
+            <button
+              onClick={() => handleNavigate('exam')}
               className="hover:text-slate-200 light:hover:text-slate-900 transition-colors"
             >
               Simulador
             </button>
-            <button 
-              onClick={() => handleNavigate('present-simple')} 
+            <button
+              onClick={() => handleNavigate('present-simple')}
               className="hover:text-slate-200 light:hover:text-slate-900 transition-colors"
             >
               Presente Simple
             </button>
-            <button 
-              onClick={() => handleNavigate('present-continuous')} 
+            <button
+              onClick={() => handleNavigate('present-continuous')}
               className="hover:text-slate-200 light:hover:text-slate-900 transition-colors"
             >
               Presente Continuo
             </button>
-            <button 
-              onClick={() => handleNavigate('past-simple')} 
+            <button
+              onClick={() => handleNavigate('past-simple')}
               className="hover:text-slate-200 light:hover:text-slate-900 transition-colors"
             >
               Pasado Simple
@@ -111,7 +111,7 @@ export function App() {
           </div>
 
           <div className="text-slate-500 text-center sm:text-right">
-            UTN Facultad Regional Buenos Aires · Técnico Universitario en Programación
+            © 2026 · EnglishLab UTN. Web by Ornela Mansilla.
           </div>
 
         </div>
