@@ -10,7 +10,8 @@ import {
   HelpCircle,
   Languages,
   Zap,
-  Bot
+  Bot,
+  Move
 } from 'lucide-react';
 import { ArthurAvatar } from './ArthurAvatar';
 import { getArthurResponse } from '../utils/arthurBrain';
@@ -20,6 +21,51 @@ import { soundManager } from '../utils/soundEffects';
 export function ArthurChatBot({ onOpenGeminiModal }) {
   const [isOpen, setIsOpen] = useState(false);
   const [hasAi, setHasAi] = useState(() => hasGeminiApiKey());
+  
+  // Posición flotante del avatar de Arthur (arrastrable con el mouse o táctil)
+  const [position, setPosition] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('englishlab_arthur_pos_v2');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && typeof parsed.x === 'number' && typeof parsed.y === 'number') {
+            return {
+              x: Math.max(16, Math.min(parsed.x, window.innerWidth - 80)),
+              y: Math.max(80, Math.min(parsed.y, window.innerHeight - 80))
+            };
+          }
+        }
+      } catch (e) {}
+      return {
+        x: Math.max(16, window.innerWidth - 84),
+        y: Math.max(80, window.innerHeight - 84)
+      };
+    }
+    return { x: 300, y: 600 };
+  });
+
+  const [isDragging, setIsDragging] = useState(false);
+  const dragInfoRef = useRef({
+    startX: 0,
+    startY: 0,
+    elemStartX: 0,
+    elemStartY: 0,
+    hasMoved: false
+  });
+
+  // Reajustar posición si se redimensiona la ventana
+  useEffect(() => {
+    const handleResize = () => {
+      setPosition(prev => ({
+        x: Math.max(16, Math.min(window.innerWidth - 80, prev.x)),
+        y: Math.max(80, Math.min(window.innerHeight - 80, prev.y))
+      }));
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const [messages, setMessages] = useState([
     {
       sender: 'arthur',
@@ -49,6 +95,58 @@ export function ArthurChatBot({ onOpenGeminiModal }) {
       setHasAi(hasGeminiApiKey());
     }
   }, [isOpen]);
+
+  // Manejar el arrastre con el mouse / touch
+  const handlePointerDown = (e) => {
+    if (e.button !== undefined && e.button !== 0) return;
+
+    dragInfoRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      elemStartX: position.x,
+      elemStartY: position.y,
+      hasMoved: false
+    };
+
+    const handlePointerMove = (moveEvent) => {
+      const dx = moveEvent.clientX - dragInfoRef.current.startX;
+      const dy = moveEvent.clientY - dragInfoRef.current.startY;
+
+      if (!dragInfoRef.current.hasMoved && Math.hypot(dx, dy) > 4) {
+        dragInfoRef.current.hasMoved = true;
+        setIsDragging(true);
+      }
+
+      if (dragInfoRef.current.hasMoved) {
+        const newX = Math.max(16, Math.min(window.innerWidth - 80, dragInfoRef.current.elemStartX + dx));
+        const newY = Math.max(80, Math.min(window.innerHeight - 80, dragInfoRef.current.elemStartY + dy));
+        setPosition({ x: newX, y: newY });
+      }
+    };
+
+    const handlePointerUp = () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+      
+      if (dragInfoRef.current.hasMoved) {
+        setTimeout(() => setIsDragging(false), 50);
+        setPosition(finalPos => {
+          try {
+            localStorage.setItem('englishlab_arthur_pos_v2', JSON.stringify(finalPos));
+          } catch (e) {}
+          return finalPos;
+        });
+      } else {
+        setIsDragging(false);
+        soundManager.playClick();
+        setIsOpen(prev => !prev);
+        setShowGreetingBadge(false);
+      }
+    };
+
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
+  };
 
   // Auto scroll al último mensaje
   useEffect(() => {
@@ -227,20 +325,31 @@ export function ArthurChatBot({ onOpenGeminiModal }) {
 
   return (
     <>
-      {/* BOTÓN FLOTANTE (TRIGGER) */}
-      <div className="fixed bottom-5 right-5 z-50 flex items-center space-x-3">
-        
-        {/* Tooltip / Greeting Badge cuando está cerrado */}
-        {!isOpen && showGreetingBadge && (
+      {/* BOTÓN FLOTANTE ARRASTRABLE (TRIGGER) */}
+      <div 
+        style={{
+          left: `${position.x}px`,
+          top: `${position.y}px`,
+          touchAction: 'none'
+        }}
+        className="fixed z-50 flex items-center select-none"
+      >
+        {/* Tooltip / Greeting Badge cuando está cerrado y no se arrastra */}
+        {!isOpen && showGreetingBadge && !isDragging && (
           <div 
             onClick={() => {
               setIsOpen(true);
               setShowGreetingBadge(false);
             }}
-            className="hidden sm:flex items-center space-x-2 px-3.5 py-2 rounded-2xl bg-slate-900/95 text-slate-200 border border-brand-500/40 shadow-2xl backdrop-blur-md cursor-pointer hover:border-brand-400 animate-slide-up"
+            className={`hidden sm:flex items-center space-x-2 px-3.5 py-2 rounded-2xl bg-slate-900/95 text-slate-200 border border-brand-500/40 shadow-2xl backdrop-blur-md cursor-pointer hover:border-brand-400 animate-slide-up ${
+              position.x > (typeof window !== 'undefined' ? window.innerWidth / 2 : 500)
+                ? 'mr-3 -translate-x-full'
+                : 'ml-16'
+            }`}
+            style={{ position: 'absolute' }}
           >
             <Sparkles className="w-4 h-4 text-cyanBrand-400 animate-pulse" />
-            <span className="text-xs font-semibold">¿Traducir o dudas de inglés? ¡Pregúntale a **Arthur**!</span>
+            <span className="text-xs font-semibold whitespace-nowrap">¿Dudas o traducir? ¡Pregúntale a **Arthur**!</span>
             <button 
               onClick={(e) => {
                 e.stopPropagation();
@@ -253,29 +362,39 @@ export function ArthurChatBot({ onOpenGeminiModal }) {
           </div>
         )}
 
-        {/* Floating Action Button */}
-        <button
+        {/* Floating Action Button Draggable */}
+        <div
           id="btn-arthur-toggle"
-          onClick={() => {
-            soundManager.playClick();
-            setIsOpen(!isOpen);
-            if (!isOpen) setShowGreetingBadge(false);
-          }}
-          className="relative group focus:outline-none transition-transform duration-200 hover:scale-105 active:scale-95"
-          title="Abrir tutor Arthur"
+          onPointerDown={handlePointerDown}
+          className={`relative group focus:outline-none transition-transform duration-150 ${
+            isDragging 
+              ? 'cursor-grabbing scale-110 shadow-2xl ring-4 ring-cyanBrand-400/50' 
+              : 'cursor-grab hover:scale-105 active:scale-95'
+          }`}
+          title="Arrastra con el mouse a cualquier lugar de la pantalla o haz clic para abrir"
         >
           {/* Avatar Icon */}
           <ArthurAvatar size="md" className="ring-2 ring-brand-400/40 shadow-2xl" />
           
           {/* Online green indicator */}
           <span className="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-slate-950 shadow"></span>
-        </button>
-
+          
+          {/* Drag handle icon hint on hover */}
+          <span className="absolute -top-1.5 -right-1.5 p-1 rounded-full bg-slate-900 border border-slate-700 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm pointer-events-none">
+            <Move className="w-2.5 h-2.5" />
+          </span>
+        </div>
       </div>
 
       {/* VENTANA DE CHAT FLOTANTE */}
       {isOpen && (
-        <div className="fixed bottom-20 right-4 sm:right-6 z-50 w-[92vw] sm:w-[420px] h-[590px] max-h-[85vh] rounded-3xl glass-card border border-slate-700/80 shadow-2xl flex flex-col overflow-hidden animate-slide-up backdrop-blur-xl">
+        <div 
+          className={`fixed bottom-20 z-50 w-[92vw] sm:w-[420px] h-[590px] max-h-[85vh] rounded-3xl glass-card border border-slate-700/80 shadow-2xl flex flex-col overflow-hidden animate-slide-up backdrop-blur-xl ${
+            position.x <= (typeof window !== 'undefined' ? window.innerWidth / 2 : 500)
+              ? 'left-4 sm:left-6'
+              : 'right-4 sm:right-6'
+          }`}
+        >
           
           {/* HEADER DEL CHAT */}
           <div className="p-4 border-b border-slate-800 bg-slate-950/85 flex items-center justify-between">
