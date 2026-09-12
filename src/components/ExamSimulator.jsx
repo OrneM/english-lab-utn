@@ -607,29 +607,37 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
           </div>
 
           {/* Generador de Preguntas Inéditas con Gemini AI */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-brand-950/40 via-indigo-950/40 to-cyanBrand-950/40 border border-brand-500/30 space-y-3">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div className="flex items-center space-x-2">
-                <Sparkles className="w-5 h-5 text-cyanBrand-400 animate-pulse" />
+          <div className="p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-brand-950/50 via-slate-900 to-indigo-950/50 border border-brand-500/30 space-y-4 shadow-lg overflow-hidden">
+            
+            {/* Top row: Icon + Title + Description */}
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start space-x-3">
+                <div className="p-2 rounded-xl bg-cyanBrand-500/10 text-cyanBrand-400 border border-cyanBrand-500/20 flex-shrink-0 mt-0.5">
+                  <Sparkles className="w-5 h-5 animate-pulse" />
+                </div>
                 <div>
-                  <h4 className="font-extrabold text-sm text-slate-100 flex items-center space-x-1.5">
-                    <span>¿Quieres practicar con preguntas nunca antes vistas?</span>
-                    <span className="text-[10px] uppercase font-black px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h4 className="font-extrabold text-sm sm:text-base text-slate-100">
+                      ¿Quieres practicar con preguntas nunca antes vistas?
+                    </h4>
+                    <span className="text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
                       Gemini AI
                     </span>
-                  </h4>
-                  <p className="text-xs text-slate-400">
-                    Genera un lote de 5 preguntas inéditas basadas estrictamente en las Clases 1 a 6 de la UTN.
+                  </div>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Genera preguntas inéditas en tiempo real basadas estrictamente en las Clases 1 a 6 de la UTN.
                   </p>
                 </div>
               </div>
+            </div>
 
-              {/* Selector de tema */}
-              <div className="flex items-center space-x-2">
+            {/* Bottom row: Topic selector + Button */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-1">
+              <div className="flex-1 min-w-0">
                 <select
                   value={selectedAITopic}
                   onChange={(e) => setSelectedAITopic(e.target.value)}
-                  className="py-2 px-3 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-xs font-semibold focus:border-cyanBrand-400 focus:outline-none"
+                  className="w-full py-2.5 px-3.5 rounded-xl bg-slate-900/90 border border-slate-700 text-slate-200 text-xs sm:text-sm font-medium focus:border-cyanBrand-400 focus:outline-none focus:ring-1 focus:ring-cyanBrand-400/50 transition-all cursor-pointer truncate"
                 >
                   <option value="all">🎲 Mezcla de Todos los Temas</option>
                   <option value="Simple Present">Presente Simple (3ra persona/negación)</option>
@@ -640,21 +648,21 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                   <option value="Lectura Google & Sergey Brin">Lectura Sergey Brin & Google</option>
                   <option value="Vocabulario IT & Roles">Vocabulario & Roles IT</option>
                 </select>
-
-                <button
-                  onClick={handleGenerateAIQuestions}
-                  disabled={isGeneratingAI}
-                  className="py-2 px-4 rounded-xl bg-gradient-to-r from-brand-600 to-cyanBrand-600 hover:from-brand-500 hover:to-cyanBrand-500 text-white font-extrabold text-xs shadow-md shadow-brand-500/20 flex items-center space-x-1.5 transition-all disabled:opacity-50 flex-shrink-0"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-cyan-200" />
-                  <span>{isGeneratingAI ? 'Generando...' : 'Generar 5 Preguntas'}</span>
-                </button>
               </div>
+
+              <button
+                onClick={handleGenerateAIQuestions}
+                disabled={isGeneratingAI}
+                className="py-2.5 px-5 rounded-xl bg-gradient-to-r from-brand-600 via-indigo-600 to-cyanBrand-600 hover:from-brand-500 hover:to-cyanBrand-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-brand-500/25 flex items-center justify-center space-x-2 transition-all duration-200 disabled:opacity-50 flex-shrink-0 cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4 text-cyan-200" />
+                <span>{isGeneratingAI ? 'Generando Preguntas...' : 'Generar 5 Preguntas'}</span>
+              </button>
             </div>
 
             {/* AI Feedback message */}
             {aiGenMessage && (
-              <div className={`p-2.5 rounded-xl border text-xs flex items-center space-x-2 animate-fade-in ${
+              <div className={`p-3 rounded-xl border text-xs flex items-center space-x-2 animate-fade-in ${
                 aiGenMessage.type === 'success'
                   ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300'
                   : 'bg-rose-950/40 border-rose-500/30 text-rose-300'
@@ -664,7 +672,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                 ) : (
                   <AlertCircle className="w-4 h-4 text-rose-400 flex-shrink-0" />
                 )}
-                <span>{aiGenMessage.text}</span>
+                <span className="leading-relaxed">{aiGenMessage.text}</span>
               </div>
             )}
           </div>
