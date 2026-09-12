@@ -402,12 +402,14 @@ export function ExamSimulator({ onNavigateToTheory }) {
               {[
                 'Presente Simple (Afirmativo/Negativo/Preguntas)',
                 'Presente Continuo (-ing, reglas y excepciones)',
-                'Simple Present vs Continuous (Contraste)',
+                'Simple Present vs Present Continuous (Contraste)',
                 'Pasado Simple (Regulares -ed e Irregulares)',
-                'Vocabulario IT & Greetings (Clase 2)',
-                'Historia de Apollo 11 & Google (Clases 5 y 6)',
-                'Comparativos & Superlativos (Short adjectives)',
-                'Adverbios de Frecuencia'
+                'Vocabulario IT & Roles (Clase 2)',
+                'Saludos Formales e Informales (Clase 2)',
+                'Historia de Apollo 11 & Margaret Hamilton (Clase 5)',
+                'Historia de Google, Sergey Brin & Larry Page (Clase 6)',
+                'Vocabulario Empresarial IT (Clase 6)',
+                'Adverbios de Frecuencia (Clase 1)'
               ].map((t, idx) => (
                 <span key={idx} className="text-[11px] px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">
                   {t}
