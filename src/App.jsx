@@ -4,6 +4,7 @@ import { ExamSimulator } from './components/ExamSimulator';
 import { SimplePresentView } from './components/SimplePresentView';
 import { PresentContinuousView } from './components/PresentContinuousView';
 import { PastSimpleView } from './components/PastSimpleView';
+import { ArthurChatBot } from './components/ArthurChatBot';
 import { soundManager } from './utils/soundEffects';
 import { GraduationCap, Heart, Code, Sparkles, BookOpen, History, ExternalLink } from 'lucide-react';
 
@@ -71,6 +72,9 @@ export function App() {
         )}
       </main>
 
+      {/* Arthur AI Interactive Tutor Bot */}
+      <ArthurChatBot />
+
       {/* Modern Footer */}
       <footer className="border-t border-slate-900 light:border-slate-200 bg-slate-950/80 light:bg-white/80 py-8 text-xs text-slate-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -120,3 +124,4 @@ export function App() {
     </div>
   );
 }
+
