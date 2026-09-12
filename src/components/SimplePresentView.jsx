@@ -139,17 +139,110 @@ export function SimplePresentView({ onGoToExam }) {
       {activeTab === 'structures' && (
         <div className="space-y-6">
           
-          {/* Overview Banner */}
-          <div className="glass-card rounded-2xl p-6 border border-slate-800 space-y-3">
-            <div className="flex items-center space-x-2 text-brand-400 font-bold text-sm">
-              <Lightbulb className="w-4 h-4 text-amber-400" />
-              <span>Concepto y Marcadores de Frecuencia</span>
+          {/* Overview Banner & Frequency Adverbs Syntax Section */}
+          <div className="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6 shadow-xl">
+            
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-4">
+              <div className="space-y-1">
+                <div className="flex items-center space-x-2 text-brand-400 font-bold text-base">
+                  <Lightbulb className="w-5 h-5 text-amber-400" />
+                  <span>Concepto y Marcadores de Frecuencia (Sintaxis de Usos)</span>
+                </div>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-3xl">
+                  {data.overview.definition}
+                </p>
+              </div>
+              <span className="self-start sm:self-center px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold whitespace-nowrap font-mono">
+                Clase 1 & 2 · Reglas de Ubicación
+              </span>
             </div>
-            <p className="text-slate-300 text-sm leading-relaxed">
-              {data.overview.definition}
-            </p>
-            <div className="pt-2">
-              <span className="text-xs font-semibold text-slate-400 block mb-1.5">Expresiones de tiempo y adverbios comunes:</span>
+
+            {/* Escala Porcentual de Frecuencia */}
+            {data.overview.frequencyScale && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    Escala de Frecuencia & Graduación Porcentual:
+                  </h4>
+                  <span className="text-[11px] text-slate-500 italic">De mayor a menor frecuencia</span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+                  {data.overview.frequencyScale.map((item, idx) => (
+                    <div key={idx} className="p-3 rounded-xl bg-slate-900/80 border border-slate-800/90 hover:border-slate-700 transition-all flex flex-col justify-between space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <span className={`text-xs font-black font-mono ${item.color}`}>
+                          {item.percentage}
+                        </span>
+                        <div className="w-2 h-2 rounded-full bg-slate-700" />
+                      </div>
+                      <div>
+                        <div className="font-bold text-slate-100 text-xs">{item.adverb}</div>
+                        <div className="text-[11px] text-slate-400">{item.translation}</div>
+                      </div>
+                      <div className="text-[10px] text-slate-500 italic pt-1 border-t border-slate-800/60 truncate" title={item.itExample}>
+                        "{item.itExample}"
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Reglas de Sintaxis y Posición en la Oración */}
+            {data.overview.syntaxRules && (
+              <div className="space-y-4 pt-2">
+                <div className="space-y-1">
+                  <h4 className="text-sm font-bold text-slate-100 flex items-center space-x-2">
+                    <Sparkles className="w-4 h-4 text-amber-400" />
+                    <span>Sintaxis y Posición de los Adverbios en la Oración</span>
+                  </h4>
+                  <p className="text-xs text-slate-400">
+                    En inglés, la posición del adverbio depende estrictamente del tipo de verbo que lo acompaña (verbo principal vs. verbo 'To Be' vs. frases de tiempo).
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {data.overview.syntaxRules.map((ruleItem, rIdx) => (
+                    <div key={rIdx} className="p-4 sm:p-5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-3 flex flex-col justify-between hover:border-slate-700 transition-colors">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between gap-2">
+                          <h5 className="font-bold text-slate-100 text-sm">{ruleItem.title}</h5>
+                          <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md border ${ruleItem.badgeColor}`}>
+                            {ruleItem.badge}
+                          </span>
+                        </div>
+
+                        {/* Sintaxis Formula */}
+                        <div className="p-2.5 rounded-lg bg-slate-950/90 border border-slate-800 font-mono text-[11px] text-cyanBrand-300">
+                          <span className="text-[9px] uppercase font-bold text-slate-500 block mb-0.5">Sintaxis:</span>
+                          {ruleItem.formula}
+                        </div>
+
+                        <p className="text-xs text-slate-300 leading-relaxed">
+                          {ruleItem.rule}
+                        </p>
+                      </div>
+
+                      {/* Ejemplos de la Regla */}
+                      <div className="pt-2 border-t border-slate-800/80 space-y-1.5">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Ejemplos IT:</span>
+                        {ruleItem.examples.map((ex, exIdx) => (
+                          <div key={exIdx} className="text-xs bg-slate-950/50 p-2 rounded-lg border border-slate-800/60 space-y-0.5">
+                            <div className="font-medium text-slate-200">"{ex.en}"</div>
+                            <div className="text-[11px] text-slate-400">{ex.es}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Badges de expresiones comunes */}
+            <div className="pt-3 border-t border-slate-800">
+              <span className="text-xs font-semibold text-slate-400 block mb-2">Marcadores de tiempo y expresiones de frecuencia frecuentes:</span>
               <div className="flex flex-wrap gap-1.5">
                 {data.overview.timeExpressions.map((exp, i) => (
                   <span key={i} className="text-xs px-2.5 py-1 rounded-md bg-slate-900 text-cyan-300 border border-slate-800 font-mono">
@@ -158,6 +251,7 @@ export function SimplePresentView({ onGoToExam }) {
                 ))}
               </div>
             </div>
+
           </div>
 
           {/* Structures Accordions */}

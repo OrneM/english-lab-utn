@@ -7,7 +7,76 @@ export const THEORY_DATA = {
     subtitle: "Uso para rutinas, hechos generales, especificaciones técnicas y hábitos cotidianos de un desarrollador.",
     overview: {
       definition: "El Presente Simple se utiliza para describir hábitos, rutinas diarias, verdades generales y estados permanentes. En el contexto de IT, describe lo que hacen los sistemas, las tareas habituales de un rol tecnológico y las funciones del código.",
-      timeExpressions: ["always (siempre)", "usually (usualmente)", "often (frecuentemente)", "sometimes (a veces)", "hardly ever (casi nunca)", "never (nunca)", "every day / week / month", "once / twice a week", "on Mondays"]
+      timeExpressions: [
+        "always (siempre)", 
+        "usually (usualmente)", 
+        "often (frecuentemente)", 
+        "sometimes (a veces)", 
+        "hardly ever / rarely (casi nunca)", 
+        "never (nunca)", 
+        "every day / week / month (cada día/semana/mes)", 
+        "once / twice a week (una/dos veces por semana)", 
+        "on Mondays (los lunes)",
+        "in the morning / at night (por la mañana / por la noche)"
+      ],
+      syntaxRules: [
+        {
+          title: "1. Antes del Verbo Principal (Main Verbs)",
+          badge: "Posición Estándar",
+          badgeColor: "bg-brand-500/20 text-brand-300 border-brand-500/30",
+          formula: "Sujeto + [Adverbio de Frecuencia] + Verbo Principal + Complemento",
+          rule: "Los adverbios de una sola palabra (always, usually, often, sometimes, hardly ever, never) se ubican SIEMPRE antes del verbo de acción principal.",
+          examples: [
+            { en: "I usually check my pull requests at 9 a.m.", es: "Usualmente reviso mis pull requests a las 9 a.m." },
+            { en: "She always tests her code before committing.", es: "Ella siempre testea su código antes de hacer commit." },
+            { en: "They never push untested code to production.", es: "Ellos nunca suben código sin testear a producción." }
+          ]
+        },
+        {
+          title: "2. Después del Verbo TO BE (am / is / are)",
+          badge: "Regla Especial TO BE",
+          badgeColor: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+          formula: "Sujeto + Verbo TO BE (am / is / are) + [Adverbio de Frecuencia] + Complemento",
+          rule: "Cuando la oración tiene el verbo 'To Be' (ser/estar), el adverbio de frecuencia se coloca DESPUÉS de am / is / are (nunca antes).",
+          examples: [
+            { en: "The production server is often overloaded on peak traffic hours.", es: "El servidor de producción a menudo está sobrecargado en horas pico." },
+            { en: "I am always online for the daily stand-up meeting.", es: "Siempre estoy conectado para la reunión diaria." },
+            { en: "These database queries are rarely that slow.", es: "Estas consultas a la base de datos rara vez son tan lentas." }
+          ]
+        },
+        {
+          title: "3. En Oraciones Negativas con Auxiliar (don't / doesn't)",
+          badge: "Con Auxiliares",
+          badgeColor: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+          formula: "Sujeto + Auxiliar Negativo (don't / doesn't) + [Adverbio] + Verbo Base",
+          rule: "El adverbio va ENTRE el auxiliar negativo y el verbo principal. ¡Atención!: 'Never' y 'Hardly ever' ya son negativos por sí mismos y NO llevan don't/doesn't.",
+          examples: [
+            { en: "We don't usually deploy new features on Friday afternoons.", es: "Usualmente no desplegamos nuevas funcionalidades los viernes por la tarde." },
+            { en: "He doesn't often work on backend microservices.", es: "Él no trabaja con frecuencia en microservicios backend." },
+            { en: "⚠️ Correcto: 'I never deploy on Friday' (INCORRECTO: 'I don't never deploy')", es: "'Never' aporta la negación gramatical por sí mismo." }
+          ]
+        },
+        {
+          title: "4. Expresiones y Frases de Tiempo al Final de la Oración",
+          badge: "Frases de Frecuencia",
+          badgeColor: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+          formula: "Sujeto + Verbo (+ Objeto) + [Frase de Frecuencia al Final]",
+          rule: "Las expresiones de tiempo compuestas por dos o más palabras (every day, once a week, twice a month, on Mondays, at night) se colocan al FINAL de la oración.",
+          examples: [
+            { en: "Our team runs automated security scans every night.", es: "Nuestro equipo ejecuta análisis automáticos de seguridad todas las noches." },
+            { en: "We have sprint planning meetings twice a month.", es: "Tenemos reuniones de planificación de sprint dos veces al mes." },
+            { en: "The database backup executes once a day.", es: "El backup de la base de datos se ejecuta una vez al día." }
+          ]
+        }
+      ],
+      frequencyScale: [
+        { percentage: "100%", adverb: "Always", translation: "Siempre", color: "text-emerald-400", itExample: "Always write clean, readable code." },
+        { percentage: "90%", adverb: "Usually / Normally", translation: "Usualmente / Normalmente", color: "text-cyanBrand-400", itExample: "Usually works remotely from home." },
+        { percentage: "70%", adverb: "Often / Frequently", translation: "A menudo / Frecuentemente", color: "text-blue-400", itExample: "Often checks server memory metrics." },
+        { percentage: "50%", adverb: "Sometimes", translation: "A veces", color: "text-amber-400", itExample: "Sometimes refactors legacy algorithms." },
+        { percentage: "10-20%", adverb: "Hardly ever / Rarely / Seldom", translation: "Casi nunca / Rara vez", color: "text-orange-400", itExample: "Hardly ever misses a sprint deadline." },
+        { percentage: "0%", adverb: "Never", translation: "Nunca", color: "text-rose-400", itExample: "Never commits secret API keys to git." }
+      ]
     },
     structures: [
       {
