@@ -107,6 +107,73 @@ class SoundManager {
     }
   }
 
+  // Alerta de 1 minuto restante (Doble tono de advertencia elegante y claro)
+  playWarning1Min() {
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.audioCtx) return;
+
+      const tones = [740, 920]; // Fa#5 -> La#5
+      tones.forEach((freq, idx) => {
+        const startTime = this.audioCtx.currentTime + idx * 0.16;
+        const osc = this.audioCtx.createOscillator();
+        const gain = this.audioCtx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, startTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.05, startTime + 0.12);
+
+        gain.gain.setValueAtTime(0.18, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.14);
+
+        osc.connect(gain);
+        gain.connect(this.audioCtx.destination);
+
+        osc.start(startTime);
+        osc.stop(startTime + 0.14);
+      });
+    } catch (e) {
+      console.warn("Audio context playWarning1Min error:", e);
+    }
+  }
+
+  // Alerta crítica de 30 segundos restantes (Triple tono de urgencia pulsante)
+  playCritical30Sec() {
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.audioCtx) return;
+
+      const pulses = [
+        { freq: 880, timeOffset: 0.0 },
+        { freq: 1100, timeOffset: 0.12 },
+        { freq: 1320, timeOffset: 0.24 }
+      ];
+
+      pulses.forEach(({ freq, timeOffset }) => {
+        const startTime = this.audioCtx.currentTime + timeOffset;
+        const osc = this.audioCtx.createOscillator();
+        const gain = this.audioCtx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, startTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.1, startTime + 0.09);
+
+        gain.gain.setValueAtTime(0.22, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.10);
+
+        osc.connect(gain);
+        gain.connect(this.audioCtx.destination);
+
+        osc.start(startTime);
+        osc.stop(startTime + 0.10);
+      });
+    } catch (e) {
+      console.warn("Audio context playCritical30Sec error:", e);
+    }
+  }
+
   // Alerta de tiempo límite (tick sutil)
   playTick() {
     if (!this.enabled) return;

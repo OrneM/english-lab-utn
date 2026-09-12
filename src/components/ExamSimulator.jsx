@@ -73,9 +73,10 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
   const [metricsState, setMetricsState] = useState(() => getEvolutionMetrics());
   const [showHistoryModal, setShowHistoryModal] = useState(false);
 
-  // Temporizador
+  // Temporizador y alertas de tiempo
   const [secondsRemaining, setSecondsRemaining] = useState(null);
   const [timeSpentSeconds, setTimeSpentSeconds] = useState(0);
+  const [timeAlertNotice, setTimeAlertNotice] = useState(null); // { type: 'warning'|'critical', text: string }
   const timerRef = useRef(null);
 
   // Filtro de revisión
@@ -86,6 +87,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
     if (gameState === 'setup' || gameState === 'results') {
       setMetricsState(getEvolutionMetrics());
       setExtraAiQuestions(getSavedAIQuestions());
+      setTimeAlertNotice(null);
     }
   }, [gameState]);
 
@@ -138,6 +140,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
     setUserAnswers({});
     setFlaggedQuestions(new Set());
     setInstantChecked({});
+    setTimeAlertNotice(null);
     
     if (timerMinutes > 0) {
       setSecondsRemaining(timerMinutes * 60);
@@ -148,7 +151,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
     setGameState('active');
   };
 
-  // Timer Tick
+  // Timer Tick con alertas sonoras a 1 min (60s) y 30s
   useEffect(() => {
     if (gameState === 'active') {
       timerRef.current = setInterval(() => {
@@ -161,9 +164,24 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
               handleFinishExam(true);
               return 0;
             }
-            if (prev === 60 || prev === 120) {
+
+            // Alerta sonora y visual de 1 minuto restante (60 segundos)
+            if (prev === 60) {
+              soundManager.playWarning1Min();
+              setTimeAlertNotice({ type: 'warning', text: '⚠️ ¡Queda 1 minuto de examen!' });
+              setTimeout(() => setTimeAlertNotice(null), 5000);
+            }
+            // Alerta sonora de mayor urgencia a los 30 segundos
+            else if (prev === 30) {
+              soundManager.playCritical30Sec();
+              setTimeAlertNotice({ type: 'critical', text: '🚨 ¡Últimos 30 segundos! Revisa y entrega tu examen.' });
+              setTimeout(() => setTimeAlertNotice(null), 6000);
+            }
+            // Ticks sutiles en la cuenta regresiva final (últimos 5 segundos)
+            else if (prev <= 5 && prev > 1) {
               soundManager.playTick();
             }
+
             return prev - 1;
           });
         }
@@ -886,6 +904,23 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
           </div>
 
         </div>
+
+        {/* Alerta flotante animada de tiempo límite (1 min / 30 seg) */}
+        {timeAlertNotice && (
+          <div className={`p-4 rounded-2xl border text-xs sm:text-sm font-extrabold flex items-center justify-between shadow-2xl animate-slide-up transition-all ${
+            timeAlertNotice.type === 'critical'
+              ? 'bg-rose-950/80 border-rose-500/80 text-rose-200 ring-2 ring-rose-500/50 shadow-rose-500/20 animate-pulse'
+              : 'bg-amber-950/80 border-amber-500/80 text-amber-200 ring-2 ring-amber-500/50 shadow-amber-500/20'
+          }`}>
+            <div className="flex items-center space-x-2.5">
+              <Clock className={`w-5 h-5 ${timeAlertNotice.type === 'critical' ? 'text-rose-400 animate-spin' : 'text-amber-400'}`} />
+              <span>{timeAlertNotice.text}</span>
+            </div>
+            <span className="font-mono font-black text-xs px-2.5 py-1 rounded-lg bg-black/50 border border-white/10">
+              {formatTime(secondsRemaining)}
+            </span>
+          </div>
+        )}
 
         {/* Question Progress Bar */}
         <div className="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
