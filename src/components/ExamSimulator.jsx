@@ -18,10 +18,23 @@ import {
   Sparkles,
   BarChart2,
   Zap,
-  CheckCheck
+  CheckCheck,
+  History,
+  Trash2,
+  Flame,
+  Target,
+  Gauge,
+  ArrowUpRight,
+  ArrowDownRight
 } from 'lucide-react';
 import { EXAM_QUESTIONS } from '../data/questions';
 import { soundManager } from '../utils/soundEffects';
+import { 
+  getExamHistory,
+  saveExamResult,
+  getEvolutionMetrics,
+  clearExamHistory 
+} from '../utils/storageHistory';
 
 export function ExamSimulator({ onNavigateToTheory }) {
   // Configuración
@@ -37,6 +50,10 @@ export function ExamSimulator({ onNavigateToTheory }) {
   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
   const [instantChecked, setInstantChecked] = useState({}); // For practice mode: { [qId]: boolean }
   
+  // Métricas de evolución persistentes
+  const [metricsState, setMetricsState] = useState(() => getEvolutionMetrics());
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+
   // Temporizador
   const [secondsRemaining, setSecondsRemaining] = useState(null);
   const [timeSpentSeconds, setTimeSpentSeconds] = useState(0);
@@ -44,6 +61,13 @@ export function ExamSimulator({ onNavigateToTheory }) {
 
   // Filtro de revisión
   const [resultsFilter, setResultsFilter] = useState('all'); // 'all' | 'incorrect' | 'correct'
+
+  // Refrescar métricas al entrar en setup o results
+  useEffect(() => {
+    if (gameState === 'setup' || gameState === 'results') {
+      setMetricsState(getEvolutionMetrics());
+    }
+  }, [gameState]);
 
   // Iniciar Examen
   const handleStartExam = () => {
@@ -131,20 +155,76 @@ export function ExamSimulator({ onNavigateToTheory }) {
     });
   };
 
+  // Formatear segundos en MM:SS
+  const formatTime = (secs) => {
+    if (secs === null || secs === undefined) return '--:--';
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
   // Finalizar Examen
   const handleFinishExam = (isTimeout = false) => {
     if (timerRef.current) clearInterval(timerRef.current);
     
     // Calcular estadísticas
     let correctCount = 0;
+    const topicStats = {};
+
     currentQuestions.forEach(q => {
-      if (userAnswers[q.id] === q.correctAnswer) {
-        correctCount++;
+      const isCorrect = userAnswers[q.id] === q.correctAnswer;
+      if (isCorrect) correctCount++;
+
+      const topic = q.topic || 'General';
+      if (!topicStats[topic]) {
+        topicStats[topic] = { total: 0, correct: 0 };
       }
+      topicStats[topic].total += 1;
+      if (isCorrect) topicStats[topic].correct += 1;
     });
 
-    const percentage = Math.round((correctCount / currentQuestions.length) * 100);
+    const total = currentQuestions.length;
+    const percentage = Math.round((correctCount / total) * 100);
+    const score = ((correctCount / total) * 10).toFixed(1);
     
+    let gradeStatus = {
+      label: 'A Recuperar',
+      color: 'text-rose-400 bg-rose-500/10 border-rose-500/30',
+      badge: 'Menor a 60%',
+      desc: 'Te recomendamos repasar los temas teóricos antes de volver a intentar el simulacro.'
+    };
+
+    if (percentage >= 80) {
+      gradeStatus = {
+        label: '¡Promocionado!',
+        color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30',
+        badge: 'Nota ≥ 8 (Sobresaliente)',
+        desc: '¡Excelente dominio de los contenidos! Cumples con todos los criterios de promoción directa de la UTN.'
+      };
+    } else if (percentage >= 60) {
+      gradeStatus = {
+        label: 'Aprobado',
+        color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/30',
+        badge: 'Nota entre 6 y 7.9',
+        desc: 'Has alcanzado el puntaje mínimo de aprobación. Puedes reforzar los puntos débiles para buscar la promoción.'
+      };
+    }
+
+    // Persistir métricas de resolución y scoring en localStorage
+    saveExamResult({
+      score,
+      percentage,
+      correctCount,
+      total,
+      timeSpentSeconds,
+      timeSpent: formatTime(timeSpentSeconds),
+      avgTimePerQuestion: Math.round(timeSpentSeconds / (total || 1)),
+      topicStats,
+      gradeStatus
+    });
+
+    setMetricsState(getEvolutionMetrics());
+
     // Si aprobó, lanzar confeti y fanfarria
     if (percentage >= 60) {
       soundManager.playFanfare();
@@ -162,12 +242,12 @@ export function ExamSimulator({ onNavigateToTheory }) {
     setGameState('results');
   };
 
-  // Formatear segundos en MM:SS
-  const formatTime = (secs) => {
-    if (secs === null) return '--:--';
-    const m = Math.floor(secs / 60);
-    const s = secs % 60;
-    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  const handleClearHistory = () => {
+    if (window.confirm("¿Seguro que deseas reiniciar el historial de métricas y scoring?")) {
+      soundManager.playClick();
+      clearExamHistory();
+      setMetricsState(getEvolutionMetrics());
+    }
   };
 
   // Cálculos para la pantalla de resultados
@@ -236,10 +316,10 @@ export function ExamSimulator({ onNavigateToTheory }) {
   // --------------------------------------------------------------------------
   if (gameState === 'setup') {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-8 animate-fade-in">
+      <div className="max-w-4xl mx-auto px-4 py-8 animate-fade-in space-y-8">
         
         {/* Hero Header */}
-        <div className="text-center space-y-3 mb-8">
+        <div className="text-center space-y-3">
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold">
             <Sparkles className="w-3.5 h-3.5 text-cyanBrand-400" />
             <span>Simulador Oficial Basado en el Parcial UTN TUP</span>
@@ -250,6 +330,178 @@ export function ExamSimulator({ onNavigateToTheory }) {
           <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
             Ejercicios múltiples choice generados estrictamente con el formato del primer parcial de inglés. Pon a prueba tus conocimientos gramaticales y vocabulario técnico.
           </p>
+        </div>
+
+        {/* Dashboard de Métricas de Evolución y Scoring */}
+        <div className="glass-card rounded-2xl p-6 border border-slate-800 space-y-4 shadow-xl relative overflow-hidden">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+            <div className="flex items-center space-x-2.5">
+              <div className="p-2 rounded-xl bg-brand-500/20 text-brand-400 border border-brand-500/30">
+                <TrendingUp className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="font-extrabold text-slate-100 text-base flex items-center space-x-2">
+                  <span>Métricas de Evolución & Scoring Histórico</span>
+                </h2>
+                <p className="text-xs text-slate-400">Seguimiento de calificaciones, velocidad de respuesta y curva de aprendizaje.</p>
+              </div>
+            </div>
+
+            {metricsState.hasData && (
+              <button
+                onClick={handleClearHistory}
+                title="Reiniciar métricas guardadas"
+                className="self-start sm:self-auto text-xs text-slate-500 hover:text-rose-400 flex items-center space-x-1 px-2.5 py-1 rounded-lg border border-slate-800 hover:border-rose-500/40 transition-colors"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Limpiar Historial</span>
+              </button>
+            )}
+          </div>
+
+          {metricsState.hasData ? (
+            <div className="space-y-4">
+              {/* 4 Tarjetas de KPIs */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                
+                {/* 1. Calificación Promedio */}
+                <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
+                  <div className="flex items-center justify-between text-xs text-slate-400">
+                    <span>Nota Promedio</span>
+                    <Target className="w-3.5 h-3.5 text-brand-400" />
+                  </div>
+                  <div className="text-2xl sm:text-3xl font-black text-slate-100">
+                    {metricsState.avgScore} <span className="text-xs text-slate-500 font-bold">/10</span>
+                  </div>
+                  <div className="text-[11px] font-semibold text-cyan-400">
+                    {Number(metricsState.avgScore) >= 8 ? '🌟 Nivel Promoción' : Number(metricsState.avgScore) >= 6 ? '✅ Nivel Aprobado' : '⚠️ A Reforzar'}
+                  </div>
+                </div>
+
+                {/* 2. Mejor Calificación (Récord) */}
+                <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
+                  <div className="flex items-center justify-between text-xs text-slate-400">
+                    <span>Mejor Calificación</span>
+                    <Award className="w-3.5 h-3.5 text-amber-400" />
+                  </div>
+                  <div className="text-2xl sm:text-3xl font-black text-amber-300">
+                    {metricsState.bestScore} <span className="text-xs text-slate-500 font-bold">/10</span>
+                  </div>
+                  <div className="text-[11px] text-slate-400 font-medium">
+                    Récord personal registrado
+                  </div>
+                </div>
+
+                {/* 3. Velocidad Promedio */}
+                <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
+                  <div className="flex items-center justify-between text-xs text-slate-400">
+                    <span>Velocidad Promedio</span>
+                    <Gauge className="w-3.5 h-3.5 text-cyanBrand-400" />
+                  </div>
+                  <div className="text-2xl sm:text-3xl font-black text-cyan-300 font-mono">
+                    {metricsState.avgSpeed}s
+                  </div>
+                  <div className="text-[11px] text-slate-400 font-medium">
+                    Por cada pregunta
+                  </div>
+                </div>
+
+                {/* 4. Tendencia de Evolución */}
+                <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
+                  <div className="flex items-center justify-between text-xs text-slate-400">
+                    <span>Evolución / Tendencia</span>
+                    <Flame className="w-3.5 h-3.5 text-rose-400" />
+                  </div>
+                  <div className="text-2xl sm:text-3xl font-black flex items-center space-x-1">
+                    {metricsState.improvementPct > 0 ? (
+                      <span className="text-emerald-400 flex items-center">
+                        <ArrowUpRight className="w-6 h-6 inline" />
+                        +{metricsState.improvementPct}%
+                      </span>
+                    ) : metricsState.improvementPct < 0 ? (
+                      <span className="text-rose-400 flex items-center">
+                        <ArrowDownRight className="w-6 h-6 inline" />
+                        {metricsState.improvementPct}%
+                      </span>
+                    ) : (
+                      <span className="text-slate-300 text-xl font-bold">Estable</span>
+                    )}
+                  </div>
+                  <div className="text-[11px] text-slate-400 font-medium">
+                    {metricsState.totalExams} {metricsState.totalExams === 1 ? 'simulacro realizado' : 'simulacros realizados'}
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Lista compacta de últimos intentos */}
+              {metricsState.history && metricsState.history.length > 0 && (
+                <div className="pt-2">
+                  <div className="flex items-center justify-between text-xs font-bold text-slate-400 mb-2">
+                    <span className="flex items-center space-x-1.5">
+                      <History className="w-3.5 h-3.5 text-slate-400" />
+                      <span>Historial de Últimos Intentos:</span>
+                    </span>
+                    <span>Mostrando {Math.min(5, metricsState.history.length)} de {metricsState.history.length}</span>
+                  </div>
+
+                  <div className="space-y-2">
+                    {metricsState.history.slice(0, 5).map((entry, idx) => (
+                      <div 
+                        key={entry.id || idx}
+                        className="p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-xs"
+                      >
+                        <div className="flex items-center space-x-3">
+                          <span className={`w-8 h-8 rounded-lg font-black text-xs flex items-center justify-center border ${
+                            entry.percentage >= 80 
+                              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' 
+                              : entry.percentage >= 60 
+                              ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40' 
+                              : 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+                          }`}>
+                            {entry.score}
+                          </span>
+                          <div>
+                            <span className="font-bold text-slate-200 block text-xs sm:text-sm">
+                              {entry.correctCount} / {entry.total} Correctas ({entry.percentage}%)
+                            </span>
+                            <span className="text-[11px] text-slate-400">{entry.date}</span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center space-x-3 text-slate-400 text-right">
+                          <div>
+                            <span className="font-mono text-slate-300 block">{entry.timeSpentFormatted || '--:--'}</span>
+                            <span className="text-[10px] text-slate-500">{entry.avgTimePerQuestion || 0}s / preg</span>
+                          </div>
+                          <span className={`px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase border ${
+                            entry.percentage >= 80 
+                              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' 
+                              : entry.percentage >= 60 
+                              ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' 
+                              : 'bg-rose-500/10 text-rose-400 border-rose-500/30'
+                          }`}>
+                            {entry.gradeStatus}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            </div>
+          ) : (
+            <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800/80 text-center space-y-2">
+              <div className="w-10 h-10 rounded-full bg-brand-500/10 border border-brand-500/20 flex items-center justify-center mx-auto text-brand-400">
+                <Target className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-slate-200 text-sm">Aún no tienes exámenes registrados</h4>
+              <p className="text-xs text-slate-400 max-w-md mx-auto">
+                Completa tu primer simulacro abajo. El sistema medirá automáticamente tu velocidad de respuesta, porcentaje de aciertos y evolución de notas para el parcial.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Config Card */}
@@ -860,6 +1112,90 @@ export function ExamSimulator({ onNavigateToTheory }) {
             })}
           </div>
         </div>
+
+        {/* Evolución vs Promedio Histórico */}
+        {metricsState.hasData && (
+          <div className="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-slate-100 text-base flex items-center space-x-2">
+                <TrendingUp className="w-5 h-5 text-cyanBrand-400" />
+                <span>Evolución vs. Tu Promedio Histórico</span>
+              </h3>
+              <span className="text-xs px-2.5 py-1 rounded-full bg-slate-900 text-slate-400 border border-slate-800">
+                {metricsState.totalExams} {metricsState.totalExams === 1 ? 'intento' : 'intentos'} en total
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {/* Comparación de Nota */}
+              <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1.5">
+                <span className="text-xs text-slate-400 block font-semibold">Nota en este Examen</span>
+                <div className="flex items-baseline space-x-2">
+                  <span className="text-2xl font-black text-slate-100">{stats.score}</span>
+                  <span className="text-xs text-slate-500">vs prom {metricsState.avgScore}</span>
+                </div>
+                <div className="text-[11px] font-bold">
+                  {Number(stats.score) > Number(metricsState.avgScore) ? (
+                    <span className="text-emerald-400 flex items-center">
+                      <ArrowUpRight className="w-3.5 h-3.5 mr-0.5 inline" />
+                      +{(Number(stats.score) - Number(metricsState.avgScore)).toFixed(1)} pts superior a tu promedio
+                    </span>
+                  ) : Number(stats.score) < Number(metricsState.avgScore) ? (
+                    <span className="text-rose-400 flex items-center">
+                      <ArrowDownRight className="w-3.5 h-3.5 mr-0.5 inline" />
+                      -{(Number(metricsState.avgScore) - Number(stats.score)).toFixed(1)} pts debajo de tu promedio
+                    </span>
+                  ) : (
+                    <span className="text-cyan-400">Igual a tu promedio histórico</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Comparación de Velocidad */}
+              <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1.5">
+                <span className="text-xs text-slate-400 block font-semibold">Velocidad x Pregunta</span>
+                <div className="flex items-baseline space-x-2">
+                  <span className="text-2xl font-black text-cyan-300 font-mono">{stats.avgTimePerQuestion}s</span>
+                  <span className="text-xs text-slate-500">vs prom {metricsState.avgSpeed}s</span>
+                </div>
+                <div className="text-[11px] font-bold">
+                  {stats.avgTimePerQuestion < metricsState.avgSpeed ? (
+                    <span className="text-emerald-400 flex items-center">
+                      <ArrowUpRight className="w-3.5 h-3.5 mr-0.5 inline" />
+                      {metricsState.avgSpeed - stats.avgTimePerQuestion}s más rápido que tu promedio
+                    </span>
+                  ) : stats.avgTimePerQuestion > metricsState.avgSpeed ? (
+                    <span className="text-amber-400 flex items-center">
+                      <ArrowDownRight className="w-3.5 h-3.5 mr-0.5 inline" />
+                      Resolución más pausada y reflexiva
+                    </span>
+                  ) : (
+                    <span className="text-cyan-400">Ritmo idéntico a tu media</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Récord Personal */}
+              <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1.5">
+                <span className="text-xs text-slate-400 block font-semibold">Récord Personal</span>
+                <div className="flex items-baseline space-x-2">
+                  <span className="text-2xl font-black text-amber-300">{metricsState.bestScore}</span>
+                  <span className="text-xs text-slate-500">/10 récord</span>
+                </div>
+                <div className="text-[11px] font-bold text-slate-400">
+                  {Number(stats.score) >= Number(metricsState.bestScore) ? (
+                    <span className="text-amber-400 flex items-center">
+                      <Flame className="w-3.5 h-3.5 mr-0.5 inline" />
+                      ¡Nuevo récord o máxima nota alcanzada!
+                    </span>
+                  ) : (
+                    <span>A {(Number(metricsState.bestScore) - Number(stats.score)).toFixed(1)} pts de tu récord personal</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Detailed Question Review */}
         <div className="glass-card rounded-2xl p-6 border border-slate-800 space-y-6">

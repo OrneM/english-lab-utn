@@ -1,6 +1,7 @@
 import { IRREGULAR_VERBS } from '../data/irregularVerbs';
 import { THEORY_DATA } from '../data/theoryData';
 import { EXAM_QUESTIONS } from '../data/questions';
+import { getEvolutionMetrics } from './storageHistory';
 
 // Diccionario bilingüe amplio enfocado en IT, Programación e Inglés General
 const TRANSLATION_DICTIONARY = [
@@ -87,10 +88,10 @@ export function getArthurResponse(userInput) {
     return {
       text: "¡Hola! Soy Arthur, tu tutor de inglés técnico. ¿En qué tema de las Clases 1 a 6 te gustaría profundizar hoy?",
       suggestedQuestions: [
+        "¿Cómo van mis métricas y scoring?",
         "¿Cómo sé cuándo usar Present Simple o Continuous?",
         "¿Cuál es el pasado del verbo 'meet'?",
-        "Traducir 'software developer' o 'debug'",
-        "Dame un ejercicio de práctica"
+        "Traducir 'software developer' o 'debug'"
       ]
     };
   }
@@ -98,11 +99,11 @@ export function getArthurResponse(userInput) {
   // 1. SALUDOS / IDENTIDAD
   if (/^(hola|buenas|hey|hi|hello|buenos d[ií]as|buenas tardes|buenas noches)/i.test(text)) {
     return {
-      text: "¡Un gusto saludarte! Soy **Arthur**, tu asistente y tutor de inglés para la carrera de Programación (UTN). Conozco a la perfección todos los temas de las unidades 1 y 2. Puedes preguntarme sobre gramática, pedirme traducciones de palabras, consultar verbos irregulares o realizar ejercicios.",
+      text: "¡Un gusto saludarte! Soy **Arthur**, tu asistente y tutor de inglés para la carrera de Programación (UTN). Conozco a la perfección todos los temas de las unidades 1 y 2. Puedes preguntarme sobre gramática, pedirme traducciones, consultar tus **métricas de rendimiento** o realizar ejercicios.",
       suggestedQuestions: [
+        "¿Cómo van mis métricas y scoring?",
         "Traducir 'step down' o 'raise money'",
         "Diferencia entre Present Simple y Continuous",
-        "Reglas de 3ra persona singular (-s, -es, -ies)",
         "Ponme a prueba con una pregunta"
       ]
     };
@@ -110,24 +111,68 @@ export function getArthurResponse(userInput) {
 
   if (/(qui[eé]n eres|tu nombre|qui[eé]n sos|presentate|arthur)/i.test(text) && !text.includes("margaret")) {
     return {
-      text: "Soy **Arthur**, tu tutor virtual de inglés técnico en **EnglishLab**. Mi misión es ayudarte a promocionar el parcial de inglés de la UTN TUP explicándote cualquier regla gramatical, traduciendo términos de programación y dándote ejemplos claros de código y desarrollo de software. 🎩✨",
+      text: "Soy **Arthur**, tu tutor virtual de inglés técnico en **EnglishLab**. Mi misión es ayudarte a promocionar el parcial de inglés de la UTN TUP explicándote cualquier regla gramatical, traduciendo términos de programación y analizando tus métricas de resolución para asegurar tu mejor nota. 🎩✨",
       suggestedQuestions: [
+        "Analiza mis métricas de examen",
         "Traducir palabras de IT",
         "¿Cómo se forman las preguntas en Pasado Simple?",
-        "Verbos de estado (Stative Verbs)",
         "Dame un ejercicio de examen"
       ]
     };
   }
 
-  // 2. MÓDULO DE TRADUCCIÓN DE PALABRAS Y TÉRMINOS (ESPAÑOL <-> INGLÉS)
+  // 2. CONSULTA DE MÉTRICAS & SCORING HISTÓRICO
+  if (/(m[eé]tricas|scoring|progreso|rendimiento|estad[ií]sticas|historial|c[oó]mo voy|cu[aá]nto saqu[eé]|mis notas|mis resultados)/i.test(text)) {
+    const metrics = getEvolutionMetrics();
+    
+    if (!metrics.hasData) {
+      return {
+        text: `🎩 **Análisis de Métricas y Scoring:**\n\n` +
+              `Aún no tienes simulacros guardados en este navegador. \n\n` +
+              `💡 **Consejo:** Realiza tu primer intento en la pestaña **"Práctica de Examen"**. Apenas termines, registraré tu calificación, tiempo de resolución por pregunta y desglose por temas para darte métricas de evolución.`,
+        suggestedQuestions: [
+          "Ir a Práctica de Examen",
+          "Dame un ejercicio rápido ahora",
+          "Repasar Presente Simple vs Continuo"
+        ]
+      };
+    }
+
+    const trendText = metrics.improvementPct > 0 
+      ? `📈 **Tendencia de Evolución:** ¡Has mejorado un **+${metrics.improvementPct}%** desde tu primer intento!`
+      : metrics.improvementPct < 0
+      ? `📊 **Tendencia:** Tuviste una ligera variación de **${metrics.improvementPct}%**. ¡Sigue practicando para estabilizar la nota alta!`
+      : `🎯 **Tendencia:** Rendimiento constante en tus simulacros.`;
+
+    const statusRecommendation = Number(metrics.avgScore) >= 8
+      ? `🌟 *Estado Actual:* Nivel de **Promoción Directa (≥ 8/10)**. ¡Excelente dominio técnico!`
+      : Number(metrics.avgScore) >= 6
+      ? `✅ *Estado Actual:* Nivel de **Aprobado**. Refuerza los verbos irregulares para alcanzar la promoción.`
+      : `⚠️ *Estado Actual:* Nivel **A Recuperar**. Te sugiero repasar las tarjetas de gramática antes de tu próximo simulacro.`;
+
+    return {
+      text: `🎩 **Tus Métricas de Rendimiento & Scoring:**\n\n` +
+            `• 📝 **Simulacros Completados:** \`${metrics.totalExams}\`\n` +
+            `• 🎯 **Calificación Promedio:** \`${metrics.avgScore} / 10\`\n` +
+            `• 🏆 **Mejor Calificación (Récord):** \`${metrics.bestScore} / 10\`\n` +
+            `• ⚡ **Velocidad de Resolución Promedio:** \`${metrics.avgSpeed} segundos / pregunta\`\n\n` +
+            `${trendText}\n\n` +
+            `${statusRecommendation}`,
+      suggestedQuestions: [
+        "Dame un ejercicio de práctica",
+        "Traducir un término IT",
+        "Verbos de estado (Stative Verbs)"
+      ]
+    };
+  }
+
+  // 3. MÓDULO DE TRADUCCIÓN DE PALABRAS Y TÉRMINOS (ESPAÑOL <-> INGLÉS)
   const isTranslationIntent = 
     /(?:traduce|traducir|traducci[oó]n|c[oó]mo se dice|c[oó]mo traduzco|qu[eé] significa|meaning of|translate|what does .* mean)/i.test(text);
 
   let wordToSearch = '';
 
   if (isTranslationIntent) {
-    // Extraer la palabra a traducir limpiando los patrones comunes
     wordToSearch = text
       .replace(/(?:por favor|arthur|puedes|podr[ií]as|me ayudas a)/gi, '')
       .replace(/(?:traduce|traducir|traducci[oó]n de|c[oó]mo se dice|c[oó]mo traduzco|qu[eé] significa|meaning of|translate|what does|mean|en ingl[eé]s|en espa[nñ]ol|al ingl[eé]s|al espa[nñ]ol)/gi, '')
@@ -135,11 +180,9 @@ export function getArthurResponse(userInput) {
       .trim();
   }
 
-  // Si hubo intención explícita o si el usuario escribió solo 1 o 2 palabras que pueden ser un término
   const searchCandidate = wordToSearch || (text.split(' ').length <= 3 ? text.replace(/["'¿?¡!:]/g, '').trim() : '');
 
   if (searchCandidate) {
-    // 1. Buscar en diccionario de traducciones
     const dictMatch = TRANSLATION_DICTIONARY.find(item => 
       item.en.toLowerCase() === searchCandidate ||
       item.es.toLowerCase().includes(searchCandidate) ||
@@ -162,7 +205,6 @@ export function getArthurResponse(userInput) {
       };
     }
 
-    // 2. Buscar en verbos irregulares
     const verbMatch = IRREGULAR_VERBS.find(v => 
       v.base.toLowerCase() === searchCandidate ||
       v.past.toLowerCase().includes(searchCandidate) ||
@@ -187,7 +229,7 @@ export function getArthurResponse(userInput) {
     }
   }
 
-  // 3. CONSULTAS ESPECÍFICAS DE VERBOS IRREGULARES
+  // 4. CONSULTAS ESPECÍFICAS DE VERBOS IRREGULARES
   const verbQueryMatch = text.match(/(?:pasado|past|conjugaci[oó]n|forma)\s*(?:de|del|of)?\s*([a-zA-Z]+)/i) ||
                          text.match(/([a-zA-Z]+)\s*(?:en pasado|in past)/i);
   
@@ -212,7 +254,7 @@ export function getArthurResponse(userInput) {
     }
   }
 
-  // 4. CONTRASTE: SIMPLE PRESENT VS PRESENT CONTINUOUS
+  // 5. CONTRASTE: SIMPLE PRESENT VS PRESENT CONTINUOUS
   if (/(diferencia|vs|versus|cuando usar|cu[aá]ndo uso|comparaci[oó]n|diferencias).*(presente|simple|continuo|continuous)/i.test(text) ||
       /(simple vs continuo|present simple vs present continuous)/i.test(text)) {
     return {
@@ -234,7 +276,7 @@ export function getArthurResponse(userInput) {
     };
   }
 
-  // 5. VERBOS DE ESTADO (STATIVE VERBS)
+  // 6. VERBOS DE ESTADO (STATIVE VERBS)
   if (/(stative|verbos de estado|no llevan ing|sin ing|know|understand|need|want)/i.test(text)) {
     return {
       text: `🎩 **Verbos de Estado (Stative Verbs)**\n\n` +
@@ -253,7 +295,7 @@ export function getArthurResponse(userInput) {
     };
   }
 
-  // 6. REGLAS DE 3RA PERSONA (-s, -es, -ies) EN PRESENTE SIMPLE
+  // 7. REGLAS DE 3RA PERSONA (-s, -es, -ies) EN PRESENTE SIMPLE
   if (/(3ra persona|tercera persona|he she it|reglas de s|cuando lleva s|-es|-ies|terminaci[oó]n s)/i.test(text)) {
     return {
       text: `🎩 **Reglas de Ortografía para 3ra Persona Singular (He / She / It):**\n\n` +
@@ -270,7 +312,7 @@ export function getArthurResponse(userInput) {
     };
   }
 
-  // 7. NEGACIÓN Y PREGUNTAS EN PASADO SIMPLE (DID / DIDN'T)
+  // 8. NEGACIÓN Y PREGUNTAS EN PASADO SIMPLE (DID / DIDN'T)
   if (/(didn't|did not|preguntas en pasado|did|negativo en pasado|c[oó]mo negar en pasado)/i.test(text)) {
     return {
       text: `🎩 **Estructura Negativa e Interrogativa en Pasado Simple**\n\n` +
@@ -289,7 +331,7 @@ export function getArthurResponse(userInput) {
     };
   }
 
-  // 8. LECTURAS Y PERSONAJES IT: MARGARET HAMILTON (APOLLO 11)
+  // 9. LECTURAS Y PERSONAJES IT: MARGARET HAMILTON (APOLLO 11)
   if (/(margaret hamilton|apollo|apollo 11|luna|moon|nasa|mit|asynchronous|as[ií]ncrono)/i.test(text)) {
     return {
       text: `🎩 **Margaret Hamilton & Apollo 11 (Clase 5):**\n\n` +
@@ -305,39 +347,7 @@ export function getArthurResponse(userInput) {
     };
   }
 
-  // 9. LECTURAS IT: GRACE HOPPER & COBOL
-  if (/(grace hopper|cobol|compilador|compiler|uss hopper)/i.test(text)) {
-    return {
-      text: `🎩 **Grace Hopper: 'The Queen of Code' (Clase 5):**\n\n` +
-            `• Doctora en Matemáticas de Yale y oficial de la Marina de EE.UU.\n` +
-            `• Desarrolló uno de los **primeros compiladores** de la historia (herramienta que traduce código a lenguaje máquina).\n` +
-            `• Fue pionera en la creación del lenguaje **COBOL**.\n` +
-            `• En 2016, la Marina nombró un buque de guerra en su honor: el *USS Hopper*.`,
-      suggestedQuestions: [
-        "Historia de Google y Sergey Brin",
-        "Verbos regulares en pasado simple (-ed)",
-        "Ponme un ejercicio de examen"
-      ]
-    };
-  }
-
-  // 10. LECTURAS IT: GOOGLE, SERGEY BRIN & LARRY PAGE
-  if (/(sergey brin|larry page|google|alphabet|ipo|stanford|youtube|1998)/i.test(text)) {
-    return {
-      text: `🎩 **Historia de Google & Vocabulario Empresarial (Clase 6):**\n\n` +
-            `• **Orígenes:** Sergey Brin nació en Moscú y emigró a EE.UU. Conoció a Larry Page en Stanford University mientras hacían su doctorado.\n` +
-            `• **Lanzamiento:** Crearon Google en **1998** tras recaudar $1 millón de dólares (*raised money*) de inversores.\n` +
-            `• **Hitos:** En 2004 realizaron su Oferta Pública Inicial (*IPO*), en 2006 compraron YouTube (*purchased YouTube*) por $1.65B y en 2015 se reestructuraron bajo la empresa matriz **Alphabet**.\n` +
-            `• En 2019, ambos se retiraron de sus cargos ejecutivos (*stepped down*).`,
-      suggestedQuestions: [
-        "¿Qué significa 'step down'?",
-        "¿Qué significa 'raise money'?",
-        "Glosario de negocios IT completo"
-      ]
-    };
-  }
-
-  // 11. GENERADOR DE EJERCICIO / RETO INTERACTIVO
+  // 10. GENERADOR DE EJERCICIO / RETO INTERACTIVO
   if (/(ejercicio|practicar|prueba|test|pregunta|retame|evaluame|quiz|examen)/i.test(text)) {
     const randomQ = EXAM_QUESTIONS[Math.floor(Math.random() * EXAM_QUESTIONS.length)];
     const optionsText = randomQ.options.map(o => `   **${o.id.toUpperCase()})** ${o.text}`).join('\n');
@@ -351,23 +361,23 @@ export function getArthurResponse(userInput) {
       suggestedQuestions: [
         "¿Cuál es la respuesta correcta?",
         "Dame otro ejercicio",
-        "Explícame la regla de este tema"
+        "¿Cómo van mis métricas y scoring?"
       ]
     };
   }
 
-  // 12. DEFAULT / FALLBACK INTELIGENTE
+  // 11. DEFAULT / FALLBACK INTELIGENTE
   return {
     text: `Entiendo tu consulta sobre **"${userInput}"**. Como tu tutor de Inglés Técnico I, puedo ayudarte con:\n\n` +
-          `1. **Traducción de palabras y términos:** Pregúntame *"traduce developer"*, *"qué significa step down"*, etc.\n` +
-          `2. **Presente Simple vs Continuo:** Cuándo usar cada uno, reglas de 3ra persona (\`-s, -es, -ies\`) y verbos de estado.\n` +
-          `3. **Pasado Simple:** Verbos irregulares (\`found, sold, met, bought\`), auxiliares (\`didn't / did\`) e historias de Margaret Hamilton y Google.\n` +
-          `4. **Práctica Interactiva:** Pídeme *"dame un ejercicio"* para ponerte a prueba.\n\n` +
+          `1. 📊 **Tus Métricas & Scoring:** Pregúntame *"¿Cómo van mis métricas?"* para analizar tu promedio y velocidad.\n` +
+          `2. 🌐 **Traducción de palabras:** Pregúntame *"traduce developer"*, *"qué significa step down"*, etc.\n` +
+          `3. ⚡ **Presente Simple vs Continuo:** Cuándo usar cada uno, reglas de 3ra persona y verbos de estado.\n` +
+          `4. 📜 **Pasado Simple:** Verbos irregulares (\`found, sold, met, bought\`) e historias de Margaret Hamilton y Google.\n\n` +
           `¿Qué te gustaría consultar?`,
     suggestedQuestions: [
+      "¿Cómo van mis métricas y scoring?",
       "Traducir 'database' o 'debug'",
       "¿Cómo sé cuándo usar Present Simple o Continuous?",
-      "Buscar pasado de un verbo irregular",
       "Dame un ejercicio de práctica"
     ]
   };
