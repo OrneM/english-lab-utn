@@ -8,7 +8,7 @@
   }
   
   html.light, html.light body {
-    background-color: #f1f5f9;
+    background-color: #f8fafc;
     color: #0f172a;
   }
 
@@ -54,11 +54,11 @@
 }
 
 .light .glass-card {
-  background: #ffffff !important;
+  background: #ffffff;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid #e2e8f0 !important;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.03) !important;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
 }
 
 .glass-nav {
@@ -69,245 +69,9 @@
 }
 
 .light .glass-nav {
-  background: rgba(255, 255, 255, 0.95) !important;
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid #e2e8f0 !important;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05) !important;
-}
-
-/* ==========================================================================
-   LIGHT MODE COMPREHENSIVE CONTRAST & ACCESSIBILITY SYSTEM
-   ========================================================================== */
-
-/* Main Headings, Titles & High-Contrast Texts in Light Mode */
-.light .text-slate-100,
-.light .text-slate-200 {
-  color: #0f172a !important; /* Deep Slate 900 */
-}
-
-.light h1, .light h2, .light h3, .light h4, .light h5 {
-  color: #0f172a !important;
-}
-
-/* Ensure pure white text stays white inside filled color buttons/badges */
-.light button[class*="bg-brand"],
-.light button[class*="from-brand"],
-.light button[class*="bg-gradient"],
-.light button.bg-brand-600,
-.light button.bg-brand-500,
-.light button.bg-amber-600,
-.light button.bg-emerald-600,
-.light button.bg-rose-600,
-.light button.bg-cyanBrand-600,
-.light a[class*="bg-brand"],
-.light span.text-white,
-.light button.text-white {
-  color: #ffffff !important;
-}
-
-.light button[class*="bg-brand"] *,
-.light button[class*="from-brand"] *,
-.light button[class*="bg-gradient"] * {
-  color: #ffffff !important;
-}
-
-/* Secondary & Body Text with High Readability */
-.light .text-slate-300 {
-  color: #334155 !important; /* Slate 700 */
-}
-
-.light .text-slate-400 {
-  color: #475569 !important; /* Slate 600 */
-}
-
-.light .text-slate-500 {
-  color: #64748b !important; /* Slate 500 */
-}
-
-/* Semantic & Accent Text Colors in Light Mode */
-.light .text-cyan-300,
-.light .text-cyan-400,
-.light .text-cyanBrand-300,
-.light .text-cyanBrand-400 {
-  color: #0284c7 !important; /* Sky 700 for optimal contrast on white */
-}
-
-.light .text-brand-300,
-.light .text-brand-400,
-.light .text-indigo-300,
-.light .text-indigo-400 {
-  color: #4338ca !important; /* Indigo 700 */
-}
-
-.light .text-emerald-300,
-.light .text-emerald-400 {
-  color: #047857 !important; /* Emerald 700 */
-}
-
-.light .text-amber-300,
-.light .text-amber-400 {
-  color: #b45309 !important; /* Amber 700 */
-}
-
-.light .text-rose-300,
-.light .text-rose-400 {
-  color: #be123c !important; /* Rose 700 */
-}
-
-.light .text-blue-300,
-.light .text-blue-400 {
-  color: #1d4ed8 !important; /* Blue 700 */
-}
-
-.light .text-orange-400 {
-  color: #c2410c !important; /* Orange 700 */
-}
-
-/* Inner Card Backgrounds & Section Boxes in Light Mode */
-.light .bg-slate-950,
-.light .bg-slate-900,
-.light .bg-slate-900\/80,
-.light .bg-slate-900\/70,
-.light .bg-slate-900\/60,
-.light .bg-slate-900\/50,
-.light .bg-slate-900\/40,
-.light .bg-slate-950\/90,
-.light .bg-slate-950\/80,
-.light .bg-slate-950\/50 {
-  background-color: #f8fafc !important; /* Clean Slate 50 */
-  border-color: #e2e8f0 !important;
-}
-
-.light .bg-slate-800,
-.light .bg-slate-800\/80,
-.light .bg-slate-800\/60,
-.light .bg-slate-800\/50 {
-  background-color: #f1f5f9 !important; /* Slate 100 */
-  border-color: #cbd5e1 !important;
-}
-
-/* Borders in Light Mode */
-.light .border-slate-800,
-.light .border-slate-800\/90,
-.light .border-slate-800\/80,
-.light .border-slate-800\/70,
-.light .border-slate-800\/60,
-.light .border-slate-800\/50,
-.light .border-slate-700,
-.light .border-slate-700\/50,
-.light .border-slate-900 {
-  border-color: #e2e8f0 !important;
-}
-
-/* Form Inputs, Selects and Textareas */
-.light input,
-.light select,
-.light textarea {
-  background-color: #ffffff !important;
-  color: #0f172a !important;
-  border-color: #cbd5e1 !important;
-}
-
-.light input:focus,
-.light select:focus,
-.light textarea:focus {
-  border-color: #6366f1 !important;
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2) !important;
-}
-
-.light input::placeholder,
-.light textarea::placeholder {
-  color: #94a3b8 !important;
-}
-
-/* Options buttons in Exam Simulator & Mini Quizzes */
-.light button.bg-slate-950,
-.light button.bg-slate-900\/50,
-.light button.bg-slate-900\/60 {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-  color: #1e293b !important;
-}
-
-.light button.bg-slate-950:hover,
-.light button.bg-slate-900\/50:hover {
-  background-color: #f1f5f9 !important;
-  border-color: #cbd5e1 !important;
-}
-
-/* Selected Option State (Active) */
-.light .bg-brand-600\/20,
-.light .bg-brand-600\/30 {
-  background-color: #eef2ff !important;
-  border-color: #6366f1 !important;
-}
-
-.light .bg-cyanBrand-500\/20,
-.light .bg-cyanBrand-600\/30 {
-  background-color: #e0f2fe !important;
-  border-color: #0284c7 !important;
-}
-
-/* Correct Option (Emerald / Green) in Light Mode */
-.light .bg-emerald-500\/20,
-.light .bg-emerald-950\/40 {
-  background-color: #ecfdf5 !important;
-  border-color: #10b981 !important;
-  color: #065f46 !important;
-}
-
-.light .bg-emerald-500\/10 {
-  background-color: #d1fae5 !important;
-  border-color: #6ee7b7 !important;
-  color: #047857 !important;
-}
-
-/* Incorrect Option (Rose / Red) in Light Mode */
-.light .bg-rose-500\/20,
-.light .bg-rose-950\/40 {
-  background-color: #fff1f2 !important;
-  border-color: #f43f5e !important;
-  color: #9f1239 !important;
-}
-
-.light .bg-rose-500\/10 {
-  background-color: #ffe4e6 !important;
-  border-color: #fca5a5 !important;
-  color: #be123c !important;
-}
-
-/* Amber feedback & badges in Light Mode */
-.light .bg-amber-500\/20,
-.light .bg-amber-950\/40 {
-  background-color: #fffbeb !important;
-  border-color: #f59e0b !important;
-  color: #92400e !important;
-}
-
-.light .bg-amber-500\/10 {
-  background-color: #fef3c7 !important;
-  border-color: #fcd34d !important;
-  color: #b45309 !important;
-}
-
-/* Cyan / Brand badges in Light Mode */
-.light .bg-cyan-500\/20,
-.light .bg-cyanBrand-500\/10 {
-  background-color: #e0f2fe !important;
-  border-color: #38bdf8 !important;
-  color: #0369a1 !important;
-}
-
-.light .bg-brand-500\/10,
-.light .bg-brand-500\/20 {
-  background-color: #eef2ff !important;
-  border-color: #a5b4fc !important;
-  color: #4338ca !important;
-}
-
-/* Header badge of Exam Simulator */
-.light .bg-slate-900.border-slate-800 {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.04);
 }

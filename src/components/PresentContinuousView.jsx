@@ -92,20 +92,20 @@ export function PresentContinuousView({ onGoToExam }) {
       
       {/* Header */}
       <div className="text-center space-y-3">
-        <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyanBrand-500/10 border border-cyanBrand-500/20 text-cyan-400 text-xs font-semibold">
-          <Sparkles className="w-3.5 h-3.5" />
+        <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-50 dark:bg-cyanBrand-500/10 border border-cyan-200 dark:border-cyanBrand-500/20 text-cyan-800 dark:text-cyan-400 text-xs font-semibold">
+          <Sparkles className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
           <span>Unidad 1 · Clase 4 · Gramática en Contexto</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-100 tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
           {data.title}
         </h1>
-        <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+        <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
           {data.subtitle}
         </p>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex flex-wrap items-center justify-center gap-2 border-b border-slate-800 pb-4">
+      <div className="flex flex-wrap items-center justify-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-4">
         {[
           { id: 'structures', label: 'Estructuras & Reglas -ING', icon: Sparkles },
           { id: 'contrast', label: 'Simple vs Continuo (Matriz)', icon: ArrowLeftRight },
@@ -124,7 +124,7 @@ export function PresentContinuousView({ onGoToExam }) {
               className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all ${
                 isActive
                   ? 'bg-cyanBrand-600 text-white shadow-lg shadow-cyanBrand-600/25 ring-2 ring-cyanBrand-500/30'
-                  : 'bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800'
+                  : 'bg-white dark:bg-slate-900/60 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 border border-slate-200 dark:border-slate-800 hover:bg-slate-50'
               }`}
             >
               <Icon className="w-4 h-4" />
@@ -139,19 +139,19 @@ export function PresentContinuousView({ onGoToExam }) {
         <div className="space-y-6 animate-fade-in">
           
           {/* Overview Card */}
-          <div className="glass-card rounded-2xl p-6 border border-slate-800 space-y-3">
-            <div className="flex items-center space-x-2 text-cyanBrand-400 font-bold text-sm">
-              <Lightbulb className="w-4 h-4 text-amber-400" />
+          <div className="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-3">
+            <div className="flex items-center space-x-2 text-cyan-800 dark:text-cyanBrand-400 font-bold text-sm">
+              <Lightbulb className="w-4 h-4 text-amber-500 dark:text-amber-400" />
               <span>Concepto y Expresiones de Tiempo</span>
             </div>
-            <p className="text-slate-300 text-sm leading-relaxed">
+            <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
               {data.overview.definition}
             </p>
             <div className="pt-2">
-              <span className="text-xs font-semibold text-slate-400 block mb-1.5">Expresiones temporales clave (Time Expressions):</span>
+              <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 block mb-1.5">Expresiones temporales clave (Time Expressions):</span>
               <div className="flex flex-wrap gap-1.5">
                 {data.overview.timeExpressions.map((exp, i) => (
-                  <span key={i} className="text-xs px-2.5 py-1 rounded-md bg-slate-900 text-cyan-300 border border-slate-800 font-mono">
+                  <span key={i} className="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-900 text-cyan-800 dark:text-cyan-300 border border-slate-200 dark:border-slate-800 font-mono">
                     {exp}
                   </span>
                 ))}
@@ -164,24 +164,24 @@ export function PresentContinuousView({ onGoToExam }) {
             {data.structures.map((struct, idx) => {
               const isOpen = openAccordions[idx];
               return (
-                <div key={idx} className="glass-card rounded-2xl border border-slate-800 overflow-hidden shadow-md">
+                <div key={idx} className="glass-card rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-md">
                   
                   {/* Trigger */}
                   <button
                     onClick={() => toggleAccordion(idx)}
-                    className="w-full p-5 text-left flex items-center justify-between hover:bg-slate-900/40 transition-colors"
+                    className="w-full p-5 text-left flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors"
                   >
                     <div className="flex items-center space-x-3">
                       <span className={`w-3 h-3 rounded-full ${
-                        struct.color === 'emerald' ? 'bg-emerald-400' :
-                        struct.color === 'rose' ? 'bg-rose-400' :
-                        struct.color === 'indigo' ? 'bg-indigo-400' : 'bg-amber-400'
+                        struct.color === 'emerald' ? 'bg-emerald-500' :
+                        struct.color === 'rose' ? 'bg-rose-500' :
+                        struct.color === 'indigo' ? 'bg-indigo-500' : 'bg-amber-500'
                       }`} />
-                      <h3 className="font-bold text-slate-100 text-base sm:text-lg">
+                      <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base sm:text-lg">
                         {struct.type}
                       </h3>
                     </div>
-                    <div className="flex items-center space-x-2 text-slate-400 text-xs">
+                    <div className="flex items-center space-x-2 text-slate-500 dark:text-slate-400 text-xs">
                       <span>{isOpen ? 'Ocultar' : 'Ver detalle'}</span>
                       {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                     </div>
@@ -189,18 +189,18 @@ export function PresentContinuousView({ onGoToExam }) {
 
                   {/* Content */}
                   {isOpen && (
-                    <div className="px-5 pb-6 pt-2 space-y-5 border-t border-slate-800/80 animate-fade-in">
+                    <div className="px-5 pb-6 pt-2 space-y-5 border-t border-slate-200 dark:border-slate-800/80 animate-fade-in">
                       
                       {/* Formula */}
-                      <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 font-mono text-xs sm:text-sm text-cyanBrand-300">
+                      <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 font-mono text-xs sm:text-sm text-cyan-800 dark:text-cyanBrand-300">
                         <span className="text-[10px] font-bold text-slate-500 uppercase block mb-1">Fórmula Estructural:</span>
                         {struct.formula}
                       </div>
 
                       {/* Rules */}
-                      <div className="space-y-2 text-sm text-slate-300">
-                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">Reglas de Conjugación:</span>
-                        <ul className="list-disc list-inside space-y-1.5 text-slate-300">
+                      <div className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 block">Reglas de Conjugación:</span>
+                        <ul className="list-disc list-inside space-y-1.5 text-slate-700 dark:text-slate-300">
                           {struct.rules.map((r, rIdx) => (
                             <li key={rIdx}>{r}</li>
                           ))}
@@ -210,14 +210,14 @@ export function PresentContinuousView({ onGoToExam }) {
                       {/* Spelling rules for -ing */}
                       {struct.spellingRules && (
                         <div className="space-y-2.5 pt-1">
-                          <span className="text-xs font-bold uppercase tracking-wider text-amber-400 block">
+                          <span className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 block">
                             Reglas Ortográficas para la terminación -ING:
                           </span>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                             {struct.spellingRules.map((sp, spIdx) => (
-                              <div key={spIdx} className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs space-y-1">
-                                <span className="font-bold text-slate-200 block">{sp.rule}</span>
-                                <div className="text-cyanBrand-300 font-mono">{sp.examples.join(' · ')}</div>
+                              <div key={spIdx} className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-xs space-y-1">
+                                <span className="font-bold text-slate-800 dark:text-slate-200 block">{sp.rule}</span>
+                                <div className="text-cyan-800 dark:text-cyanBrand-300 font-mono font-medium">{sp.examples.join(' · ')}</div>
                               </div>
                             ))}
                           </div>
@@ -226,28 +226,28 @@ export function PresentContinuousView({ onGoToExam }) {
 
                       {/* Examples */}
                       <div className="space-y-2.5 pt-2">
-                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 block">
                           Ejemplos Contextualizados:
                         </span>
                         <div className="space-y-2">
                           {struct.examples.map((ex, exIdx) => (
-                            <div key={exIdx} className="p-3.5 rounded-xl bg-slate-900/50 border border-slate-800/80 space-y-1">
+                            <div key={exIdx} className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/80 space-y-1">
                               {ex.en && (
-                                <p className="font-medium text-slate-100 text-sm">
+                                <p className="font-medium text-slate-900 dark:text-slate-100 text-sm">
                                   "{ex.en}"
                                 </p>
                               )}
                               {ex.es && (
-                                <p className="text-xs text-slate-400">
+                                <p className="text-xs text-slate-600 dark:text-slate-400">
                                   {ex.es}
                                 </p>
                               )}
                               {ex.q && (
                                 <div className="space-y-1">
-                                  <p className="font-semibold text-slate-200 text-sm">Q: {ex.q}</p>
+                                  <p className="font-semibold text-slate-800 dark:text-slate-200 text-sm">Q: {ex.q}</p>
                                   <div className="flex gap-4 text-xs font-mono">
-                                    <span className="text-emerald-400">Aff: {ex.aAff}</span>
-                                    <span className="text-rose-400">Neg: {ex.aNeg}</span>
+                                    <span className="text-emerald-700 dark:text-emerald-400 font-medium">Aff: {ex.aAff}</span>
+                                    <span className="text-rose-700 dark:text-rose-400 font-medium">Neg: {ex.aNeg}</span>
                                   </div>
                                 </div>
                               )}
@@ -269,13 +269,13 @@ export function PresentContinuousView({ onGoToExam }) {
 
       {/* TAB 2: CONTRASTE SIMPLE VS CONTINUO */}
       {activeTab === 'contrast' && (
-        <div className="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6 animate-fade-in">
+        <div className="glass-card rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 space-y-6 animate-fade-in">
           <div className="space-y-1">
-            <h3 className="text-lg font-bold text-slate-100 flex items-center space-x-2">
-              <ArrowLeftRight className="w-5 h-5 text-cyanBrand-400" />
+            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center space-x-2">
+              <ArrowLeftRight className="w-5 h-5 text-cyan-600 dark:text-cyanBrand-400" />
               <span>{data.contrastMatrix.title}</span>
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-600 dark:text-slate-400">
               Diferencias críticas evaluadas en el examen de la UTN.
             </p>
           </div>
@@ -283,25 +283,25 @@ export function PresentContinuousView({ onGoToExam }) {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs sm:text-sm">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 uppercase text-[11px] tracking-wider">
+                <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 uppercase text-[11px] tracking-wider">
                   <th className="py-3 px-4">Aspecto</th>
-                  <th className="py-3 px-4 text-emerald-400">Present Simple</th>
-                  <th className="py-3 px-4 text-cyanBrand-400">Present Continuous</th>
+                  <th className="py-3 px-4 text-emerald-700 dark:text-emerald-400 font-bold">Present Simple</th>
+                  <th className="py-3 px-4 text-cyan-700 dark:text-cyanBrand-400 font-bold">Present Continuous</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60">
                 {data.contrastMatrix.rows.map((row, idx) => (
-                  <tr key={idx} className="hover:bg-slate-900/40 transition-colors">
-                    <td className="py-4 px-4 font-bold text-slate-200">{row.aspect}</td>
-                    <td className="py-4 px-4 text-slate-300">{row.presentSimple}</td>
-                    <td className="py-4 px-4 text-slate-300">{row.presentContinuous}</td>
+                  <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+                    <td className="py-4 px-4 font-bold text-slate-900 dark:text-slate-200">{row.aspect}</td>
+                    <td className="py-4 px-4 text-slate-700 dark:text-slate-300">{row.presentSimple}</td>
+                    <td className="py-4 px-4 text-slate-700 dark:text-slate-300">{row.presentContinuous}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <div className="p-4 rounded-xl bg-cyan-950/20 border border-cyan-500/30 text-xs sm:text-sm text-cyan-200 space-y-1">
+          <div className="p-4 rounded-xl bg-cyan-50 dark:bg-cyan-950/20 border border-cyan-200 dark:border-cyan-500/30 text-xs sm:text-sm text-cyan-900 dark:text-cyan-200 space-y-1">
             <span className="font-bold block">💡 Regla Mnemotécnica de Examen:</span>
             <p className="leading-relaxed">
               Si la oración contiene <strong>"every day", "usually", "always"</strong> 👉 usa <strong>Simple Present</strong>. <br />
@@ -313,31 +313,31 @@ export function PresentContinuousView({ onGoToExam }) {
 
       {/* TAB 3: STATIVE VERBS */}
       {activeTab === 'stative' && (
-        <div className="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6 animate-fade-in">
+        <div className="glass-card rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 space-y-6 animate-fade-in">
           <div className="space-y-1">
-            <h3 className="text-lg font-bold text-slate-100 flex items-center space-x-2">
-              <AlertTriangle className="w-5 h-5 text-amber-400" />
+            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center space-x-2">
+              <AlertTriangle className="w-5 h-5 text-amber-500 dark:text-amber-400" />
               <span>{data.stativeVerbs.title}</span>
             </h3>
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
               {data.stativeVerbs.desc}
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {data.stativeVerbs.categories.map((cat, idx) => (
-              <div key={idx} className="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-1.5">
-                <span className="font-bold text-amber-300 text-xs uppercase tracking-wider block">
+              <div key={idx} className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 space-y-1.5">
+                <span className="font-bold text-amber-700 dark:text-amber-300 text-xs uppercase tracking-wider block">
                   {cat.name}
                 </span>
-                <p className="text-sm font-mono text-slate-200">
+                <p className="text-sm font-mono text-slate-800 dark:text-slate-200">
                   {cat.verbs}
                 </p>
               </div>
             ))}
           </div>
 
-          <div className="p-4 rounded-xl bg-amber-950/20 border border-amber-500/30 text-amber-200 text-xs sm:text-sm font-medium">
+          <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs sm:text-sm font-medium">
             ⚠️ {data.stativeVerbs.warning}
           </div>
         </div>
@@ -345,20 +345,20 @@ export function PresentContinuousView({ onGoToExam }) {
 
       {/* TAB 4: MINI QUIZ */}
       {activeTab === 'miniquiz' && (
-        <div className="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6 animate-fade-in">
+        <div className="glass-card rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 space-y-6 animate-fade-in">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <h3 className="text-lg font-bold text-slate-100 flex items-center space-x-2">
-                <Sparkles className="w-5 h-5 text-cyanBrand-400" />
+              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center space-x-2">
+                <Sparkles className="w-5 h-5 text-cyan-600 dark:text-cyanBrand-400" />
                 <span>Mini-Quiz Rápido de Presente Continuo</span>
               </h3>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                 Preguntas seleccionadas aleatoriamente del banco temático ({activeQuestions.length} ejercicios)
               </p>
             </div>
             <button
               onClick={handleResetQuiz}
-              className="text-xs text-cyanBrand-400 hover:text-cyanBrand-300 font-medium underline self-start sm:self-auto"
+              className="text-xs text-cyan-700 dark:text-cyanBrand-400 hover:text-cyan-800 dark:hover:text-cyanBrand-300 font-semibold underline self-start sm:self-auto"
             >
               Cargar otras preguntas
             </button>
@@ -370,23 +370,23 @@ export function PresentContinuousView({ onGoToExam }) {
               const isCorrect = selected === q.correct;
 
               return (
-                <div key={qIdx} className="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-3">
-                  <p className="font-bold text-slate-100 text-sm">
+                <div key={qIdx} className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 space-y-3">
+                  <p className="font-bold text-slate-900 dark:text-slate-100 text-sm">
                     {qIdx + 1}. {q.q}
                   </p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {q.options.map((opt, optIdx) => {
                       const isOptSelected = selected === optIdx;
-                      let btnStyle = 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700';
+                      let btnStyle = 'bg-white dark:bg-slate-950 border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-700 hover:bg-slate-50';
 
                       if (quizChecked) {
                         if (optIdx === q.correct) {
-                          btnStyle = 'bg-emerald-500/20 border-emerald-500 text-emerald-300 font-bold';
+                          btnStyle = 'bg-emerald-50 dark:bg-emerald-500/20 border-emerald-500 text-emerald-900 dark:text-emerald-300 font-bold';
                         } else if (isOptSelected && !isCorrect) {
-                          btnStyle = 'bg-rose-500/20 border-rose-500 text-rose-300';
+                          btnStyle = 'bg-rose-50 dark:bg-rose-500/20 border-rose-500 text-rose-900 dark:text-rose-300';
                         }
                       } else if (isOptSelected) {
-                        btnStyle = 'bg-cyanBrand-600/30 border-cyanBrand-400 text-white font-bold ring-2 ring-cyanBrand-500/30';
+                        btnStyle = 'bg-cyan-50 dark:bg-cyanBrand-600/30 border-cyan-500 dark:border-cyanBrand-400 text-cyan-900 dark:text-white font-bold ring-2 ring-cyan-500/30';
                       }
 
                       return (
@@ -404,7 +404,7 @@ export function PresentContinuousView({ onGoToExam }) {
 
                   {quizChecked && (
                     <div className={`text-xs p-2.5 rounded-lg border ${
-                      isCorrect ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300' : 'bg-rose-950/40 border-rose-500/30 text-rose-300'
+                      isCorrect ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-500/30 text-emerald-900 dark:text-emerald-300' : 'bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-500/30 text-rose-900 dark:text-rose-300'
                     }`}>
                       <strong>{isCorrect ? '¡Correcto!' : 'Atención:'}</strong> {q.exp}
                     </div>
@@ -422,7 +422,7 @@ export function PresentContinuousView({ onGoToExam }) {
                 className={`px-6 py-2.5 rounded-xl font-bold text-sm transition-all ${
                   Object.keys(quizAnswers).length >= activeQuestions.length
                     ? 'bg-cyanBrand-600 hover:bg-cyanBrand-500 text-white shadow-lg shadow-cyanBrand-600/25'
-                    : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                    : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed'
                 }`}
               >
                 Comprobar Respuestas
@@ -430,7 +430,7 @@ export function PresentContinuousView({ onGoToExam }) {
             ) : (
               <button
                 onClick={handleResetQuiz}
-                className="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm border border-slate-700"
+                className="px-6 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-sm border border-slate-300 dark:border-slate-700"
               >
                 Reiniciar con Nuevas Preguntas
               </button>

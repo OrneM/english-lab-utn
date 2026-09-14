@@ -393,30 +393,30 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
         
         {/* Hero Header */}
         <div className="text-center space-y-3">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold">
-            <Sparkles className="w-3.5 h-3.5 text-cyanBrand-400" />
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-600 dark:text-brand-400 text-xs font-semibold">
+            <Sparkles className="w-3.5 h-3.5 text-cyan-600 dark:text-cyanBrand-400" />
             <span>Simulador Oficial Basado en el Parcial UTN TUP</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-100 tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
             Práctica y Simulacro de Examen
           </h1>
-          <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+          <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
             Ejercicios múltiples choice generados estrictamente con el formato del primer parcial de inglés. Pon a prueba tus conocimientos gramaticales y vocabulario técnico.
           </p>
         </div>
 
         {/* Dashboard de Métricas de Evolución y Scoring */}
-        <div className="glass-card rounded-2xl p-6 border border-slate-800 space-y-4 shadow-xl relative overflow-hidden">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+        <div className="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4 shadow-xl relative overflow-hidden">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800/80 pb-3">
             <div className="flex items-center space-x-2.5">
-              <div className="p-2 rounded-xl bg-brand-500/20 text-brand-400 border border-brand-500/30">
+              <div className="p-2 rounded-xl bg-brand-500/10 dark:bg-brand-500/20 text-brand-600 dark:text-brand-400 border border-brand-500/20 dark:border-brand-500/30">
                 <TrendingUp className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="font-extrabold text-slate-100 text-base flex items-center space-x-2">
+                <h2 className="font-extrabold text-slate-900 dark:text-slate-100 text-base flex items-center space-x-2">
                   <span>Métricas de Evolución & Scoring Histórico</span>
                 </h2>
-                <p className="text-xs text-slate-400">Seguimiento de calificaciones, velocidad de respuesta y curva de aprendizaje.</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Seguimiento de calificaciones, velocidad de respuesta y curva de aprendizaje.</p>
               </div>
             </div>
 
@@ -424,7 +424,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
               <button
                 onClick={handleClearHistory}
                 title="Reiniciar métricas guardadas"
-                className="self-start sm:self-auto text-xs text-slate-500 hover:text-rose-400 flex items-center space-x-1 px-2.5 py-1 rounded-lg border border-slate-800 hover:border-rose-500/40 transition-colors"
+                className="self-start sm:self-auto text-xs text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 flex items-center space-x-1 px-2.5 py-1 rounded-lg border border-slate-300 dark:border-slate-800 hover:border-rose-300 dark:hover:border-rose-500/40 bg-slate-50 dark:bg-transparent transition-colors"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>Limpiar Historial</span>
@@ -438,69 +438,69 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                 
                 {/* 1. Calificación Promedio */}
-                <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                  <div className="flex items-center justify-between text-xs text-slate-400">
+                <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-1">
+                  <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                     <span>Nota Promedio</span>
-                    <Target className="w-3.5 h-3.5 text-brand-400" />
+                    <Target className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
                   </div>
-                  <div className="text-2xl sm:text-3xl font-black text-slate-100">
+                  <div className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-100">
                     {metricsState.avgScore} <span className="text-xs text-slate-500 font-bold">/10</span>
                   </div>
-                  <div className="text-[11px] font-semibold text-cyan-400">
+                  <div className="text-[11px] font-semibold text-cyan-700 dark:text-cyan-400">
                     {Number(metricsState.avgScore) >= 8 ? '🌟 Nivel Promoción' : Number(metricsState.avgScore) >= 6 ? '✅ Nivel Aprobado' : '⚠️ A Reforzar'}
                   </div>
                 </div>
 
                 {/* 2. Mejor Calificación (Récord) */}
-                <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                  <div className="flex items-center justify-between text-xs text-slate-400">
+                <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-1">
+                  <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                     <span>Mejor Calificación</span>
-                    <Award className="w-3.5 h-3.5 text-amber-400" />
+                    <Award className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
                   </div>
-                  <div className="text-2xl sm:text-3xl font-black text-amber-300">
+                  <div className="text-2xl sm:text-3xl font-black text-amber-600 dark:text-amber-300">
                     {metricsState.bestScore} <span className="text-xs text-slate-500 font-bold">/10</span>
                   </div>
-                  <div className="text-[11px] text-slate-400 font-medium">
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
                     Récord personal registrado
                   </div>
                 </div>
 
                 {/* 3. Velocidad Promedio */}
-                <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                  <div className="flex items-center justify-between text-xs text-slate-400">
+                <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-1">
+                  <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                     <span>Velocidad Promedio</span>
-                    <Gauge className="w-3.5 h-3.5 text-cyanBrand-400" />
+                    <Gauge className="w-3.5 h-3.5 text-cyan-600 dark:text-cyanBrand-400" />
                   </div>
-                  <div className="text-2xl sm:text-3xl font-black text-cyan-300 font-mono">
+                  <div className="text-2xl sm:text-3xl font-black text-cyan-700 dark:text-cyan-300 font-mono">
                     {metricsState.avgSpeed}s
                   </div>
-                  <div className="text-[11px] text-slate-400 font-medium">
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
                     Por cada pregunta
                   </div>
                 </div>
 
                 {/* 4. Tendencia de Evolución */}
-                <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-                  <div className="flex items-center justify-between text-xs text-slate-400">
+                <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-1">
+                  <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                     <span>Evolución / Tendencia</span>
-                    <Flame className="w-3.5 h-3.5 text-rose-400" />
+                    <Flame className="w-3.5 h-3.5 text-rose-500 dark:text-rose-400" />
                   </div>
                   <div className="text-2xl sm:text-3xl font-black flex items-center space-x-1">
                     {metricsState.improvementPct > 0 ? (
-                      <span className="text-emerald-400 flex items-center">
+                      <span className="text-emerald-600 dark:text-emerald-400 flex items-center">
                         <ArrowUpRight className="w-6 h-6 inline" />
                         +{metricsState.improvementPct}%
                       </span>
                     ) : metricsState.improvementPct < 0 ? (
-                      <span className="text-rose-400 flex items-center">
+                      <span className="text-rose-600 dark:text-rose-400 flex items-center">
                         <ArrowDownRight className="w-6 h-6 inline" />
                         {metricsState.improvementPct}%
                       </span>
                     ) : (
-                      <span className="text-slate-300 text-xl font-bold">Estable</span>
+                      <span className="text-slate-700 dark:text-slate-300 text-xl font-bold">Estable</span>
                     )}
                   </div>
-                  <div className="text-[11px] text-slate-400 font-medium">
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
                     {metricsState.totalExams} {metricsState.totalExams === 1 ? 'simulacro realizado' : 'simulacros realizados'}
                   </div>
                 </div>
@@ -510,9 +510,9 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
               {/* Lista compacta de últimos intentos */}
               {metricsState.history && metricsState.history.length > 0 && (
                 <div className="pt-2">
-                  <div className="flex items-center justify-between text-xs font-bold text-slate-400 mb-2">
+                  <div className="flex items-center justify-between text-xs font-bold text-slate-500 dark:text-slate-400 mb-2">
                     <span className="flex items-center space-x-1.5">
-                      <History className="w-3.5 h-3.5 text-slate-400" />
+                      <History className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
                       <span>Historial de Últimos Intentos:</span>
                     </span>
                     <span>Mostrando {Math.min(5, metricsState.history.length)} de {metricsState.history.length}</span>
@@ -522,37 +522,37 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                     {metricsState.history.slice(0, 5).map((entry, idx) => (
                       <div 
                         key={entry.id || idx}
-                        className="p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-xs"
+                        className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-xs"
                       >
                         <div className="flex items-center space-x-3">
                           <span className={`w-8 h-8 rounded-lg font-black text-xs flex items-center justify-center border ${
                             entry.percentage >= 80 
-                              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' 
+                              ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-500/40' 
                               : entry.percentage >= 60 
-                              ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40' 
-                              : 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+                              ? 'bg-cyan-100 dark:bg-cyan-500/20 text-cyan-800 dark:text-cyan-300 border-cyan-300 dark:border-cyan-500/40' 
+                              : 'bg-rose-100 dark:bg-rose-500/20 text-rose-800 dark:text-rose-300 border-rose-300 dark:border-rose-500/40'
                           }`}>
                             {entry.score}
                           </span>
                           <div>
-                            <span className="font-bold text-slate-200 block text-xs sm:text-sm">
+                            <span className="font-bold text-slate-900 dark:text-slate-200 block text-xs sm:text-sm">
                               {entry.correctCount} / {entry.total} Correctas ({entry.percentage}%)
                             </span>
-                            <span className="text-[11px] text-slate-400">{entry.date}</span>
+                            <span className="text-[11px] text-slate-500 dark:text-slate-400">{entry.date}</span>
                           </div>
                         </div>
 
-                        <div className="flex items-center space-x-3 text-slate-400 text-right">
+                        <div className="flex items-center space-x-3 text-slate-500 dark:text-slate-400 text-right">
                           <div>
-                            <span className="font-mono text-slate-300 block">{entry.timeSpentFormatted || '--:--'}</span>
+                            <span className="font-mono text-slate-800 dark:text-slate-300 block">{entry.timeSpentFormatted || '--:--'}</span>
                             <span className="text-[10px] text-slate-500">{entry.avgTimePerQuestion || 0}s / preg</span>
                           </div>
                           <span className={`px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase border ${
                             entry.percentage >= 80 
-                              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' 
+                              ? 'bg-emerald-100 dark:bg-emerald-500/10 text-emerald-800 dark:text-emerald-400 border-emerald-300 dark:border-emerald-500/30' 
                               : entry.percentage >= 60 
-                              ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' 
-                              : 'bg-rose-500/10 text-rose-400 border-rose-500/30'
+                              ? 'bg-cyan-100 dark:bg-cyan-500/10 text-cyan-800 dark:text-cyan-400 border-cyan-300 dark:border-cyan-500/30' 
+                              : 'bg-rose-100 dark:bg-rose-500/10 text-rose-800 dark:text-rose-400 border-rose-300 dark:border-rose-500/30'
                           }`}>
                             {entry.gradeStatus}
                           </span>
@@ -565,12 +565,12 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
 
             </div>
           ) : (
-            <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800/80 text-center space-y-2">
-              <div className="w-10 h-10 rounded-full bg-brand-500/10 border border-brand-500/20 flex items-center justify-center mx-auto text-brand-400">
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/80 text-center space-y-2">
+              <div className="w-10 h-10 rounded-full bg-brand-500/10 border border-brand-500/20 flex items-center justify-center mx-auto text-brand-600 dark:text-brand-400">
                 <Target className="w-5 h-5" />
               </div>
-              <h4 className="font-bold text-slate-200 text-sm">Aún no tienes exámenes registrados</h4>
-              <p className="text-xs text-slate-400 max-w-md mx-auto">
+              <h4 className="font-bold text-slate-900 dark:text-slate-200 text-sm">Aún no tienes exámenes registrados</h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mx-auto">
                 Completa tu primer simulacro abajo. El sistema medirá automáticamente tu velocidad de respuesta, porcentaje de aciertos y evolución de notas para el parcial.
               </p>
             </div>
@@ -578,17 +578,17 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
         </div>
 
         {/* Config Card */}
-        <div className="glass-card rounded-2xl p-6 sm:p-8 space-y-8 shadow-2xl border border-slate-800">
+        <div className="glass-card rounded-2xl p-6 sm:p-8 space-y-8 shadow-2xl border border-slate-200 dark:border-slate-800">
           
           {/* Opción 1: Cantidad de preguntas */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center space-x-2">
-                <HelpCircle className="w-4 h-4 text-brand-400" />
+              <label className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center space-x-2">
+                <HelpCircle className="w-4 h-4 text-brand-600 dark:text-brand-400" />
                 <span>1. Cantidad de Preguntas</span>
               </label>
-              <span className="text-xs text-slate-400">
-                Banco total: <strong>{fullQuestionsBank.length} preguntas</strong> {extraAiQuestions.length > 0 && <span className="text-cyan-400">({extraAiQuestions.length} con IA ✨)</span>}
+              <span className="text-xs text-slate-500 dark:text-slate-400">
+                Banco total: <strong>{fullQuestionsBank.length} preguntas</strong> {extraAiQuestions.length > 0 && <span className="text-cyan-600 dark:text-cyan-400">({extraAiQuestions.length} con IA ✨)</span>}
               </span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -597,52 +597,61 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                 { val: 20, label: '20 Preguntas', sub: 'Formato Estándar (~15 min)' },
                 { val: 30, label: '30 Preguntas', sub: 'Examen Completo (~25 min)' },
                 { val: 'all', label: `Todas (+${fullQuestionsBank.length})`, sub: 'Maratón de Estudio' },
-              ].map((item) => (
-                <button
-                  key={item.val}
-                  type="button"
-                  id={`btn-qcount-${item.val}`}
-                  onClick={() => {
-                    soundManager.playClick();
-                    setQuestionCount(item.val);
-                  }}
-                  className={`p-4 rounded-xl text-left border transition-all duration-200 ${
-                    questionCount === item.val
-                      ? 'bg-brand-600/20 border-brand-500 text-white shadow-lg shadow-brand-500/10 ring-2 ring-brand-500/30'
-                      : 'bg-slate-900/50 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
-                  }`}
-                >
-                  <div className="font-bold text-base text-slate-100 flex items-center justify-between">
-                    <span>{item.label}</span>
-                    {questionCount === item.val && (
-                      <Check className="w-4 h-4 text-brand-400" />
-                    )}
-                  </div>
-                  <div className="text-xs text-slate-400 mt-1">{item.sub}</div>
-                </button>
-              ))}
+              ].map((item) => {
+                const isSelected = questionCount === item.val;
+                return (
+                  <button
+                    key={item.val}
+                    type="button"
+                    id={`btn-qcount-${item.val}`}
+                    onClick={() => {
+                      soundManager.playClick();
+                      setQuestionCount(item.val);
+                    }}
+                    className={`p-4 rounded-xl text-left border transition-all duration-200 ${
+                      isSelected
+                        ? 'bg-brand-50 dark:bg-brand-600/20 border-brand-500 shadow-lg shadow-brand-500/10 ring-2 ring-brand-500/30'
+                        : 'bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                    }`}
+                  >
+                    <div className={`font-bold text-base flex items-center justify-between ${
+                      isSelected ? 'text-brand-900 dark:text-slate-100' : 'text-slate-800 dark:text-slate-100'
+                    }`}>
+                      <span>{item.label}</span>
+                      {isSelected && (
+                        <Check className="w-4 h-4 text-brand-600 dark:text-brand-400" />
+                      )}
+                    </div>
+                    <div className={`text-xs mt-1 ${
+                      isSelected ? 'text-brand-700 dark:text-slate-300' : 'text-slate-500 dark:text-slate-400'
+                    }`}>
+                      {item.sub}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           {/* Generador de Preguntas Inéditas con Gemini AI */}
-          <div className="p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-brand-950/50 via-slate-900 to-indigo-950/50 border border-brand-500/30 space-y-4 shadow-lg overflow-hidden">
+          <div className="p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-indigo-50 via-white to-cyan-50 dark:from-brand-950/50 dark:via-slate-900 dark:to-indigo-950/50 border border-brand-200 dark:border-brand-500/30 space-y-4 shadow-sm overflow-hidden">
             
             {/* Top row: Icon + Title + Description */}
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-start space-x-3">
-                <div className="p-2 rounded-xl bg-cyanBrand-500/10 text-cyanBrand-400 border border-cyanBrand-500/20 flex-shrink-0 mt-0.5">
+                <div className="p-2 rounded-xl bg-brand-100 dark:bg-cyanBrand-500/10 text-brand-600 dark:text-cyanBrand-400 border border-brand-200 dark:border-cyanBrand-500/20 flex-shrink-0 mt-0.5">
                   <Sparkles className="w-5 h-5 animate-pulse" />
                 </div>
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <h4 className="font-extrabold text-sm sm:text-base text-slate-100">
+                    <h4 className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-slate-100">
                       ¿Quieres practicar con preguntas nunca antes vistas?
                     </h4>
-                    <span className="text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                    <span className="text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-cyan-100 dark:bg-cyan-500/20 text-cyan-800 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-500/30">
                       Gemini AI
                     </span>
                   </div>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                     Genera preguntas inéditas en tiempo real basadas estrictamente en las Clases 1 a 6 de la UTN.
                   </p>
                 </div>
@@ -655,7 +664,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                 <select
                   value={selectedAITopic}
                   onChange={(e) => setSelectedAITopic(e.target.value)}
-                  className="w-full py-2.5 px-3.5 rounded-xl bg-slate-900/90 border border-slate-700 text-slate-200 text-xs sm:text-sm font-medium focus:border-cyanBrand-400 focus:outline-none focus:ring-1 focus:ring-cyanBrand-400/50 transition-all cursor-pointer truncate"
+                  className="w-full py-2.5 px-3.5 rounded-xl bg-white dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200 text-xs sm:text-sm font-medium focus:border-brand-500 dark:focus:border-cyanBrand-400 focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all cursor-pointer truncate shadow-sm"
                 >
                   <option value="all">🎲 Mezcla de Todos los Temas</option>
                   <option value="Simple Present">Presente Simple (3ra persona/negación)</option>
@@ -682,13 +691,13 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
             {aiGenMessage && (
               <div className={`p-3 rounded-xl border text-xs flex items-center space-x-2 animate-fade-in ${
                 aiGenMessage.type === 'success'
-                  ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300'
-                  : 'bg-rose-950/40 border-rose-500/30 text-rose-300'
+                  ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300'
+                  : 'bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-500/30 text-rose-800 dark:text-rose-300'
               }`}>
                 {aiGenMessage.type === 'success' ? (
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                 ) : (
-                  <AlertCircle className="w-4 h-4 text-rose-400 flex-shrink-0" />
+                  <AlertCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 flex-shrink-0" />
                 )}
                 <span className="leading-relaxed">{aiGenMessage.text}</span>
               </div>
@@ -698,11 +707,11 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
           {/* Opción 2: Temporizador */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center space-x-2">
-                <Clock className="w-4 h-4 text-cyanBrand-400" />
+              <label className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center space-x-2">
+                <Clock className="w-4 h-4 text-cyan-600 dark:text-cyanBrand-400" />
                 <span>2. Tiempo Límite / Temporizador</span>
               </label>
-              <span className="text-xs text-slate-400">Control de velocidad</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">Control de velocidad</span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
               {[
@@ -711,31 +720,34 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                 { val: 20, label: '20 Min' },
                 { val: 38, label: '38 Min (UTN)' },
                 { val: 0, label: 'Sin Tiempo' },
-              ].map((item) => (
-                <button
-                  key={item.val}
-                  type="button"
-                  id={`btn-timer-${item.val}`}
-                  onClick={() => {
-                    soundManager.playClick();
-                    setTimerMinutes(item.val);
-                  }}
-                  className={`py-3 px-3 rounded-xl text-center border font-semibold text-sm transition-all duration-200 ${
-                    timerMinutes === item.val
-                      ? 'bg-cyanBrand-500/20 border-cyanBrand-400 text-cyan-300 shadow-md ring-2 ring-cyanBrand-500/20'
-                      : 'bg-slate-900/50 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
+              ].map((item) => {
+                const isSelected = timerMinutes === item.val;
+                return (
+                  <button
+                    key={item.val}
+                    type="button"
+                    id={`btn-timer-${item.val}`}
+                    onClick={() => {
+                      soundManager.playClick();
+                      setTimerMinutes(item.val);
+                    }}
+                    className={`py-3 px-3 rounded-xl text-center border font-semibold text-sm transition-all duration-200 ${
+                      isSelected
+                        ? 'bg-cyan-50 dark:bg-cyanBrand-500/20 border-cyan-500 dark:border-cyanBrand-400 text-cyan-900 dark:text-cyan-300 shadow-md ring-2 ring-cyan-500/20 font-bold'
+                        : 'bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700 hover:text-slate-900 dark:hover:text-slate-200'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           {/* Opción 3: Modo de Examen */}
           <div className="space-y-3">
-            <label className="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center space-x-2">
-              <Zap className="w-4 h-4 text-amber-400" />
+            <label className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center space-x-2">
+              <Zap className="w-4 h-4 text-amber-500 dark:text-amber-400" />
               <span>3. Modo de Evaluación</span>
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -748,18 +760,22 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                 }}
                 className={`p-4 rounded-xl text-left border transition-all ${
                   examMode === 'exam'
-                    ? 'bg-brand-600/20 border-brand-500 ring-2 ring-brand-500/30'
-                    : 'bg-slate-900/50 border-slate-800 text-slate-400 hover:border-slate-700'
+                    ? 'bg-brand-50 dark:bg-brand-600/20 border-brand-500 ring-2 ring-brand-500/30 shadow-sm'
+                    : 'bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
-                <div className="flex items-center justify-between font-bold text-slate-100">
-                  <span className="flex items-center space-x-2">
-                    <Award className="w-4 h-4 text-brand-400" />
+                <div className="flex items-center justify-between font-bold">
+                  <span className={`flex items-center space-x-2 ${
+                    examMode === 'exam' ? 'text-brand-900 dark:text-slate-100' : 'text-slate-800 dark:text-slate-100'
+                  }`}>
+                    <Award className="w-4 h-4 text-brand-600 dark:text-brand-400" />
                     <span>Simulacro Formal</span>
                   </span>
-                  {examMode === 'exam' && <Check className="w-4 h-4 text-brand-400" />}
+                  {examMode === 'exam' && <Check className="w-4 h-4 text-brand-600 dark:text-brand-400" />}
                 </div>
-                <p className="text-xs text-slate-400 mt-1.5">
+                <p className={`text-xs mt-1.5 ${
+                  examMode === 'exam' ? 'text-brand-800 dark:text-slate-400' : 'text-slate-500 dark:text-slate-400'
+                }`}>
                   Respuestas ocultas hasta el final. Genera calificación en escala UTN (0-10) y desglose por temas al entregar.
                 </p>
               </button>
@@ -773,18 +789,22 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                 }}
                 className={`p-4 rounded-xl text-left border transition-all ${
                   examMode === 'practice'
-                    ? 'bg-brand-600/20 border-brand-500 ring-2 ring-brand-500/30'
-                    : 'bg-slate-900/50 border-slate-800 text-slate-400 hover:border-slate-700'
+                    ? 'bg-brand-50 dark:bg-brand-600/20 border-brand-500 ring-2 ring-brand-500/30 shadow-sm'
+                    : 'bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
-                <div className="flex items-center justify-between font-bold text-slate-100">
-                  <span className="flex items-center space-x-2">
-                    <CheckCheck className="w-4 h-4 text-cyanBrand-400" />
+                <div className="flex items-center justify-between font-bold">
+                  <span className={`flex items-center space-x-2 ${
+                    examMode === 'practice' ? 'text-brand-900 dark:text-slate-100' : 'text-slate-800 dark:text-slate-100'
+                  }`}>
+                    <CheckCheck className="w-4 h-4 text-cyan-600 dark:text-cyanBrand-400" />
                     <span>Práctica con Feedback Inmediato</span>
                   </span>
-                  {examMode === 'practice' && <Check className="w-4 h-4 text-brand-400" />}
+                  {examMode === 'practice' && <Check className="w-4 h-4 text-brand-600 dark:text-brand-400" />}
                 </div>
-                <p className="text-xs text-slate-400 mt-1.5">
+                <p className={`text-xs mt-1.5 ${
+                  examMode === 'practice' ? 'text-brand-800 dark:text-slate-400' : 'text-slate-500 dark:text-slate-400'
+                }`}>
                   Verifica cada respuesta al instante con colores verde/rojo y explicación gramatical detallada mientras avanzas.
                 </p>
               </button>
@@ -792,8 +812,8 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
           </div>
 
           {/* Temas Incluidos */}
-          <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800/80 space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800/80 space-y-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
               Temas Evaluados en este Simulacro:
             </span>
             <div className="flex flex-wrap gap-2 pt-1">
@@ -809,7 +829,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                 'Vocabulario Empresarial IT (Clase 6)',
                 'Adverbios de Frecuencia (Clase 1)'
               ].map((t, idx) => (
-                <span key={idx} className="text-[11px] px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 border border-slate-700">
+                <span key={idx} className="text-[11px] px-2.5 py-1 rounded-md bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-sm">
                   {t}
                 </span>
               ))}
@@ -847,14 +867,14 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6 animate-fade-in">
         
         {/* Top Control Bar */}
-        <div className="glass-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 shadow-lg border border-slate-800">
+        <div className="glass-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 shadow-lg border border-slate-200 dark:border-slate-800">
           
           {/* Progress badge */}
           <div className="flex items-center space-x-3">
-            <span className="font-extrabold text-slate-100 text-sm sm:text-base">
+            <span className="font-extrabold text-slate-900 dark:text-slate-100 text-sm sm:text-base">
               Pregunta {currentIndex + 1} de {currentQuestions.length}
             </span>
-            <span className="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+            <span className="text-xs px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 font-medium">
               {answeredCount} / {currentQuestions.length} respondidas
             </span>
           </div>
@@ -866,14 +886,14 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
             {secondsRemaining !== null ? (
               <div className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl font-mono font-bold text-sm border ${
                 isTimeCritical
-                  ? 'bg-rose-500/20 text-rose-400 border-rose-500/40 animate-pulse'
-                  : 'bg-slate-900 text-cyan-300 border-slate-700'
+                  ? 'bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-400 border-rose-300 dark:border-rose-500/40 animate-pulse'
+                  : 'bg-cyan-50 dark:bg-slate-900 text-cyan-800 dark:text-cyan-300 border border-cyan-200 dark:border-slate-700'
               }`}>
-                <Clock className="w-4 h-4" />
+                <Clock className="w-4 h-4 text-cyan-600 dark:text-cyanBrand-400" />
                 <span>{formatTime(secondsRemaining)}</span>
               </div>
             ) : (
-              <div className="flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-slate-900 text-slate-400 border border-slate-800 text-xs font-medium">
+              <div className="flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 text-xs font-medium">
                 <Clock className="w-3.5 h-3.5" />
                 <span>Modo Libre</span>
               </div>
@@ -886,18 +906,18 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
               title={isFlagged ? 'Quitar marca' : 'Marcar para revisar luego'}
               className={`p-2 rounded-xl border transition-colors ${
                 isFlagged
-                  ? 'bg-amber-500/20 text-amber-400 border-amber-500/40'
-                  : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-slate-200'
+                  ? 'bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-400 border-amber-300 dark:border-amber-500/40'
+                  : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-800 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50'
               }`}
             >
-              <Flag className={`w-4 h-4 ${isFlagged ? 'fill-current' : ''}`} />
+              <Flag className={`w-4 h-4 ${isFlagged ? 'fill-current text-amber-600 dark:text-amber-400' : ''}`} />
             </button>
 
             {/* Finish Button */}
             <button
               id="btn-finish-exam-early"
               onClick={() => handleFinishExam(false)}
-              className="px-3.5 py-1.5 rounded-xl bg-rose-600/80 hover:bg-rose-600 text-white text-xs font-bold border border-rose-500/50 shadow transition-colors"
+              className="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow transition-colors"
             >
               Entregar Examen
             </button>
@@ -909,21 +929,21 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
         {timeAlertNotice && (
           <div className={`p-4 rounded-2xl border text-xs sm:text-sm font-extrabold flex items-center justify-between shadow-2xl animate-slide-up transition-all ${
             timeAlertNotice.type === 'critical'
-              ? 'bg-rose-950/80 border-rose-500/80 text-rose-200 ring-2 ring-rose-500/50 shadow-rose-500/20 animate-pulse'
-              : 'bg-amber-950/80 border-amber-500/80 text-amber-200 ring-2 ring-amber-500/50 shadow-amber-500/20'
+              ? 'bg-rose-100 dark:bg-rose-950/80 border-rose-400 dark:border-rose-500/80 text-rose-900 dark:text-rose-200 ring-2 ring-rose-500/50 shadow-rose-500/20 animate-pulse'
+              : 'bg-amber-100 dark:bg-amber-950/80 border-amber-400 dark:border-amber-500/80 text-amber-900 dark:text-amber-200 ring-2 ring-amber-500/50 shadow-amber-500/20'
           }`}>
             <div className="flex items-center space-x-2.5">
-              <Clock className={`w-5 h-5 ${timeAlertNotice.type === 'critical' ? 'text-rose-400 animate-spin' : 'text-amber-400'}`} />
+              <Clock className={`w-5 h-5 ${timeAlertNotice.type === 'critical' ? 'text-rose-600 dark:text-rose-400 animate-spin' : 'text-amber-600 dark:text-amber-400'}`} />
               <span>{timeAlertNotice.text}</span>
             </div>
-            <span className="font-mono font-black text-xs px-2.5 py-1 rounded-lg bg-black/50 border border-white/10">
+            <span className="font-mono font-black text-xs px-2.5 py-1 rounded-lg bg-black/10 dark:bg-black/50 border border-black/10 dark:border-white/10">
               {formatTime(secondsRemaining)}
             </span>
           </div>
         )}
 
         {/* Question Progress Bar */}
-        <div className="w-full bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-800">
+        <div className="w-full bg-slate-200 dark:bg-slate-900 rounded-full h-2 overflow-hidden border border-slate-300 dark:border-slate-800">
           <div 
             className="bg-gradient-to-r from-brand-500 to-cyanBrand-400 h-2 transition-all duration-300 rounded-full"
             style={{ width: `${((currentIndex + 1) / currentQuestions.length) * 100}%` }}
@@ -931,20 +951,20 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
         </div>
 
         {/* Question Card */}
-        <div className="glass-card rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl border border-slate-800">
+        <div className="glass-card rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl border border-slate-200 dark:border-slate-800">
           
           {/* Question Metadata */}
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-lg bg-brand-500/10 text-brand-400 border border-brand-500/20">
+            <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-400 border border-brand-200 dark:border-brand-500/20">
               {currentQ.topic}
             </span>
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-slate-500 dark:text-slate-400">
               {currentQ.source || 'Primer Parcial UTN'}
             </span>
           </div>
 
           {/* Question Text */}
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-100 leading-relaxed">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 leading-relaxed">
             {currentQ.question}
           </h2>
 
@@ -954,18 +974,18 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
               const isSelected = userAnswers[currentQ.id] === opt.id;
               
               // Color de feedback en modo práctica verificado
-              let optionStyle = 'bg-slate-900/60 border-slate-800 text-slate-200 hover:border-slate-700 hover:bg-slate-850';
+              let optionStyle = 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-850';
               
               if (isInstant && isChecked) {
                 if (opt.id === currentQ.correctAnswer) {
-                  optionStyle = 'bg-emerald-500/20 border-emerald-500 text-emerald-200 ring-2 ring-emerald-500/30';
+                  optionStyle = 'bg-emerald-50 dark:bg-emerald-500/20 border-emerald-500 text-emerald-900 dark:text-emerald-200 ring-2 ring-emerald-500/30 font-bold';
                 } else if (isSelected && opt.id !== currentQ.correctAnswer) {
-                  optionStyle = 'bg-rose-500/20 border-rose-500 text-rose-200 ring-2 ring-rose-500/30';
+                  optionStyle = 'bg-rose-50 dark:bg-rose-500/20 border-rose-500 text-rose-900 dark:text-rose-200 ring-2 ring-rose-500/30';
                 } else {
-                  optionStyle = 'bg-slate-900/30 border-slate-850 text-slate-500 opacity-60';
+                  optionStyle = 'bg-slate-50/50 dark:bg-slate-900/30 border-slate-200 dark:border-slate-850 text-slate-400 dark:text-slate-500 opacity-60';
                 }
               } else if (isSelected) {
-                optionStyle = 'bg-brand-600/20 border-brand-500 text-white ring-2 ring-brand-500/30 shadow-md';
+                optionStyle = 'bg-brand-50 dark:bg-brand-600/20 border-brand-500 text-brand-900 dark:text-white ring-2 ring-brand-500/30 shadow-md font-bold';
               }
 
               return (
@@ -979,8 +999,8 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                   <div className="flex items-center space-x-3">
                     <span className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs uppercase border ${
                       isSelected
-                        ? 'bg-brand-500 text-white border-brand-400'
-                        : 'bg-slate-800 text-slate-400 border-slate-700'
+                        ? 'bg-brand-600 text-white border-brand-500'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-400 border-slate-300 dark:border-slate-700'
                     }`}>
                       {opt.id}
                     </span>
@@ -993,10 +1013,10 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                   {isInstant && isChecked && (
                     <div>
                       {opt.id === currentQ.correctAnswer && (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                       )}
                       {isSelected && opt.id !== currentQ.correctAnswer && (
-                        <XCircle className="w-5 h-5 text-rose-400" />
+                        <XCircle className="w-5 h-5 text-rose-600 dark:text-rose-400" />
                       )}
                     </div>
                   )}
@@ -1016,7 +1036,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                   className={`w-full py-3 rounded-xl font-bold text-sm transition-all ${
                     isAnswered
                       ? 'bg-cyanBrand-600 hover:bg-cyanBrand-500 text-white shadow-lg shadow-cyanBrand-600/25'
-                      : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                      : 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed'
                   }`}
                 >
                   Comprobar Respuesta Ahora
@@ -1024,24 +1044,24 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
               ) : (
                 <div className={`p-4 rounded-xl border text-sm space-y-2 animate-fade-in ${
                   userAnswers[currentQ.id] === currentQ.correctAnswer
-                    ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300'
-                    : 'bg-rose-950/40 border-rose-500/30 text-rose-300'
+                    ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-500/30 text-emerald-900 dark:text-emerald-300'
+                    : 'bg-rose-50 dark:bg-rose-950/40 border-rose-300 dark:border-rose-500/30 text-rose-900 dark:text-rose-300'
                 }`}>
                   <div className="flex items-center space-x-2 font-bold">
                     {userAnswers[currentQ.id] === currentQ.correctAnswer ? (
                       <>
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                         <span>¡Respuesta Correcta!</span>
                       </>
                     ) : (
                       <>
-                        <XCircle className="w-4 h-4 text-rose-400" />
+                        <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
                         <span>Respuesta Incorrecta</span>
                       </>
                     )}
                   </div>
-                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-                    <strong className="text-white">Explicación: </strong>
+                  <p className="text-slate-700 dark:text-slate-300 text-xs sm:text-sm leading-relaxed">
+                    <strong className="text-slate-900 dark:text-white">Explicación: </strong>
                     {currentQ.explanation}
                   </p>
                 </div>
@@ -1050,7 +1070,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
           )}
 
           {/* Navigation Controls */}
-          <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-800">
             
             {/* Previous */}
             <button
@@ -1062,8 +1082,8 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
               }}
               className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl font-bold text-sm border transition-colors ${
                 currentIndex === 0
-                  ? 'opacity-40 cursor-not-allowed bg-slate-900 border-slate-800 text-slate-600'
-                  : 'bg-slate-900 hover:bg-slate-800 border-slate-700 text-slate-300'
+                  ? 'opacity-40 cursor-not-allowed bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-600'
+                  : 'bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300'
               }`}
             >
               <ChevronLeft className="w-4 h-4" />
@@ -1099,8 +1119,8 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
         </div>
 
         {/* Question Palette / Grid Navigator */}
-        <div className="glass-card rounded-2xl p-4 border border-slate-800 space-y-3">
-          <div className="flex items-center justify-between text-xs font-bold text-slate-400">
+        <div className="glass-card rounded-2xl p-4 border border-slate-200 dark:border-slate-800 space-y-3">
+          <div className="flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-400">
             <span>Navegador de Preguntas:</span>
             <div className="flex items-center space-x-3">
               <span className="flex items-center space-x-1">
@@ -1120,13 +1140,13 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
               const isAns = userAnswers[q.id] !== undefined;
               const isFlg = flaggedQuestions.has(q.id);
 
-              let btnClass = 'bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700';
+              let btnClass = 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-700';
               if (isCurr) {
-                btnClass = 'bg-cyanBrand-500 text-slate-950 font-extrabold border-cyan-400 shadow-md ring-2 ring-cyanBrand-400/40';
+                btnClass = 'bg-cyan-500 text-slate-950 font-black border-cyan-400 shadow-md ring-2 ring-cyanBrand-400/40';
               } else if (isFlg) {
-                btnClass = 'bg-amber-500/20 text-amber-300 border-amber-500/50';
+                btnClass = 'bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-500/50 font-bold';
               } else if (isAns) {
-                btnClass = 'bg-brand-600/30 text-brand-300 border-brand-500/40';
+                btnClass = 'bg-brand-100 dark:bg-brand-600/30 text-brand-900 dark:text-brand-300 border-brand-300 dark:border-brand-500/40 font-bold';
               }
 
               return (
@@ -1165,15 +1185,13 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
         
         {/* Main Score Header Banner */}
-        <div className="glass-card rounded-3xl p-6 sm:p-10 border border-slate-800 text-center space-y-6 shadow-2xl relative overflow-hidden">
+        <div className="glass-card rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-800 text-center space-y-6 shadow-2xl relative overflow-hidden">
           
-          <div className="absolute -top-24 -left-24 w-48 h-48 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
-          <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-cyanBrand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -top-24 -left-24 w-48 h-48 bg-brand-500/10 dark:bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-cyanBrand-500/10 dark:bg-cyanBrand-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
           {/* Status Badge */}
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-extrabold uppercase tracking-wider shadow-sm"
-               style={{}}
-          >
+          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-extrabold uppercase tracking-wider shadow-sm">
             <span className={`px-3 py-1 rounded-full border ${stats.gradeStatus.color}`}>
               {stats.gradeStatus.label}
             </span>
@@ -1182,42 +1200,42 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
           {/* Score Numbers */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
             <div className="space-y-1">
-              <div className="text-5xl sm:text-7xl font-black bg-gradient-to-r from-brand-400 via-indigo-200 to-cyan-400 bg-clip-text text-transparent tracking-tight">
+              <div className="text-5xl sm:text-7xl font-black bg-gradient-to-r from-brand-600 via-indigo-500 to-cyan-600 dark:from-brand-400 dark:via-indigo-200 dark:to-cyan-400 bg-clip-text text-transparent tracking-tight">
                 {stats.score}
-                <span className="text-2xl sm:text-3xl text-slate-500 font-bold"> / 10</span>
+                <span className="text-2xl sm:text-3xl text-slate-400 dark:text-slate-500 font-bold"> / 10</span>
               </div>
-              <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Calificación UTN</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">Calificación UTN</p>
             </div>
 
-            <div className="h-12 w-px bg-slate-800 hidden sm:block"></div>
+            <div className="h-12 w-px bg-slate-200 dark:bg-slate-800 hidden sm:block"></div>
 
             <div className="space-y-1">
-              <div className="text-4xl sm:text-5xl font-black text-slate-100 tracking-tight">
+              <div className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
                 {stats.percentage}%
               </div>
-              <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">
+              <p className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
                 {stats.correctCount} de {stats.total} Aciertos
               </p>
             </div>
           </div>
 
-          <p className="text-slate-300 max-w-xl mx-auto text-sm leading-relaxed">
+          <p className="text-slate-700 dark:text-slate-300 max-w-xl mx-auto text-sm leading-relaxed">
             {stats.gradeStatus.desc}
           </p>
 
           {/* Key Metrics Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-2xl mx-auto pt-2">
-            <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
-              <span className="text-[11px] text-slate-400 block">Tiempo Empleado</span>
-              <span className="font-mono font-bold text-slate-100 text-sm sm:text-base">{stats.timeSpent}</span>
+            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 block">Tiempo Empleado</span>
+              <span className="font-mono font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">{stats.timeSpent}</span>
             </div>
-            <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
-              <span className="text-[11px] text-slate-400 block">Promedio x Pregunta</span>
-              <span className="font-mono font-bold text-slate-100 text-sm sm:text-base">{stats.avgTimePerQuestion}s</span>
+            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 block">Promedio x Pregunta</span>
+              <span className="font-mono font-bold text-slate-900 dark:text-slate-100 text-sm sm:text-base">{stats.avgTimePerQuestion}s</span>
             </div>
-            <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 col-span-2 sm:col-span-1">
-              <span className="text-[11px] text-slate-400 block">Efectividad</span>
-              <span className="font-bold text-cyanBrand-400 text-sm sm:text-base">{stats.percentage >= 60 ? 'Aprobatorio' : 'A reforzar'}</span>
+            <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 col-span-2 sm:col-span-1">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 block">Efectividad</span>
+              <span className="font-bold text-cyan-700 dark:text-cyanBrand-400 text-sm sm:text-base">{stats.percentage >= 60 ? 'Aprobatorio' : 'A reforzar'}</span>
             </div>
           </div>
 
@@ -1237,9 +1255,9 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                 soundManager.playClick();
                 setGameState('setup');
               }}
-              className="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm border border-slate-700 transition-all flex items-center space-x-2"
+              className="px-6 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-sm border border-slate-300 dark:border-slate-700 transition-all flex items-center space-x-2"
             >
-              <Sparkles className="w-4 h-4 text-cyanBrand-400" />
+              <Sparkles className="w-4 h-4 text-cyan-600 dark:text-cyanBrand-400" />
               <span>Configurar Nuevo Simulacro</span>
             </button>
           </div>
@@ -1247,9 +1265,9 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
         </div>
 
         {/* Breakdown by Topic */}
-        <div className="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
-          <h3 className="font-bold text-slate-100 text-base flex items-center space-x-2">
-            <BarChart2 className="w-5 h-5 text-brand-400" />
+        <div className="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
+          <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base flex items-center space-x-2">
+            <BarChart2 className="w-5 h-5 text-brand-600 dark:text-brand-400" />
             <span>Desglose de Rendimiento por Tema</span>
           </h3>
 
@@ -1257,15 +1275,15 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
             {Object.entries(stats.topicStats).map(([topic, data]) => {
               const pct = Math.round((data.correct / data.total) * 100);
               return (
-                <div key={topic} className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-2">
+                <div key={topic} className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-2">
                   <div className="flex items-center justify-between text-xs font-semibold">
-                    <span className="text-slate-200">{topic}</span>
-                    <span className="text-slate-400 font-mono">{data.correct}/{data.total} ({pct}%)</span>
+                    <span className="text-slate-800 dark:text-slate-200">{topic}</span>
+                    <span className="text-slate-500 dark:text-slate-400 font-mono">{data.correct}/{data.total} ({pct}%)</span>
                   </div>
-                  <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                  <div className="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                     <div 
                       className={`h-2 rounded-full transition-all duration-500 ${
-                        pct >= 80 ? 'bg-emerald-400' : pct >= 60 ? 'bg-cyan-400' : 'bg-rose-400'
+                        pct >= 80 ? 'bg-emerald-500' : pct >= 60 ? 'bg-cyan-500' : 'bg-rose-500'
                       }`}
                       style={{ width: `${pct}%` }}
                     />
@@ -1278,76 +1296,76 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
 
         {/* Evolución vs Promedio Histórico */}
         {metricsState.hasData && (
-          <div className="glass-card rounded-2xl p-6 border border-slate-800 space-y-4">
+          <div className="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="font-bold text-slate-100 text-base flex items-center space-x-2">
-                <TrendingUp className="w-5 h-5 text-cyanBrand-400" />
+              <h3 className="font-bold text-slate-900 dark:text-slate-100 text-base flex items-center space-x-2">
+                <TrendingUp className="w-5 h-5 text-cyan-600 dark:text-cyanBrand-400" />
                 <span>Evolución vs. Tu Promedio Histórico</span>
               </h3>
-              <span className="text-xs px-2.5 py-1 rounded-full bg-slate-900 text-slate-400 border border-slate-800">
+              <span className="text-xs px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800">
                 {metricsState.totalExams} {metricsState.totalExams === 1 ? 'intento' : 'intentos'} en total
               </span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {/* Comparación de Nota */}
-              <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1.5">
-                <span className="text-xs text-slate-400 block font-semibold">Nota en este Examen</span>
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-1.5">
+                <span className="text-xs text-slate-500 dark:text-slate-400 block font-semibold">Nota en este Examen</span>
                 <div className="flex items-baseline space-x-2">
-                  <span className="text-2xl font-black text-slate-100">{stats.score}</span>
+                  <span className="text-2xl font-black text-slate-900 dark:text-slate-100">{stats.score}</span>
                   <span className="text-xs text-slate-500">vs prom {metricsState.avgScore}</span>
                 </div>
                 <div className="text-[11px] font-bold">
                   {Number(stats.score) > Number(metricsState.avgScore) ? (
-                    <span className="text-emerald-400 flex items-center">
+                    <span className="text-emerald-600 dark:text-emerald-400 flex items-center">
                       <ArrowUpRight className="w-3.5 h-3.5 mr-0.5 inline" />
                       +{(Number(stats.score) - Number(metricsState.avgScore)).toFixed(1)} pts superior a tu promedio
                     </span>
                   ) : Number(stats.score) < Number(metricsState.avgScore) ? (
-                    <span className="text-rose-400 flex items-center">
+                    <span className="text-rose-600 dark:text-rose-400 flex items-center">
                       <ArrowDownRight className="w-3.5 h-3.5 mr-0.5 inline" />
                       -{(Number(metricsState.avgScore) - Number(stats.score)).toFixed(1)} pts debajo de tu promedio
                     </span>
                   ) : (
-                    <span className="text-cyan-400">Igual a tu promedio histórico</span>
+                    <span className="text-cyan-700 dark:text-cyan-400">Igual a tu promedio histórico</span>
                   )}
                 </div>
               </div>
 
               {/* Comparación de Velocidad */}
-              <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1.5">
-                <span className="text-xs text-slate-400 block font-semibold">Velocidad x Pregunta</span>
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-1.5">
+                <span className="text-xs text-slate-500 dark:text-slate-400 block font-semibold">Velocidad x Pregunta</span>
                 <div className="flex items-baseline space-x-2">
-                  <span className="text-2xl font-black text-cyan-300 font-mono">{stats.avgTimePerQuestion}s</span>
+                  <span className="text-2xl font-black text-cyan-700 dark:text-cyan-300 font-mono">{stats.avgTimePerQuestion}s</span>
                   <span className="text-xs text-slate-500">vs prom {metricsState.avgSpeed}s</span>
                 </div>
                 <div className="text-[11px] font-bold">
                   {stats.avgTimePerQuestion < metricsState.avgSpeed ? (
-                    <span className="text-emerald-400 flex items-center">
+                    <span className="text-emerald-600 dark:text-emerald-400 flex items-center">
                       <ArrowUpRight className="w-3.5 h-3.5 mr-0.5 inline" />
                       {metricsState.avgSpeed - stats.avgTimePerQuestion}s más rápido que tu promedio
                     </span>
                   ) : stats.avgTimePerQuestion > metricsState.avgSpeed ? (
-                    <span className="text-amber-400 flex items-center">
+                    <span className="text-amber-600 dark:text-amber-400 flex items-center">
                       <ArrowDownRight className="w-3.5 h-3.5 mr-0.5 inline" />
                       Resolución más pausada y reflexiva
                     </span>
                   ) : (
-                    <span className="text-cyan-400">Ritmo idéntico a tu media</span>
+                    <span className="text-cyan-700 dark:text-cyan-400">Ritmo idéntico a tu media</span>
                   )}
                 </div>
               </div>
 
               {/* Récord Personal */}
-              <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1.5">
-                <span className="text-xs text-slate-400 block font-semibold">Récord Personal</span>
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-1.5">
+                <span className="text-xs text-slate-500 dark:text-slate-400 block font-semibold">Récord Personal</span>
                 <div className="flex items-baseline space-x-2">
-                  <span className="text-2xl font-black text-amber-300">{metricsState.bestScore}</span>
+                  <span className="text-2xl font-black text-amber-600 dark:text-amber-300">{metricsState.bestScore}</span>
                   <span className="text-xs text-slate-500">/10 récord</span>
                 </div>
-                <div className="text-[11px] font-bold text-slate-400">
+                <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
                   {Number(stats.score) >= Number(metricsState.bestScore) ? (
-                    <span className="text-amber-400 flex items-center">
+                    <span className="text-amber-600 dark:text-amber-400 flex items-center">
                       <Flame className="w-3.5 h-3.5 mr-0.5 inline" />
                       ¡Nuevo récord o máxima nota alcanzada!
                     </span>
@@ -1361,15 +1379,15 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
         )}
 
         {/* Detailed Question Review */}
-        <div className="glass-card rounded-2xl p-6 border border-slate-800 space-y-6">
+        <div className="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h3 className="font-bold text-slate-100 text-lg">Revisión Detallada de Respuestas</h3>
-              <p className="text-xs text-slate-400">Consulta las correcciones y la fundamentación gramatical de cada ítem.</p>
+              <h3 className="font-bold text-slate-900 dark:text-slate-100 text-lg">Revisión Detallada de Respuestas</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Consulta las correcciones y la fundamentación gramatical de cada ítem.</p>
             </div>
 
             {/* Filter Pills */}
-            <div className="flex items-center space-x-1.5 bg-slate-900 p-1 rounded-xl border border-slate-800">
+            <div className="flex items-center space-x-1.5 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800">
               {[
                 { id: 'all', label: `Todas (${currentQuestions.length})` },
                 { id: 'incorrect', label: `Incorrectas (${stats.total - stats.correctCount})` },
@@ -1384,7 +1402,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     resultsFilter === f.id
                       ? 'bg-brand-600 text-white shadow'
-                      : 'text-slate-400 hover:text-slate-200'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   {f.label}
@@ -1395,7 +1413,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
 
           {/* List of Questions */}
           <div className="space-y-4">
-            {filteredReviewQuestions.map((q, idx) => {
+            {filteredReviewQuestions.map((q) => {
               const userAns = userAnswers[q.id];
               const isCorrect = userAns === q.correctAnswer;
               const selectedOpt = q.options.find(o => o.id === userAns);
@@ -1406,16 +1424,16 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                   key={q.id}
                   className={`p-5 rounded-xl border space-y-3 transition-all ${
                     isCorrect
-                      ? 'bg-emerald-950/20 border-emerald-500/30'
-                      : 'bg-rose-950/20 border-rose-500/30'
+                      ? 'bg-emerald-50/70 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-500/30'
+                      : 'bg-rose-50/70 dark:bg-rose-950/20 border-rose-300 dark:border-rose-500/30'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                    <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                       {q.topic}
                     </span>
                     <span className={`flex items-center space-x-1 text-xs font-extrabold ${
-                      isCorrect ? 'text-emerald-400' : 'text-rose-400'
+                      isCorrect ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'
                     }`}>
                       {isCorrect ? (
                         <>
@@ -1431,28 +1449,28 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                     </span>
                   </div>
 
-                  <p className="font-bold text-slate-100 text-base">
+                  <p className="font-bold text-slate-900 dark:text-slate-100 text-base">
                     {q.question}
                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                     <div className={`p-2.5 rounded-lg border ${
-                      isCorrect ? 'bg-emerald-900/30 border-emerald-500/40 text-emerald-200' : 'bg-rose-900/30 border-rose-500/40 text-rose-200'
+                      isCorrect ? 'bg-emerald-100/80 dark:bg-emerald-900/30 border-emerald-300 dark:border-emerald-500/40 text-emerald-950 dark:text-emerald-200' : 'bg-rose-100/80 dark:bg-rose-900/30 border-rose-300 dark:border-rose-500/40 text-rose-950 dark:text-rose-200'
                     }`}>
                       <span className="font-semibold block text-[10px] uppercase opacity-75">Tu Respuesta:</span>
                       <span>{selectedOpt ? `(${selectedOpt.id.toUpperCase()}) ${selectedOpt.text}` : 'No respondida'}</span>
                     </div>
 
                     {!isCorrect && (
-                      <div className="p-2.5 rounded-lg bg-emerald-900/30 border border-emerald-500/40 text-emerald-200">
+                      <div className="p-2.5 rounded-lg bg-emerald-100/80 dark:bg-emerald-900/30 border border-emerald-300 dark:border-emerald-500/40 text-emerald-950 dark:text-emerald-200">
                         <span className="font-semibold block text-[10px] uppercase opacity-75">Respuesta Correcta:</span>
                         <span>({correctOpt.id.toUpperCase()}) {correctOpt.text}</span>
                       </div>
                     )}
                   </div>
 
-                  <div className="pt-2 border-t border-slate-800/80 text-xs text-slate-300 leading-relaxed">
-                    <strong className="text-slate-100">Fundamentación: </strong>
+                  <div className="pt-2 border-t border-slate-200 dark:border-slate-800/80 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                    <strong className="text-slate-900 dark:text-slate-100">Fundamentación: </strong>
                     {q.explanation}
                   </div>
                 </div>
