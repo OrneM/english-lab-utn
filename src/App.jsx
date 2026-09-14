@@ -45,7 +45,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 light:bg-slate-50 text-slate-100 light:text-slate-900 transition-colors duration-200">
+    <div className="min-h-screen flex flex-col bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
 
       {/* Fixed Navbar */}
       <Navbar
@@ -92,39 +92,39 @@ export function App() {
       />
 
       {/* Modern Footer */}
-      <footer className="border-t border-slate-900 light:border-slate-200 bg-slate-950/80 light:bg-white/80 py-8 text-xs text-slate-400">
+      <footer className="border-t border-slate-200 dark:border-slate-900 bg-white/80 dark:bg-slate-950/80 py-8 text-xs text-slate-600 dark:text-slate-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
 
           <div className="flex items-center space-x-2">
             <div className="w-6 h-6 rounded-md bg-brand-600 flex items-center justify-center text-white">
               <Code className="w-3.5 h-3.5" />
             </div>
-            <span className="font-bold text-slate-200 light:text-slate-800">EnglishLab TUP</span>
+            <span className="font-bold text-slate-800 dark:text-slate-200">EnglishLab TUP</span>
             <span>· Material Oficial de Inglés Técnico I</span>
           </div>
 
-          <div className="flex items-center space-x-6 text-slate-400">
+          <div className="flex items-center space-x-6 text-slate-600 dark:text-slate-400">
             <button
               onClick={() => handleNavigate('exam')}
-              className="hover:text-slate-200 light:hover:text-slate-900 transition-colors"
+              className="hover:text-slate-900 dark:hover:text-slate-200 transition-colors"
             >
               Simulador
             </button>
             <button
               onClick={() => handleNavigate('present-simple')}
-              className="hover:text-slate-200 light:hover:text-slate-900 transition-colors"
+              className="hover:text-slate-900 dark:hover:text-slate-200 transition-colors"
             >
               Presente Simple
             </button>
             <button
               onClick={() => handleNavigate('present-continuous')}
-              className="hover:text-slate-200 light:hover:text-slate-900 transition-colors"
+              className="hover:text-slate-900 dark:hover:text-slate-200 transition-colors"
             >
               Presente Continuo
             </button>
             <button
               onClick={() => handleNavigate('past-simple')}
-              className="hover:text-slate-200 light:hover:text-slate-900 transition-colors"
+              className="hover:text-slate-900 dark:hover:text-slate-200 transition-colors"
             >
               Pasado Simple
             </button>
