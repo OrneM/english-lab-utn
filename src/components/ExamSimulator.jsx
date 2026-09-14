@@ -25,8 +25,7 @@ import {
   Target,
   Gauge,
   ArrowUpRight,
-  ArrowDownRight,
-  Dices
+  ArrowDownRight
 } from 'lucide-react';
 import { EXAM_QUESTIONS } from '../data/questions';
 import { soundManager } from '../utils/soundEffects';
@@ -41,23 +40,16 @@ import {
   getSavedAIQuestions,
   hasGeminiApiKey
 } from '../utils/geminiService';
-import {
-  shuffleArray,
-  shuffleQuestionOptions,
-  generateSpontaneousQuestions
-} from '../utils/dynamicQuestionGenerator';
 
 export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
   // Configuración
   const [questionCount, setQuestionCount] = useState(20);
   const [timerMinutes, setTimerMinutes] = useState(20);
   const [examMode, setExamMode] = useState('exam'); // 'exam' | 'practice'
-  const [bankSourceMode, setBankSourceMode] = useState('dynamic'); // 'dynamic' | 'curated'
   
-  // Banco extendido con preguntas generadas por IA y generador espontáneo
+  // Banco extendido con preguntas generadas por IA
   const [extraAiQuestions, setExtraAiQuestions] = useState(() => getSavedAIQuestions());
   const [isGeneratingAI, setIsGeneratingAI] = useState(false);
-  const [isGeneratingSpontaneous, setIsGeneratingSpontaneous] = useState(false);
   const [aiGenMessage, setAiGenMessage] = useState(null); // { type: 'success'|'error', text: string }
   const [selectedAITopic, setSelectedAITopic] = useState('all');
 
@@ -99,35 +91,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
     }
   }, [gameState]);
 
-  // Generador de preguntas procedurales espontáneas (Offline / Instantáneo)
-  const handleGenerateSpontaneousBatch = (count = 5) => {
-    soundManager.playClick();
-    setIsGeneratingSpontaneous(true);
-    setAiGenMessage(null);
-
-    setTimeout(() => {
-      try {
-        const newQuestions = generateSpontaneousQuestions(count, selectedAITopic);
-        setExtraAiQuestions(prev => [...newQuestions, ...prev]);
-        setAiGenMessage({
-          type: 'success',
-          text: `¡Se generaron ${newQuestions.length} preguntas espontáneas inéditas de "${selectedAITopic === 'all' ? 'todos los temas' : selectedAITopic}" y se añadieron al banco!`
-        });
-        soundManager.playFanfare();
-      } catch (err) {
-        console.error("Error generating spontaneous questions:", err);
-        setAiGenMessage({
-          type: 'error',
-          text: 'Error al generar preguntas dinámicas.'
-        });
-        soundManager.playIncorrect();
-      } finally {
-        setIsGeneratingSpontaneous(false);
-      }
-    }, 200);
-  };
-
-  // Generador de preguntas con IA (Gemini)
+  // Generador de preguntas con IA
   const handleGenerateAIQuestions = async () => {
     soundManager.playClick();
     if (!hasGeminiApiKey()) {
@@ -162,50 +126,16 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
     }
   };
 
-  // Iniciar Examen con Barajado Completo de Preguntas y Opciones
+  // Iniciar Examen
   const handleStartExam = () => {
     soundManager.playClick();
     
-    let candidatePool = [...fullQuestionsBank];
-
-    // En modo dinámico, generamos 25 preguntas espontáneas combinatorias frescas en tiempo real
-    if (bankSourceMode === 'dynamic') {
-      const spontaneousBatch = generateSpontaneousQuestions(25, selectedAITopic);
-      candidatePool = [...spontaneousBatch, ...fullQuestionsBank];
-    }
-
-    // Mezclar y seleccionar preguntas
-    const shuffled = shuffleArray(candidatePool);
+    // Mezclar y seleccionar preguntas del banco completo
+    const shuffled = [...fullQuestionsBank].sort(() => 0.5 - Math.random());
     const count = questionCount === 'all' ? shuffled.length : Math.min(questionCount, shuffled.length);
     const selected = shuffled.slice(0, count);
     
-    // CRÍTICO: Barajar aleatoriamente el orden de las opciones (A, B, C, D) para cada pregunta
-    // de modo que la respuesta correcta nunca quede en una letra fija ni predecible
-    const randomizedQuestions = selected.map(q => shuffleQuestionOptions(q));
-    
-    setCurrentQuestions(randomizedQuestions);
-    setCurrentIndex(0);
-    setUserAnswers({});
-    setFlaggedQuestions(new Set());
-    setInstantChecked({});
-    setTimeAlertNotice(null);
-    
-    if (timerMinutes > 0) {
-      setSecondsRemaining(timerMinutes * 60);
-    } else {
-      setSecondsRemaining(null);
-    }
-    setTimeSpentSeconds(0);
-    setGameState('active');
-  };
-
-  // Reintentar examen barajando de nuevo las opciones (A/B/C/D)
-  const handleRetryExam = () => {
-    soundManager.playClick();
-    
-    // Re-barajar el orden de preguntas y el orden interno de opciones
-    const reRandomized = shuffleArray(currentQuestions).map(q => shuffleQuestionOptions(q));
-    setCurrentQuestions(reRandomized);
+    setCurrentQuestions(selected);
     setCurrentIndex(0);
     setUserAnswers({});
     setFlaggedQuestions(new Set());
@@ -703,80 +633,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
             </div>
           </div>
 
-          {/* Opción 2: Modo de Banco (Espontáneo vs Curado) */}
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center space-x-2">
-                <Dices className="w-4 h-4 text-cyan-600 dark:text-cyanBrand-400" />
-                <span>2. Modo de Generación & Banco</span>
-              </label>
-              <span className="text-xs text-brand-600 dark:text-cyan-400 font-semibold">
-                ¡Opciones A/B/C/D siempre barajadas al azar!
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <button
-                type="button"
-                id="btn-bank-mode-dynamic"
-                onClick={() => {
-                  soundManager.playClick();
-                  setBankSourceMode('dynamic');
-                }}
-                className={`p-4 rounded-xl text-left border transition-all ${
-                  bankSourceMode === 'dynamic'
-                    ? 'bg-brand-50 dark:bg-brand-600/20 border-brand-500 ring-2 ring-brand-500/30 shadow-md'
-                    : 'bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-                }`}
-              >
-                <div className="flex items-center justify-between font-bold">
-                  <span className={`flex items-center space-x-2 ${
-                    bankSourceMode === 'dynamic' ? 'text-brand-900 dark:text-slate-100' : 'text-slate-800 dark:text-slate-100'
-                  }`}>
-                    <Dices className="w-4 h-4 text-cyan-600 dark:text-cyanBrand-400" />
-                    <span>🎲 Modo Espontáneo e Infinito (Recomendado)</span>
-                  </span>
-                  {bankSourceMode === 'dynamic' && <Check className="w-4 h-4 text-brand-600 dark:text-brand-400" />}
-                </div>
-                <p className={`text-xs mt-1.5 ${
-                  bankSourceMode === 'dynamic' ? 'text-brand-800 dark:text-slate-300' : 'text-slate-500 dark:text-slate-400'
-                }`}>
-                  Genera oraciones y ejercicios inéditos en cada intento con variación de sujetos, verbos y trampas gramaticales. Cero predictibilidad.
-                </p>
-              </button>
-
-              <button
-                type="button"
-                id="btn-bank-mode-curated"
-                onClick={() => {
-                  soundManager.playClick();
-                  setBankSourceMode('curated');
-                }}
-                className={`p-4 rounded-xl text-left border transition-all ${
-                  bankSourceMode === 'curated'
-                    ? 'bg-brand-50 dark:bg-brand-600/20 border-brand-500 ring-2 ring-brand-500/30 shadow-md'
-                    : 'bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-                }`}
-              >
-                <div className="flex items-center justify-between font-bold">
-                  <span className={`flex items-center space-x-2 ${
-                    bankSourceMode === 'curated' ? 'text-brand-900 dark:text-slate-100' : 'text-slate-800 dark:text-slate-100'
-                  }`}>
-                    <BookOpen className="w-4 h-4 text-brand-600 dark:text-brand-400" />
-                    <span>📚 Banco Clásico Curado</span>
-                  </span>
-                  {bankSourceMode === 'curated' && <Check className="w-4 h-4 text-brand-600 dark:text-brand-400" />}
-                </div>
-                <p className={`text-xs mt-1.5 ${
-                  bankSourceMode === 'curated' ? 'text-brand-800 dark:text-slate-300' : 'text-slate-500 dark:text-slate-400'
-                }`}>
-                  Utiliza las preguntas curadas oficiales de las clases de la UTN. El orden de las respuestas A/B/C/D se baraja al azar para evitar memorización de posición.
-                </p>
-              </button>
-            </div>
-          </div>
-
-          {/* Generador de Preguntas Inéditas (Espontáneo Instantáneo o Gemini AI) */}
+          {/* Generador de Preguntas Inéditas con Gemini AI */}
           <div className="p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-indigo-50 via-white to-cyan-50 dark:from-brand-950/50 dark:via-slate-900 dark:to-indigo-950/50 border border-brand-200 dark:border-brand-500/30 space-y-4 shadow-sm overflow-hidden">
             
             {/* Top row: Icon + Title + Description */}
@@ -788,64 +645,49 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
                     <h4 className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-slate-100">
-                      ¿Deseas incorporar más preguntas inéditas al banco de práctica?
+                      ¿Quieres practicar con preguntas nunca antes vistas?
                     </h4>
                     <span className="text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-cyan-100 dark:bg-cyan-500/20 text-cyan-800 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-500/30">
-                      Espontáneo / IA
+                      Gemini AI
                     </span>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                    Crea preguntas adicionales al instante con el motor combinatorio procedural o genera preguntas con Gemini AI.
+                    Genera preguntas inéditas en tiempo real basadas estrictamente en las Clases 1 a 6 de la UTN.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Bottom row: Topic selector + Dual Buttons */}
-            <div className="flex flex-col gap-2.5 pt-1">
-              <div className="w-full">
+            {/* Bottom row: Topic selector + Button */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-1">
+              <div className="flex-1 min-w-0">
                 <select
                   value={selectedAITopic}
                   onChange={(e) => setSelectedAITopic(e.target.value)}
                   className="w-full py-2.5 px-3.5 rounded-xl bg-white dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200 text-xs sm:text-sm font-medium focus:border-brand-500 dark:focus:border-cyanBrand-400 focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all cursor-pointer truncate shadow-sm"
                 >
                   <option value="all">🎲 Mezcla de Todos los Temas</option>
-                  <option value="Simple Present">Presente Simple (3ra persona/negación/preguntas)</option>
+                  <option value="Simple Present">Presente Simple (3ra persona/negación)</option>
                   <option value="Present Continuous">Presente Continuo & Stative Verbs</option>
                   <option value="Simple Present vs Continuous">Contraste Simple vs Continuous</option>
-                  <option value="Past Simple">Pasado Simple (70+ Irregulares & Regulares -ed)</option>
+                  <option value="Past Simple">Pasado Simple (Regulares & Irregulares)</option>
                   <option value="Lectura Apollo 11 & Margaret Hamilton">Lectura Margaret Hamilton (Apollo 11)</option>
                   <option value="Lectura Google & Sergey Brin">Lectura Sergey Brin & Google</option>
                   <option value="Vocabulario IT & Roles">Vocabulario & Roles IT</option>
                 </select>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-2">
-                <button
-                  type="button"
-                  id="btn-gen-spontaneous"
-                  onClick={() => handleGenerateSpontaneousBatch(5)}
-                  disabled={isGeneratingSpontaneous}
-                  className="flex-1 py-2.5 px-4 rounded-xl bg-cyanBrand-600 hover:bg-cyanBrand-500 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-cyanBrand-600/20 flex items-center justify-center space-x-2 transition-all duration-200 disabled:opacity-50 cursor-pointer"
-                >
-                  <Dices className="w-4 h-4" />
-                  <span>{isGeneratingSpontaneous ? 'Generando...' : '🎲 Generar 5 Espontáneas (Instantáneo)'}</span>
-                </button>
-
-                <button
-                  type="button"
-                  id="btn-gen-ai"
-                  onClick={handleGenerateAIQuestions}
-                  disabled={isGeneratingAI}
-                  className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-brand-600 via-indigo-600 to-cyanBrand-600 hover:from-brand-500 hover:to-cyanBrand-500 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-brand-500/25 flex items-center justify-center space-x-2 transition-all duration-200 disabled:opacity-50 cursor-pointer"
-                >
-                  <Sparkles className="w-4 h-4 text-cyan-200" />
-                  <span>{isGeneratingAI ? 'Generando con IA...' : '✨ Generar con Gemini AI'}</span>
-                </button>
-              </div>
+              <button
+                onClick={handleGenerateAIQuestions}
+                disabled={isGeneratingAI}
+                className="py-2.5 px-5 rounded-xl bg-gradient-to-r from-brand-600 via-indigo-600 to-cyanBrand-600 hover:from-brand-500 hover:to-cyanBrand-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-brand-500/25 flex items-center justify-center space-x-2 transition-all duration-200 disabled:opacity-50 flex-shrink-0 cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4 text-cyan-200" />
+                <span>{isGeneratingAI ? 'Generando Preguntas...' : 'Generar 5 Preguntas'}</span>
+              </button>
             </div>
 
-            {/* Feedback message */}
+            {/* AI Feedback message */}
             {aiGenMessage && (
               <div className={`p-3 rounded-xl border text-xs flex items-center space-x-2 animate-fade-in ${
                 aiGenMessage.type === 'success'
@@ -862,12 +704,12 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
             )}
           </div>
 
-          {/* Opción 3: Temporizador */}
+          {/* Opción 2: Temporizador */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center space-x-2">
                 <Clock className="w-4 h-4 text-cyan-600 dark:text-cyanBrand-400" />
-                <span>3. Tiempo Límite / Temporizador</span>
+                <span>2. Tiempo Límite / Temporizador</span>
               </label>
               <span className="text-xs text-slate-500 dark:text-slate-400">Control de velocidad</span>
             </div>
@@ -902,11 +744,11 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
             </div>
           </div>
 
-          {/* Opción 4: Modo de Examen */}
+          {/* Opción 3: Modo de Examen */}
           <div className="space-y-3">
             <label className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center space-x-2">
               <Zap className="w-4 h-4 text-amber-500 dark:text-amber-400" />
-              <span>4. Modo de Evaluación</span>
+              <span>3. Modo de Evaluación</span>
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <button
@@ -1401,19 +1243,11 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
           <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
             <button
               id="btn-retry-exam"
-              onClick={handleRetryExam}
-              className="px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-brand-500/25 flex items-center space-x-2 transition-all"
+              onClick={handleStartExam}
+              className="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-extrabold text-sm shadow-lg shadow-brand-500/25 flex items-center space-x-2 transition-all"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>Reintentar (Opciones Barajadas)</span>
-            </button>
-            <button
-              id="btn-new-random-exam"
-              onClick={handleStartExam}
-              className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-brand-600 hover:from-cyan-500 hover:to-brand-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-cyan-600/25 flex items-center space-x-2 transition-all"
-            >
-              <Dices className="w-4 h-4" />
-              <span>Nuevo Simulacro Espontáneo</span>
+              <span>Reintentar este Examen</span>
             </button>
             <button
               id="btn-new-exam-setup"
@@ -1421,10 +1255,10 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                 soundManager.playClick();
                 setGameState('setup');
               }}
-              className="px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs sm:text-sm border border-slate-300 dark:border-slate-700 transition-all flex items-center space-x-2"
+              className="px-6 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-sm border border-slate-300 dark:border-slate-700 transition-all flex items-center space-x-2"
             >
               <Sparkles className="w-4 h-4 text-cyan-600 dark:text-cyanBrand-400" />
-              <span>Cambiar Configuración</span>
+              <span>Configurar Nuevo Simulacro</span>
             </button>
           </div>
 
