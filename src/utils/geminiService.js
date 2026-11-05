@@ -68,25 +68,30 @@ export async function generateExamQuestionsWithAI({ topic = 'all', count = 5 }) 
   }
 
   const topicPrompt = topic === 'all' 
-    ? 'una mezcla variada de todos los temas oficiales: Present Simple, Present Continuous, Stative Verbs, Simple Past (regulares e irregulares), Lectura de Margaret Hamilton (Apollo 11), Lectura de Sergey Brin & Google, y Vocabulario IT.'
+    ? 'una mezcla variada de todos los temas oficiales de Inglés Técnico I (1er y 2do Parcial · Clases 1 a 14): Present Simple, Present Continuous, Simple Past, Cuantificadores (much/many/few/little/some/any), Comparativos y Superlativos (Python vs C, Java vs Go), Present Perfect Tense, Redacción de CV y Entrevista IT, Futuro (Will vs Going To), Conectores Básicos (And, But, Or, So, Because), Adverbios de Modo y Repaso Integral.'
     : `específicamente sobre el tema: "${topic}".`;
 
   const prompt = `Actúa como un profesor universitario de inglés técnico para la carrera de Programación de la UTN (Inglés Técnico I).
-Genera exactamente ${count} preguntas inéditas de opción múltiple (Multiple Choice) para el primer parcial basadas en ${topicPrompt}.
+Genera exactamente ${count} preguntas inéditas de opción múltiple (Multiple Choice) para examen universitario basadas en ${topicPrompt}.
 
 REGLAS OBLIGATORIAS:
-1. Las preguntas deben estar en inglés, contextualizadas en informática, programación o rutinas de desarrollo.
+1. Las preguntas deben estar en inglés, contextualizadas en informática, programación, desarrollo de software o entrevistas laborales IT.
 2. Cada pregunta debe tener exactamente 4 opciones identificadas con "a", "b", "c" y "d".
 3. Solo una opción debe ser la correcta.
 4. La explicación debe estar en español y explicar claramente la regla gramatical o el dato del texto.
-5. Los temas permitidos son estrictamente:
+5. Los temas permitidos incluyen:
    - "Simple Present" (rutinas, 3ra persona -s/-es/-ies, doesn't/don't, adverbios de frecuencia)
    - "Present Continuous" (-ing spelling rules, acciones en progreso, stative verbs)
-   - "Simple Present vs Continuous" (contraste, temporales vs permanentes)
-   - "Past Simple" (verbos irregulares como meet/met, write/wrote, buy/bought, sell/sold, run/ran, find/found; negación didn't + base form)
-   - "Lectura Apollo 11 & Margaret Hamilton" (software asíncrono, pantallas de prioridad, alunizaje 1969)
-   - "Lectura Google & Sergey Brin" (lanzamiento 1998, Stanford, $1M recaudado, IPO 2004, step down)
-   - "Vocabulario IT & Roles" (software developer, systems analyst, UX designer, database, server farm, debug)
+   - "Past Simple" (verbos regulares e irregulares, negación didn't + base form)
+   - "Cuantificadores" (much, many, little, few, a little, a few, some, any, a lot of, too much/many)
+   - "Dispositivos IT & Wearables" (laptop, touchpad, flash drive, iTBra, Heartguide, SmartSleep, smart jacket)
+   - "Comparativos & Superlativos" (easier, faster, more powerful, most common; Python vs C, Java vs Go, concurrency, garbage collection)
+   - "Present Perfect Tense" (have/has + past participle, since, for, ever, never, just, already, yet, been vs gone)
+   - "Vocabulario CV & Entrevista IT" (develop, maintain, solve, qualifications, internship, degree, troubleshooting, deadline, 5 DOs & 5 DON'Ts)
+   - "Futuro: Will vs Going To" (predicciones con opinión vs evidencia visual; decisiones espontáneas vs planes previos)
+   - "Conectores Básicos" (And, But, Or, So, Because; paralelismo sintáctico; oraciones negativas con 'or')
+   - "Adverbios de Modo & Adjetivos" (carefully, quickly, well, -ly adjectives like friendly/lovely)
+   - "Lecturas IT" (Apollo 11, Google/Sergey Brin, OpenAI new screenless device, AI Smart Glasses)
 
 Devuelve ÚNICAMENTE un array JSON válido con la siguiente estructura sin bloques de código markdown adicionales:
 [
@@ -178,14 +183,20 @@ export async function askArthurWithGemini(userPrompt, chatHistory = []) {
   const systemInstruction = `Eres Arthur 🎩✨, el tutor virtual de inglés técnico para estudiantes de Programación de la UTN TUP (Materia: Inglés Técnico I).
 Tu personalidad es la de un distinguido caballero inglés: muy educado, cordial, inteligente, pedagógico y alentador. Ocasionalmente usas el emoji 🎩 o ✨.
 
-CONOCIMIENTO DEL PROGRAMA ACADÉMICO (Clases 1 a 6):
-1. Present Simple: Rutinas de desarrolladores, reglas de 3ra persona (-s, -es, -ies), negación con don't/doesn't, adverbios de frecuencia (always, usually, never) antes del verbo principal.
-2. Present Continuous: -ing spelling rules (cvc doubling, drop e, ie->y), acciones en progreso vs rutinas, Stative Verbs (know, need, want, understand, belong - NO llevan -ing).
-3. Simple Past: Reglas de -ed regulares, negación y preguntas con DID/DIDN'T + verbo en forma base (¡nunca en pasado!), verbos irregulares clave (meet->met, write->wrote, build->built, buy->bought, find->found, sell->sold, teach->taught, run->ran, speak->spoke, become->became, hold->held, see->saw, think->thought).
-4. Textos de Lectura IT:
-   - Margaret Hamilton (Apollo 11, MIT, software asíncrono, pantallas de prioridad, medalla de la libertad 2016).
-   - Sergey Brin y Larry Page (Google 1998, Stanford, inversión de $1M, compra de YouTube en 2006, IPO en 2004, Alphabet 2015).
-5. Traducción de términos IT (Español <-> Inglés) y roles (Software developer, Systems analyst, UX designer, Network engineer, IT support, Project manager).
+CONOCIMIENTO DEL PROGRAMA ACADÉMICO (Clases 1 a 14 - 1er y 2do Parcial):
+1. Present Simple: Rutinas de desarrolladores, reglas de 3ra persona (-s, -es, -ies), negación con don't/doesn't, adverbios de frecuencia antes del verbo principal.
+2. Present Continuous: -ing spelling rules, acciones en progreso vs rutinas, Stative Verbs (know, need, want, understand - sin -ing).
+3. Simple Past: Reglas de -ed regulares, negación y preguntas con DID/DIDN'T + verbo en forma base, verbos irregulares (meet->met, write->wrote, buy->bought, find->found, sell->sold, run->ran, hold->held, spend->spent).
+4. Cuantificadores (Clase 8): Much vs Many, Too much / Too many, A lot of, Few vs A few, Little vs A little, Some vs Any (en ofertas/peticiones).
+5. Dispositivos & Wearables (Clase 8): Laptop, desktop, tablet, touchpad, flash drive; Fitbits, iTBra, Heartguide, SmartSleep.
+6. Comparativos & Superlativos (Clase 9): -er / more than, the -est / the most, irregulars (good/better/best, bad/worse/worst); lecturas de Python vs C (interpreted vs compiled, memory control) y Java vs Go (JVM, concurrency, goroutines, tooling, garbage collection).
+7. Present Perfect Tense (Clase 10): Have/has + past participle; 4 usos (iniciadas en pasado que siguen hoy con since/for; experiencia de vida con ever/never; acción pasada con resultado presente; eventos recientes con just, already, yet, recently); been vs gone; contraste con Past Simple (prohibido usar present perfect con yesterday o in 2017).
+8. Redacción de CV para IT (Clase 10): Verbos de acción (develop, design, manage, maintain, solve, improve, create, test, collaborate, support); sustantivos (qualifications, work experience, skills, achievement, responsibilities, degree, internship, deadline, troubleshooting); CV de Martina López.
+9. Futuro: Will vs Be Going To (Clase 12): Predicciones (will para opiniones vs be going to para evidencia visible); Decisiones (will para decisiones espontáneas en el momento vs be going to para planes o intenciones previas); AI Smart Glasses de Meta & Snap.
+10. Consejos para Entrevistas IT (Clase 12): 5 DOs (investigar empresa, hablar de skills, mencionar logros, preparar respuestas, preguntar al final) y 5 DON'Ts (no llegar tarde, no mentir sobre tecnologías, no hablar mal de otros, no dar respuestas monosilábicas, cuidar lenguaje corporal).
+11. Conectores Básicos (Clase 13): And (adición, paralelismo sintáctico), But (contraste), Or (alternativas, oraciones negativas 'not X or Y'), So (consecuencia/resultado), Because (causa/motivo); Dispositivo AI de OpenAI (sin pantalla, tamaño iPod Shuffle, io Products, ayuda por voz para coders).
+12. Adverbios de Modo & Adjetivos (Clase 14): Adverbios describen verbos (carefully, quickly, well); posición después del verbo o después de verbo+objeto; palabras en -ly que son ADJETIVOS (friendly, lovely, silly); Repaso integral de todos los tiempos verbales.
+13. Textos Históricos IT: Margaret Hamilton (Apollo 11, software asíncrono) y Google (Sergey Brin, Larry Page, IPO 2004, Alphabet).
 
 INSTRUCCIONES DE RESPUESTA:
 - Responde de forma clara, concisa y estructurada usando Markdown (negritas para conceptos clave, \`código\` para términos en inglés, listas con viñetas).

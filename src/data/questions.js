@@ -1,7 +1,9 @@
-// Banco de preguntas para el Simulador de Examen de Inglés Técnico I
-// Basado estrictamente en los contenidos oficiales de Clases 1, 2, 4, 5 y 6 (UTN TUP).
+import { UNIT3_QUESTIONS } from './unit3Questions.js';
 
-export const EXAM_QUESTIONS = [
+// Banco de preguntas para el Simulador de Examen de Inglés Técnico I
+// Basado estrictamente en los contenidos oficiales de Clases 1 a 14 (UTN TUP).
+
+const FIRST_TERM_QUESTIONS = [
   // --- CLASE 1: SIMPLE PRESENT & ROUTINES ---
   {
     id: 1,
@@ -1202,5 +1204,10 @@ export const EXAM_QUESTIONS = [
     explanation: "El verbo irregular 'meet' (conocerse/reunirse) conjuga en Pasado Simple como 'met'.",
     source: "Unidad 2 Clase 6 Reading"
   }
+];
+
+export const EXAM_QUESTIONS = [
+  ...FIRST_TERM_QUESTIONS.map(q => ({ ...q, parcial: 1 })),
+  ...UNIT3_QUESTIONS
 ];
 

@@ -46,6 +46,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
   const [questionCount, setQuestionCount] = useState(20);
   const [timerMinutes, setTimerMinutes] = useState(20);
   const [examMode, setExamMode] = useState('exam'); // 'exam' | 'practice'
+  const [selectedParcial, setSelectedParcial] = useState('2'); // '2' (2do Parcial) | '1' (1er Parcial) | 'all' (Integral)
   
   // Banco extendido con preguntas generadas por IA
   const [extraAiQuestions, setExtraAiQuestions] = useState(() => getSavedAIQuestions());
@@ -58,8 +59,16 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
     const map = new Map();
     EXAM_QUESTIONS.forEach(q => map.set(q.id, q));
     extraAiQuestions.forEach(q => map.set(q.id, q));
-    return Array.from(map.values());
-  }, [extraAiQuestions]);
+    const all = Array.from(map.values());
+
+    if (selectedParcial === '2') {
+      return all.filter(q => q.parcial === 2);
+    }
+    if (selectedParcial === '1') {
+      return all.filter(q => q.parcial === 1 || !q.parcial);
+    }
+    return all;
+  }, [extraAiQuestions, selectedParcial]);
 
   // Estado del Examen
   const [gameState, setGameState] = useState('setup'); // 'setup' | 'active' | 'results'
@@ -401,7 +410,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
             Práctica y Simulacro de Examen
           </h1>
           <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
-            Ejercicios múltiples choice generados estrictamente con el formato del primer parcial de inglés. Pon a prueba tus conocimientos gramaticales y vocabulario técnico.
+            Ejercicios múltiples choice generados estrictamente con el formato oficial del 1er y 2do parcial de inglés (Unidades 1, 2 y 3 · Clases 1 a 14). Pon a prueba tus conocimientos gramaticales y vocabulario técnico.
           </p>
         </div>
 
@@ -580,15 +589,83 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
         {/* Config Card */}
         <div className="glass-card rounded-2xl p-6 sm:p-8 space-y-8 shadow-2xl border border-slate-200 dark:border-slate-800">
           
-          {/* Opción 1: Cantidad de preguntas */}
+          {/* Opción 1: Alcance / Parcial del Examen */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center space-x-2">
+                <Target className="w-4 h-4 text-cyan-600 dark:text-cyanBrand-400" />
+                <span>1. Alcance / Parcial del Examen</span>
+              </label>
+              <span className="text-xs text-brand-600 dark:text-cyanBrand-400 font-bold">
+                {selectedParcial === '2' ? '🌟 2do Parcial Seleccionado' : selectedParcial === '1' ? '📘 1er Parcial Seleccionado' : '🏆 Examen Integral'}
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {[
+                { 
+                  val: '2', 
+                  title: '🌟 2do Parcial', 
+                  sub: 'Unidad 3 · Clases 8 a 14 (Cuantificadores, Comparativos, Present Perfect, Futuro, CV, Conectores, Adverbios)', 
+                  badge: 'Nuevo ✨' 
+                },
+                { 
+                  val: '1', 
+                  title: '📘 1er Parcial', 
+                  sub: 'Unidades 1 y 2 · Clases 1 a 6 (Presente Simple, Continuo, Pasado Simple, Apollo 11, Google)', 
+                  badge: 'U1 & U2' 
+                },
+                { 
+                  val: 'all', 
+                  title: '🏆 Examen Integral', 
+                  sub: 'Todas las clases 1 a 14 combinadas (Práctica final completa de toda la materia)', 
+                  badge: 'Completo' 
+                },
+              ].map((p) => {
+                const isSelected = selectedParcial === p.val;
+                return (
+                  <button
+                    key={p.val}
+                    type="button"
+                    onClick={() => {
+                      soundManager.playClick();
+                      setSelectedParcial(p.val);
+                    }}
+                    className={`p-4 rounded-xl text-left border transition-all duration-200 flex flex-col justify-between space-y-2 ${
+                      isSelected
+                        ? 'bg-gradient-to-br from-brand-50 to-cyan-50 dark:from-brand-950/40 dark:to-cyan-950/40 border-brand-500 shadow-md ring-2 ring-brand-500/30'
+                        : 'bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between w-full">
+                      <span className={`font-black text-sm ${isSelected ? 'text-brand-900 dark:text-cyanBrand-300' : 'text-slate-900 dark:text-slate-100'}`}>
+                        {p.title}
+                      </span>
+                      {isSelected ? (
+                        <Check className="w-4 h-4 text-brand-600 dark:text-cyanBrand-400 flex-shrink-0" />
+                      ) : (
+                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">
+                          {p.badge}
+                        </span>
+                      )}
+                    </div>
+                    <p className={`text-xs leading-relaxed ${isSelected ? 'text-slate-700 dark:text-slate-300' : 'text-slate-500 dark:text-slate-400'}`}>
+                      {p.sub}
+                    </p>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Opción 2: Cantidad de preguntas */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center space-x-2">
                 <HelpCircle className="w-4 h-4 text-brand-600 dark:text-brand-400" />
-                <span>1. Cantidad de Preguntas</span>
+                <span>2. Cantidad de Preguntas</span>
               </label>
               <span className="text-xs text-slate-500 dark:text-slate-400">
-                Banco total: <strong>{fullQuestionsBank.length} preguntas</strong> {extraAiQuestions.length > 0 && <span className="text-cyan-600 dark:text-cyan-400">({extraAiQuestions.length} con IA ✨)</span>}
+                Banco filtrado: <strong>{fullQuestionsBank.length} preguntas</strong> {extraAiQuestions.length > 0 && <span className="text-cyan-600 dark:text-cyan-400">({extraAiQuestions.length} con IA ✨)</span>}
               </span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -652,7 +729,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                     </span>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                    Genera preguntas inéditas en tiempo real basadas estrictamente en las Clases 1 a 6 de la UTN.
+                    Genera preguntas inéditas en tiempo real con Gemini basadas estrictamente en las Clases 1 a 14 de la UTN.
                   </p>
                 </div>
               </div>
@@ -666,14 +743,27 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                   onChange={(e) => setSelectedAITopic(e.target.value)}
                   className="w-full py-2.5 px-3.5 rounded-xl bg-white dark:bg-slate-900/90 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-200 text-xs sm:text-sm font-medium focus:border-brand-500 dark:focus:border-cyanBrand-400 focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all cursor-pointer truncate shadow-sm"
                 >
-                  <option value="all">🎲 Mezcla de Todos los Temas</option>
-                  <option value="Simple Present">Presente Simple (3ra persona/negación)</option>
-                  <option value="Present Continuous">Presente Continuo & Stative Verbs</option>
-                  <option value="Simple Present vs Continuous">Contraste Simple vs Continuous</option>
-                  <option value="Past Simple">Pasado Simple (Regulares & Irregulares)</option>
-                  <option value="Lectura Apollo 11 & Margaret Hamilton">Lectura Margaret Hamilton (Apollo 11)</option>
-                  <option value="Lectura Google & Sergey Brin">Lectura Sergey Brin & Google</option>
-                  <option value="Vocabulario IT & Roles">Vocabulario & Roles IT</option>
+                  <option value="all">🎲 Mezcla de Todos los Temas (1er & 2do Parcial)</option>
+                  <optgroup label="🌟 2do Parcial (Unidad 3 · Clases 8 a 14)">
+                    <option value="2do Parcial Completo">🌟 Todo el 2do Parcial (Clases 8 a 14)</option>
+                    <option value="Cuantificadores (Quantifiers)">Cuantificadores (much, many, few, little, some, any)</option>
+                    <option value="Dispositivos IT y Wearables">Dispositivos IT, Verbos y Wearables</option>
+                    <option value="Comparativos y Superlativos">Comparativos, Superlativos & Lenguajes</option>
+                    <option value="Present Perfect">Present Perfect Tense & Marcadores</option>
+                    <option value="Vocabulario CV y Entrevistas IT">Redacción de CV & Entrevista IT</option>
+                    <option value="Futuro Will vs Going to">Futuro: Will vs. Be Going To</option>
+                    <option value="Conectores Básicos">Conectores (And, But, Or, So, Because)</option>
+                    <option value="Adverbios de Modo y Repaso">Adverbios de Modo & Repaso Integral</option>
+                  </optgroup>
+                  <optgroup label="📘 1er Parcial (Unidades 1 y 2 · Clases 1 a 6)">
+                    <option value="Simple Present">Presente Simple (3ra persona/negación)</option>
+                    <option value="Present Continuous">Presente Continuo & Stative Verbs</option>
+                    <option value="Simple Present vs Continuous">Contraste Simple vs Continuous</option>
+                    <option value="Past Simple">Pasado Simple (Regulares & Irregulares)</option>
+                    <option value="Lectura Apollo 11 & Margaret Hamilton">Lectura Margaret Hamilton (Apollo 11)</option>
+                    <option value="Lectura Google & Sergey Brin">Lectura Sergey Brin & Google</option>
+                    <option value="Vocabulario IT & Roles">Vocabulario & Roles IT</option>
+                  </optgroup>
                 </select>
               </div>
 

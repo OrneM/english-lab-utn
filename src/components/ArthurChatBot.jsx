@@ -69,13 +69,14 @@ export function ArthurChatBot({ onOpenGeminiModal }) {
   const [messages, setMessages] = useState([
     {
       sender: 'arthur',
-      text: "¡Hola! Soy **Arthur**, tu tutor virtual de inglés técnico. 🎩✨\n\nPuedo ayudarte con **traducciones de palabras y términos IT**, explicarte **gramática** (Presente Simple, Continuo, Pasado Simple, verbos irregulares) o ponerte a prueba con ejercicios. ¿En qué te ayudo hoy?",
+      text: "¡Hola! Soy **Arthur**, tu tutor virtual de inglés técnico. 🎩✨\n\nConozco todos los contenidos del 1er Parcial y del **2do Parcial (Unidad 3 · Clases 8 a 14)**: Cuantificadores, Comparativos, Present Perfect, Futuro, Conectores, Adverbios, CV IT y Entrevistas Laborales. ¿En qué tema te gustaría que practiquemos hoy?",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       suggestedQuestions: [
-        "Traducir 'software developer' o 'debug'",
-        "¿Qué significa 'step down' o 'raise money'?",
-        "¿Cuándo uso Present Simple vs Continuous?",
-        "Dame un ejercicio de práctica"
+        "¿Qué temas entran en el 2do Parcial?",
+        "¿Cómo se usan los Cuantificadores?",
+        "Diferencia entre Will y Going To",
+        "Reglas de Present Perfect (been vs gone)",
+        "Traducir 'troubleshooting' o 'internship'"
       ]
     }
   ]);

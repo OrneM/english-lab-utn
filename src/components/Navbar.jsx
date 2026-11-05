@@ -20,9 +20,10 @@ export function Navbar({ activeSection, onNavigate, isDark, onToggleTheme, sound
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { id: 'exam', label: 'Práctica de Examen', icon: GraduationCap, badge: 'Simulador' },
+    { id: 'exam', label: 'Simulador', icon: GraduationCap, badge: 'Exámenes' },
+    { id: 'unit3', label: '2do Parcial (U3)', icon: Sparkles, badge: 'Clases 8-14', isNew: true },
     { id: 'present-simple', label: 'Presente Simple', icon: BookOpen, badge: 'Unidad 1' },
-    { id: 'present-continuous', label: 'Presente Continuo', icon: Sparkles, badge: 'Unidad 1' },
+    { id: 'present-continuous', label: 'Presente Continuo', icon: Layers, badge: 'Unidad 1' },
     { id: 'past-simple', label: 'Pasado Simple', icon: History, badge: 'Unidad 2' },
   ];
 
@@ -74,8 +75,13 @@ export function Navbar({ activeSection, onNavigate, isDark, onToggleTheme, sound
                       : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-slate-800/50'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-500 dark:text-slate-400'}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : item.isNew ? 'text-cyan-500 dark:text-cyan-400' : 'text-slate-500 dark:text-slate-400'}`} />
                   <span>{item.label}</span>
+                  {item.isNew && !isActive && (
+                    <span className="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 border border-cyan-400/40">
+                      Nuevo
+                    </span>
+                  )}
                   {isActive && (
                     <span className="inline-block w-1.5 h-1.5 rounded-full bg-cyanBrand-400 animate-pulse"></span>
                   )}

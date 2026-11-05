@@ -1,5 +1,7 @@
+import { UNIT3_THEORY } from './unit3TheoryData.js';
+
 // Base de datos de Teoría y Gramática
-// Diseñada 100% en base a los contenidos oficiales de Clase 1 a Clase 6 de Inglés I (UTN TUP)
+// Diseñada 100% en base a los contenidos oficiales de Clase 1 a Clase 14 de Inglés I (UTN TUP)
 
 export const THEORY_DATA = {
   simplePresent: {
@@ -680,5 +682,8 @@ export const THEORY_DATA = {
         exp: "'Spend' es un verbo irregular cuyo pasado simple es 'spent'."
       }
     ]
-  }
+  },
+
+  // Contenidos Oficiales de la Unidad 3 (Segundo Parcial - Clases 8 a 14)
+  unit3: UNIT3_THEORY
 };

@@ -4,6 +4,7 @@ import { ExamSimulator } from './components/ExamSimulator';
 import { SimplePresentView } from './components/SimplePresentView';
 import { PresentContinuousView } from './components/PresentContinuousView';
 import { PastSimpleView } from './components/PastSimpleView';
+import { Unit3View } from './components/Unit3View';
 import { ArthurChatBot } from './components/ArthurChatBot';
 import { GeminiApiKeyModal } from './components/GeminiApiKeyModal';
 import { soundManager } from './utils/soundEffects';
@@ -79,6 +80,10 @@ export function App() {
         {activeSection === 'past-simple' && (
           <PastSimpleView onGoToExam={() => handleNavigate('exam')} />
         )}
+
+        {activeSection === 'unit3' && (
+          <Unit3View onGoToExam={() => handleNavigate('exam')} />
+        )}
       </main>
 
       {/* Arthur AI Interactive Tutor Bot */}
@@ -109,6 +114,12 @@ export function App() {
               className="hover:text-slate-900 dark:hover:text-slate-200 transition-colors"
             >
               Simulador
+            </button>
+            <button
+              onClick={() => handleNavigate('unit3')}
+              className="hover:text-slate-900 dark:hover:text-slate-200 font-bold text-cyan-600 dark:text-cyan-400 transition-colors"
+            >
+              2do Parcial (U3)
             </button>
             <button
               onClick={() => handleNavigate('present-simple')}
