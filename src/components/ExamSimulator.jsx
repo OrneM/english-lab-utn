@@ -25,7 +25,8 @@ import {
   Target,
   Gauge,
   ArrowUpRight,
-  ArrowDownRight
+  ArrowDownRight,
+  ArrowRight
 } from 'lucide-react';
 import { EXAM_QUESTIONS } from '../data/questions';
 import { soundManager } from '../utils/soundEffects';
@@ -40,14 +41,29 @@ import {
   getSavedAIQuestions,
   hasGeminiApiKey
 } from '../utils/geminiService';
+import { UNIT3_CLASSES } from '../data/unit3TheoryData';
 
-export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
+export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTargetConfig }) {
   // Configuración
   const [questionCount, setQuestionCount] = useState(20);
   const [timerMinutes, setTimerMinutes] = useState(20);
   const [examMode, setExamMode] = useState('exam'); // 'exam' | 'practice'
   const [selectedParcial, setSelectedParcial] = useState('2'); // '2' (2do Parcial) | '1' (1er Parcial) | 'all' (Integral)
+  const [selectedClass, setSelectedClass] = useState('all'); // 'all' | 8 | 9 | 10 | 12 | 13 | 14
   
+  // Escuchar configuración enviada desde Navbar u otras vistas
+  useEffect(() => {
+    if (examTargetConfig && examTargetConfig.key) {
+      if (examTargetConfig.parcial) {
+        setSelectedParcial(examTargetConfig.parcial);
+      }
+      if (examTargetConfig.targetClass !== undefined) {
+        setSelectedClass(examTargetConfig.targetClass);
+      }
+      setGameState('setup');
+    }
+  }, [examTargetConfig]);
+
   // Banco extendido con preguntas generadas por IA
   const [extraAiQuestions, setExtraAiQuestions] = useState(() => getSavedAIQuestions());
   const [isGeneratingAI, setIsGeneratingAI] = useState(false);
@@ -62,13 +78,43 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
     const all = Array.from(map.values());
 
     if (selectedParcial === '2') {
-      return all.filter(q => q.parcial === 2);
+      let list = all.filter(q => q.parcial === 2);
+      if (selectedClass && selectedClass !== 'all') {
+        list = list.filter(q => q.clase === Number(selectedClass));
+      }
+      return list;
     }
     if (selectedParcial === '1') {
       return all.filter(q => q.parcial === 1 || !q.parcial);
     }
     return all;
-  }, [extraAiQuestions, selectedParcial]);
+  }, [extraAiQuestions, selectedParcial, selectedClass]);
+
+  // Opciones dinámicas de cantidad de preguntas según el tamaño del banco filtrado
+  const questionCountOptions = useMemo(() => {
+    const total = fullQuestionsBank.length;
+    if (total <= 15) {
+      return [
+        { val: 5, label: '5 Preguntas', sub: 'Práctica Rápida (~4 min)' },
+        { val: 10, label: '10 Preguntas', sub: 'Examen Estándar (~8 min)' },
+        { val: 'all', label: `Todas (${total})`, sub: 'Completo de la Clase' }
+      ];
+    }
+    if (total <= 25) {
+      return [
+        { val: 10, label: '10 Preguntas', sub: 'Práctica Rápida (~8 min)' },
+        { val: 15, label: '15 Preguntas', sub: 'Examen Rápido (~12 min)' },
+        { val: 20, label: '20 Preguntas', sub: 'Estándar Oficial (~15 min)' },
+        { val: 'all', label: `Todas (${total})`, sub: 'Completo de la Clase' }
+      ];
+    }
+    return [
+      { val: 10, label: '10 Preguntas', sub: 'Práctica Rápida (~8 min)' },
+      { val: 20, label: '20 Preguntas', sub: 'Formato Estándar (~15 min)' },
+      { val: 30, label: '30 Preguntas', sub: 'Examen Completo (~25 min)' },
+      { val: 'all', label: `Todas (+${total})`, sub: 'Maratón de Estudio' }
+    ];
+  }, [fullQuestionsBank.length]);
 
   // Estado del Examen
   const [gameState, setGameState] = useState('setup'); // 'setup' | 'active' | 'results'
@@ -141,7 +187,9 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
     
     // Mezclar y seleccionar preguntas del banco completo
     const shuffled = [...fullQuestionsBank].sort(() => 0.5 - Math.random());
-    const count = questionCount === 'all' ? shuffled.length : Math.min(questionCount, shuffled.length);
+    const count = questionCount === 'all' 
+      ? shuffled.length 
+      : Math.min(Number(questionCount) || shuffled.length, shuffled.length);
     const selected = shuffled.slice(0, count);
     
     setCurrentQuestions(selected);
@@ -657,6 +705,108 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
             </div>
           </div>
 
+          {/* Opción 1.1: Filtro por Clase Específica (Solo disponible en 2do Parcial) */}
+          {selectedParcial === '2' && (
+            <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-brand-500/5 via-cyan-500/5 to-slate-100/50 dark:from-brand-950/30 dark:via-cyan-950/20 dark:to-slate-900/40 border border-brand-500/20 space-y-3 animate-fade-in">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                <label className="text-xs sm:text-sm font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center space-x-2">
+                  <Zap className="w-4 h-4 text-cyan-600 dark:text-cyanBrand-400" />
+                  <span>Seleccionar Clase para el Simulacro:</span>
+                </label>
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs text-brand-600 dark:text-cyanBrand-400 font-bold">
+                    {selectedClass === 'all' 
+                      ? '⚡ Todas las Clases (8 a 14) Seleccionadas' 
+                      : `🎯 Clase ${selectedClass}: ${UNIT3_CLASSES.find(c => c.id === Number(selectedClass))?.shortTitle || ''}`}
+                  </span>
+                  {selectedClass !== 'all' && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        soundManager.playClick();
+                        if (onNavigateToTheory) onNavigateToTheory('unit3');
+                      }}
+                      className="text-[11px] underline text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 cursor-pointer"
+                    >
+                      Ver teoría
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Botón Todas las clases + Grid de clases individuales */}
+              <div className="space-y-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    soundManager.playClick();
+                    setSelectedClass('all');
+                  }}
+                  className={`w-full p-3 rounded-xl text-left border transition-all flex items-center justify-between cursor-pointer ${
+                    selectedClass === 'all'
+                      ? 'bg-brand-600 text-white border-brand-500 shadow-md ring-2 ring-brand-400/30 font-bold'
+                      : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-brand-400 hover:bg-slate-50 dark:hover:bg-slate-850'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2.5">
+                    <Zap className={`w-4 h-4 ${selectedClass === 'all' ? 'text-cyan-200' : 'text-cyan-500'}`} />
+                    <span className="text-xs sm:text-sm font-bold">⚡ Simulacro Completo de Todas las Clases (Clases 8, 9, 10, 12, 13 y 14)</span>
+                  </div>
+                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded-md ${
+                    selectedClass === 'all' ? 'bg-white/20 text-white font-bold' : 'bg-slate-100 dark:bg-slate-800 text-slate-500'
+                  }`}>
+                    105 preguntas
+                  </span>
+                </button>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                  {UNIT3_CLASSES.map((c) => {
+                    const isSelected = String(selectedClass) === String(c.id);
+                    return (
+                      <button
+                        key={c.id}
+                        type="button"
+                        onClick={() => {
+                          soundManager.playClick();
+                          setSelectedClass(c.id);
+                        }}
+                        className={`p-3 rounded-xl text-left border transition-all flex flex-col justify-between space-y-1.5 cursor-pointer ${
+                          isSelected
+                            ? 'bg-cyan-50 dark:bg-cyanBrand-950/40 border-cyan-500 dark:border-cyanBrand-400 ring-2 ring-cyanBrand-400/30 shadow-md'
+                            : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-850'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between w-full">
+                          <span className={`font-black text-xs sm:text-sm flex items-center space-x-1.5 ${
+                            isSelected ? 'text-cyan-900 dark:text-cyanBrand-300' : 'text-slate-900 dark:text-slate-100'
+                          }`}>
+                            <span>{c.emoji}</span>
+                            <span>{c.label}</span>
+                          </span>
+                          <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
+                            isSelected 
+                              ? 'bg-cyan-500 text-white' 
+                              : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                          }`}>
+                            {c.questionCount} preg
+                          </span>
+                        </div>
+                        <div className={`text-xs font-semibold ${
+                          isSelected ? 'text-slate-800 dark:text-slate-200' : 'text-slate-700 dark:text-slate-300'
+                        }`}>
+                          {c.title}
+                        </div>
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1">
+                          {c.description}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Opción 2: Cantidad de preguntas */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
@@ -669,13 +819,8 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
               </span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {[
-                { val: 10, label: '10 Preguntas', sub: 'Práctica Rápida (~8 min)' },
-                { val: 20, label: '20 Preguntas', sub: 'Formato Estándar (~15 min)' },
-                { val: 30, label: '30 Preguntas', sub: 'Examen Completo (~25 min)' },
-                { val: 'all', label: `Todas (+${fullQuestionsBank.length})`, sub: 'Maratón de Estudio' },
-              ].map((item) => {
-                const isSelected = questionCount === item.val;
+              {questionCountOptions.map((item) => {
+                const isSelected = questionCount === item.val || (questionCount > fullQuestionsBank.length && item.val === 'all');
                 return (
                   <button
                     key={item.val}
@@ -685,7 +830,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
                       soundManager.playClick();
                       setQuestionCount(item.val);
                     }}
-                    className={`p-4 rounded-xl text-left border transition-all duration-200 ${
+                    className={`p-4 rounded-xl text-left border transition-all duration-200 cursor-pointer ${
                       isSelected
                         ? 'bg-brand-50 dark:bg-brand-600/20 border-brand-500 shadow-lg shadow-brand-500/10 ring-2 ring-brand-500/30'
                         : 'bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
@@ -1044,12 +1189,19 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
         <div className="glass-card rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl border border-slate-200 dark:border-slate-800">
           
           {/* Question Metadata */}
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-400 border border-brand-200 dark:border-brand-500/20">
-              {currentQ.topic}
-            </span>
-            <span className="text-xs text-slate-500 dark:text-slate-400">
-              {currentQ.source || 'Primer Parcial UTN'}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center space-x-2">
+              {currentQ.clase && (
+                <span className="text-xs font-black uppercase px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30">
+                  Clase {currentQ.clase}
+                </span>
+              )}
+              <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-400 border border-brand-200 dark:border-brand-500/20">
+                {currentQ.topic}
+              </span>
+            </div>
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+              {currentQ.source || (currentQ.parcial === 2 ? '2do Parcial UTN' : '1er Parcial UTN')}
             </span>
           </div>
 
@@ -1281,10 +1433,23 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
           <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-cyanBrand-500/10 dark:bg-cyanBrand-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
           {/* Status Badge */}
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-extrabold uppercase tracking-wider shadow-sm">
-            <span className={`px-3 py-1 rounded-full border ${stats.gradeStatus.color}`}>
-              {stats.gradeStatus.label}
-            </span>
+          <div className="flex flex-col items-center gap-2">
+            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border text-xs sm:text-sm font-extrabold uppercase tracking-wider shadow-sm">
+              <span className={`px-3 py-1 rounded-full border ${stats.gradeStatus.color}`}>
+                {stats.gradeStatus.label}
+              </span>
+            </div>
+            <div className="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300">
+              {selectedParcial === '2' ? (
+                selectedClass === 'all' 
+                  ? '🌟 Simulacro General 2do Parcial (Clases 8 a 14 · 105 preg)' 
+                  : `🎯 Simulacro Oficial · Clase ${selectedClass}: ${UNIT3_CLASSES.find(c => c.id === Number(selectedClass))?.title || ''}`
+              ) : selectedParcial === '1' ? (
+                '📘 Simulacro 1er Parcial (Unidades 1 y 2 · Clases 1 a 6)'
+              ) : (
+                '🏆 Examen Integral UTN (Clases 1 a 14)'
+              )}
+            </div>
           </div>
 
           {/* Score Numbers */}
@@ -1334,21 +1499,59 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal }) {
             <button
               id="btn-retry-exam"
               onClick={handleStartExam}
-              className="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-extrabold text-sm shadow-lg shadow-brand-500/25 flex items-center space-x-2 transition-all"
+              className="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-extrabold text-sm shadow-lg shadow-brand-500/25 flex items-center space-x-2 transition-all cursor-pointer"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>Reintentar este Examen</span>
+              <span>Reintentar este Simulacro</span>
             </button>
+
+            {/* Siguiente clase del 2do parcial */}
+            {selectedParcial === '2' && selectedClass !== 'all' && (
+              (() => {
+                const classIds = [8, 9, 10, 12, 13, 14];
+                const curIdx = classIds.indexOf(Number(selectedClass));
+                const nextClassId = curIdx >= 0 && curIdx < classIds.length - 1 ? classIds[curIdx + 1] : null;
+                if (!nextClassId) return null;
+                return (
+                  <button
+                    onClick={() => {
+                      soundManager.playClick();
+                      setSelectedClass(nextClassId);
+                      setGameState('setup');
+                    }}
+                    className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-600 to-brand-600 hover:from-cyan-500 hover:to-brand-500 text-white font-bold text-sm shadow-md transition-all flex items-center space-x-2 cursor-pointer"
+                  >
+                    <span>Simulacro Clase {nextClassId}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                );
+              })()
+            )}
+
+            {/* Repasar teoría en Unidad 3 */}
+            {selectedParcial === '2' && (
+              <button
+                onClick={() => {
+                  soundManager.playClick();
+                  if (onNavigateToTheory) onNavigateToTheory('unit3');
+                }}
+                className="px-5 py-3 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 font-bold text-sm border border-cyan-500/30 transition-all flex items-center space-x-2 cursor-pointer"
+              >
+                <BookOpen className="w-4 h-4" />
+                <span>Repasar Teoría (Unidad 3)</span>
+              </button>
+            )}
+
             <button
               id="btn-new-exam-setup"
               onClick={() => {
                 soundManager.playClick();
                 setGameState('setup');
               }}
-              className="px-6 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-sm border border-slate-300 dark:border-slate-700 transition-all flex items-center space-x-2"
+              className="px-6 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-sm border border-slate-300 dark:border-slate-700 transition-all flex items-center space-x-2 cursor-pointer"
             >
               <Sparkles className="w-4 h-4 text-cyan-600 dark:text-cyanBrand-400" />
-              <span>Configurar Nuevo Simulacro</span>
+              <span>Configurar Otro Simulacro</span>
             </button>
           </div>
 

@@ -810,3 +810,73 @@ export const UNIT3_THEORY = {
     ]
   }
 };
+
+export const UNIT3_CLASSES = [
+  {
+    id: 8,
+    key: 'clase8',
+    label: 'Clase 8',
+    title: 'Cuantificadores & Dispositivos IT',
+    shortTitle: 'Cuantificadores',
+    description: 'Much, many, few, little, some, any & Hardware IT',
+    questionCount: 20,
+    emoji: '⚖️',
+    gradient: 'from-amber-500 to-orange-500'
+  },
+  {
+    id: 9,
+    key: 'clase9',
+    label: 'Clase 9',
+    title: 'Comparativos & Lenguajes de Prog.',
+    shortTitle: 'Comparativos',
+    description: 'Python vs C vs Java vs Go, concurrencia y tooling',
+    questionCount: 18,
+    emoji: '🚀',
+    gradient: 'from-blue-500 to-cyan-500'
+  },
+  {
+    id: 10,
+    key: 'clase10',
+    label: 'Clase 10',
+    title: 'Present Perfect & CV Profesional IT',
+    shortTitle: 'Present Perfect & CV',
+    description: 'Have/has + participio, Martina López CV, since/for',
+    questionCount: 25,
+    emoji: '🎯',
+    gradient: 'from-purple-500 to-indigo-500'
+  },
+  {
+    id: 12,
+    key: 'clase12',
+    label: 'Clase 12',
+    title: 'Futuro (Will / Going to) & Entrevistas',
+    shortTitle: 'Futuro & Entrevistas',
+    description: 'Will vs Going To, Smart Glasses, DOs & DONTs IT',
+    questionCount: 16,
+    emoji: '🔮',
+    gradient: 'from-pink-500 to-rose-500'
+  },
+  {
+    id: 13,
+    key: 'clase13',
+    label: 'Clase 13',
+    title: 'Conectores & Dispositivo OpenAI',
+    shortTitle: 'Conectores & OpenAI',
+    description: 'And, but, or, so, because, paralelismo y audio AI',
+    questionCount: 12,
+    emoji: '🔗',
+    gradient: 'from-emerald-500 to-teal-500'
+  },
+  {
+    id: 14,
+    key: 'clase14',
+    label: 'Clase 14',
+    title: 'Adverbios & Repaso de Tiempos',
+    shortTitle: 'Adverbios & Repaso',
+    description: 'Adverbios de modo -ly, repaso Presente, Pasado y Futuro',
+    questionCount: 14,
+    emoji: '⚡',
+    gradient: 'from-violet-500 to-fuchsia-500'
+  }
+];
+

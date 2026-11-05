@@ -29,8 +29,44 @@ import {
   Target,
   ArrowRight
 } from 'lucide-react';
-import { UNIT3_THEORY } from '../data/unit3TheoryData';
+import { UNIT3_THEORY, UNIT3_CLASSES } from '../data/unit3TheoryData';
 import { soundManager } from '../utils/soundEffects';
+
+function ClassExamCtaBanner({ classId, onGoToExam }) {
+  const c = UNIT3_CLASSES.find(item => item.id === classId);
+  if (!c) return null;
+
+  return (
+    <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-brand-500/10 via-cyan-500/10 to-indigo-500/10 border border-brand-500/20 dark:border-cyan-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+      <div className="flex items-center space-x-3.5">
+        <div className="p-3 rounded-xl bg-brand-600 text-white shadow-md flex-shrink-0">
+          <GraduationCap className="w-6 h-6" />
+        </div>
+        <div>
+          <h3 className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-slate-100 flex items-center space-x-2">
+            <span>¿Listo para evaluar {c.label}?</span>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 font-bold">
+              {c.questionCount} preguntas
+            </span>
+          </h3>
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+            Pon a prueba tus conocimientos con el simulacro oficial de {c.title}.
+          </p>
+        </div>
+      </div>
+      <button
+        onClick={() => {
+          soundManager.playClick();
+          if (onGoToExam) onGoToExam({ parcial: '2', targetClass: c.id });
+        }}
+        className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-extrabold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer flex-shrink-0"
+      >
+        <Zap className="w-4 h-4 text-cyan-300" />
+        <span>Hacer Simulacro de {c.label}</span>
+      </button>
+    </div>
+  );
+}
 
 function shuffleArray(arr) {
   const newArr = [...arr];
@@ -174,12 +210,12 @@ export function Unit3View({ onGoToExam }) {
             <button
               onClick={() => {
                 soundManager.playClick();
-                if (onGoToExam) onGoToExam('2');
+                if (onGoToExam) onGoToExam({ parcial: '2', targetClass: 'all' });
               }}
-              className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyanBrand-500 to-brand-500 hover:from-cyanBrand-400 hover:to-brand-400 text-slate-950 font-black text-sm shadow-lg shadow-cyan-500/20 flex items-center justify-center space-x-2 transition-transform active:scale-95"
+              className="px-5 py-3 rounded-xl bg-gradient-to-r from-cyanBrand-500 to-brand-500 hover:from-cyanBrand-400 hover:to-brand-400 text-slate-950 font-black text-sm shadow-lg shadow-cyan-500/20 flex items-center justify-center space-x-2 transition-transform active:scale-95 cursor-pointer"
             >
               <Target className="w-4 h-4" />
-              <span>Simular 2do Parcial</span>
+              <span>Simular 2do Parcial Completo</span>
               <ArrowRight className="w-4 h-4 ml-1" />
             </button>
           </div>
@@ -198,7 +234,7 @@ export function Unit3View({ onGoToExam }) {
                 soundManager.playClick();
                 setActiveTab(tab.id);
               }}
-              className={`p-3.5 rounded-2xl text-left border transition-all duration-200 flex flex-col justify-between space-y-2 ${
+              className={`p-3.5 rounded-2xl text-left border transition-all duration-200 flex flex-col justify-between space-y-2 cursor-pointer ${
                 isActive
                   ? 'bg-brand-600 text-white border-brand-500 shadow-lg shadow-brand-500/25 ring-2 ring-brand-400'
                   : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:border-brand-500/50 hover:bg-slate-50 dark:hover:bg-slate-800/60'
@@ -225,11 +261,66 @@ export function Unit3View({ onGoToExam }) {
         })}
       </div>
 
+      {/* Hub de Simulacros por Clase */}
+      <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-md space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800/80 pb-3">
+          <div className="flex items-center space-x-2.5">
+            <div className="p-2 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/20">
+              <Zap className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-slate-100 flex items-center space-x-2">
+                <span>🎯 Simulacros de Examen por Clase (2do Parcial)</span>
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Practica de forma focalizada clase por clase o realiza el simulacro completo de 105 preguntas.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              soundManager.playClick();
+              if (onGoToExam) onGoToExam({ parcial: '2', targetClass: 'all' });
+            }}
+            className="self-start sm:self-auto px-4 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-md transition-all flex items-center space-x-1.5 cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-cyan-200" />
+            <span>⚡ Simulacro Completo (105 preg)</span>
+          </button>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+          {UNIT3_CLASSES.map((c) => (
+            <button
+              key={c.id}
+              onClick={() => {
+                soundManager.playClick();
+                if (onGoToExam) onGoToExam({ parcial: '2', targetClass: c.id });
+              }}
+              className="p-3 rounded-xl bg-slate-50 dark:bg-slate-950/70 hover:bg-brand-50 dark:hover:bg-brand-950/30 border border-slate-200 dark:border-slate-800 hover:border-cyan-400 transition-all text-left group flex flex-col justify-between cursor-pointer"
+            >
+              <div className="flex items-center justify-between w-full">
+                <span className="font-extrabold text-xs text-slate-900 dark:text-slate-200 group-hover:text-brand-600 dark:group-hover:text-cyan-300">
+                  {c.emoji} {c.label}
+                </span>
+                <span className="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-500/20">
+                  {c.questionCount}q
+                </span>
+              </div>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-1.5 group-hover:text-slate-700 dark:group-hover:text-slate-300">
+                {c.shortTitle}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* ======================================================== */}
       {/* CLASE 8 VIEW */}
       {/* ======================================================== */}
       {activeTab === 'clase8' && (
         <div className="space-y-6">
+          <ClassExamCtaBanner classId={8} onGoToExam={onGoToExam} />
           
           {/* Header Info */}
           <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
@@ -470,6 +561,7 @@ export function Unit3View({ onGoToExam }) {
       {/* ======================================================== */}
       {activeTab === 'clase9' && (
         <div className="space-y-6">
+          <ClassExamCtaBanner classId={9} onGoToExam={onGoToExam} />
           
           <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
             <div className="flex items-center space-x-2 text-brand-600 dark:text-cyanBrand-400 text-xs font-bold uppercase tracking-wider">
@@ -693,6 +785,7 @@ export function Unit3View({ onGoToExam }) {
       {/* ======================================================== */}
       {activeTab === 'clase10' && (
         <div className="space-y-6">
+          <ClassExamCtaBanner classId={10} onGoToExam={onGoToExam} />
           
           <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
             <div className="flex items-center space-x-2 text-brand-600 dark:text-cyanBrand-400 text-xs font-bold uppercase tracking-wider">
@@ -896,6 +989,7 @@ export function Unit3View({ onGoToExam }) {
       {/* ======================================================== */}
       {activeTab === 'clase12' && (
         <div className="space-y-6">
+          <ClassExamCtaBanner classId={12} onGoToExam={onGoToExam} />
           
           <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
             <div className="flex items-center space-x-2 text-brand-600 dark:text-cyanBrand-400 text-xs font-bold uppercase tracking-wider">
@@ -1090,6 +1184,7 @@ export function Unit3View({ onGoToExam }) {
       {/* ======================================================== */}
       {activeTab === 'clase13' && (
         <div className="space-y-6">
+          <ClassExamCtaBanner classId={13} onGoToExam={onGoToExam} />
           
           <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
             <div className="flex items-center space-x-2 text-brand-600 dark:text-cyanBrand-400 text-xs font-bold uppercase tracking-wider">
@@ -1236,6 +1331,7 @@ export function Unit3View({ onGoToExam }) {
       {/* ======================================================== */}
       {activeTab === 'clase14' && (
         <div className="space-y-6">
+          <ClassExamCtaBanner classId={14} onGoToExam={onGoToExam} />
           
           <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-2">
             <div className="flex items-center space-x-2 text-brand-600 dark:text-cyanBrand-400 text-xs font-bold uppercase tracking-wider">

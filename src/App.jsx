@@ -17,6 +17,13 @@ export function App() {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [isGeminiModalOpen, setIsGeminiModalOpen] = useState(false);
   const [hasAiKey, setHasAiKey] = useState(() => hasGeminiApiKey());
+  
+  // Configuración de destino del simulador (parcial y clase)
+  const [examTargetConfig, setExamTargetConfig] = useState({
+    parcial: '2',
+    targetClass: 'all',
+    key: 0
+  });
 
   // Sincronizar tema con elemento HTML
   useEffect(() => {
@@ -45,6 +52,17 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Iniciar simulador configurado para una clase específica o parcial
+  const handleStartExamWithConfig = ({ parcial = '2', targetClass = 'all' } = {}) => {
+    setExamTargetConfig({
+      parcial,
+      targetClass,
+      key: Date.now()
+    });
+    setActiveSection('exam');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-200">
 
@@ -52,6 +70,7 @@ export function App() {
       <Navbar
         activeSection={activeSection}
         onNavigate={handleNavigate}
+        onStartExamWithConfig={handleStartExamWithConfig}
         isDark={isDark}
         onToggleTheme={handleToggleTheme}
         soundEnabled={soundEnabled}
@@ -66,6 +85,7 @@ export function App() {
           <ExamSimulator 
             onNavigateToTheory={handleNavigate}
             onOpenGeminiModal={() => setIsGeminiModalOpen(true)}
+            examTargetConfig={examTargetConfig}
           />
         )}
 
@@ -82,7 +102,7 @@ export function App() {
         )}
 
         {activeSection === 'unit3' && (
-          <Unit3View onGoToExam={() => handleNavigate('exam')} />
+          <Unit3View onGoToExam={(cfg) => handleStartExamWithConfig(cfg || { parcial: '2', targetClass: 'all' })} />
         )}
       </main>
 

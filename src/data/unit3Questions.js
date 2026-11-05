@@ -5,6 +5,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 101,
     "parcial": 2,
+    "clase": 8,
     "topic": "Quantifiers (Much vs Many)",
     "question": "There isn't _____ free RAM on this cloud instance to run another Docker container.",
     "options": [
@@ -32,6 +33,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 102,
     "parcial": 2,
+    "clase": 8,
     "topic": "Quantifiers (Much vs Many)",
     "question": "How _____ pull requests did the team merge during this sprint?",
     "options": [
@@ -59,6 +61,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 103,
     "parcial": 2,
+    "clase": 8,
     "topic": "Quantifiers (Too much vs Too many)",
     "question": "You have opened _____ browser tabs; it is slowing down your laptop.",
     "options": [
@@ -86,6 +89,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 104,
     "parcial": 2,
+    "clase": 8,
     "topic": "Quantifiers (Few vs A few)",
     "question": "We have _____ open tickets left in Jira, so we will easily finish them before 5 p.m.",
     "options": [
@@ -107,12 +111,13 @@ export const UNIT3_QUESTIONS = [
       }
     ],
     "correctAnswer": "a",
-    "explanation": "'A few' se usa con contables plurales con un sentido POSITIVO ('unos pocos, suficientes para manejarlos'). 'Few' sin 'a' tendría sentido negativo ('casi ninguno').",
+    "explanation": "'A few' se usa con contables plurales con un sentido POSITIVO ('unos pocos, suficientes para terminarlos'). 'Few' sin 'a' tendría sentido negativo ('casi ninguno').",
     "source": "Unidad 2 Clase 8 - Quantifiers"
   },
   {
     "id": 105,
     "parcial": 2,
+    "clase": 8,
     "topic": "Quantifiers (Little vs A little)",
     "question": "There is _____ documentation for this legacy API; we almost know nothing about how it works.",
     "options": [
@@ -140,6 +145,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 106,
     "parcial": 2,
+    "clase": 8,
     "topic": "Quantifiers (Some vs Any)",
     "question": "Would you like _____ help with configuring your local development environment?",
     "options": [
@@ -167,6 +173,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 107,
     "parcial": 2,
+    "clase": 8,
     "topic": "Quantifiers (Some vs Any)",
     "question": "The database query didn't return _____ matching records.",
     "options": [
@@ -194,6 +201,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 108,
     "parcial": 2,
+    "clase": 8,
     "topic": "Quantifiers (A lot of vs Lots)",
     "question": "‘Did you write code today?’ ‘Yes, I coded _____.’",
     "options": [
@@ -221,6 +229,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 109,
     "parcial": 2,
+    "clase": 8,
     "topic": "IT Devices & Hardware",
     "question": "A small flat part on a laptop that you move with your finger to control the cursor is a _____.",
     "options": [
@@ -248,6 +257,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 110,
     "parcial": 2,
+    "clase": 8,
     "topic": "IT Devices & Hardware",
     "question": "A small device that stores files and can be plugged directly into a computer's USB port is a _____.",
     "options": [
@@ -275,6 +285,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 111,
     "parcial": 2,
+    "clase": 8,
     "topic": "Internet & IT Verbs",
     "question": "When you copy a configuration file from your local laptop to an AWS server, you _____ it.",
     "options": [
@@ -302,6 +313,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 112,
     "parcial": 2,
+    "clase": 8,
     "topic": "Internet & IT Verbs",
     "question": "When you disconnect a device from electricity by removing its cable, you _____ it.",
     "options": [
@@ -329,6 +341,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 113,
     "parcial": 2,
+    "clase": 8,
     "topic": "Reading: Wearables",
     "question": "Which wearable device is an electronic patch worn inside a bra to check for breast cancer?",
     "options": [
@@ -356,6 +369,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 114,
     "parcial": 2,
+    "clase": 8,
     "topic": "Reading: Wearables",
     "question": "The 'Heartguide' device looks like a smartwatch, but its primary medical capability is measuring _____.",
     "options": [
@@ -383,6 +397,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 115,
     "parcial": 2,
+    "clase": 8,
     "topic": "Reading: Wearables",
     "question": "Which of the following was an early, NON-electronic historical example of wearable technology?",
     "options": [
@@ -408,8 +423,149 @@ export const UNIT3_QUESTIONS = [
     "source": "Unidad 2 Clase 8 - Reading Wearable Technologies"
   },
   {
+    "id": 1151,
+    "parcial": 2,
+    "clase": 8,
+    "topic": "Quantifiers (Countable vs Uncountable)",
+    "question": "Which of the following computer-related words is UNCOUNTABLE in English?",
+    "options": [
+      {
+        "id": "a",
+        "text": "information"
+      },
+      {
+        "id": "b",
+        "text": "computer"
+      },
+      {
+        "id": "c",
+        "text": "laptop"
+      },
+      {
+        "id": "d",
+        "text": "keyboard"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "'Information' (así como 'data', 'software' o 'hardware') es un sustantivo incontable en inglés, por lo que no lleva plural en '-s' ni se cuenta con números directamente.",
+    "source": "Unidad 2 Clase 8 - Quantifiers"
+  },
+  {
+    "id": 1152,
+    "parcial": 2,
+    "clase": 8,
+    "topic": "IT Verbs",
+    "question": "When you enter your username and password to start using an account, you _____.",
+    "options": [
+      {
+        "id": "a",
+        "text": "sign in / log in"
+      },
+      {
+        "id": "b",
+        "text": "sign out / log out"
+      },
+      {
+        "id": "c",
+        "text": "scroll down"
+      },
+      {
+        "id": "d",
+        "text": "unplug"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 8 Verbs: 'When you sign in or log in to an account, you enter your name and password.'",
+    "source": "Unidad 2 Clase 8 - Vocabulary"
+  },
+  {
+    "id": 1153,
+    "parcial": 2,
+    "clase": 8,
+    "topic": "Reading: Wearables",
+    "question": "Maria can't sleep easily. According to the text, which soft headband device can help her fall asleep?",
+    "options": [
+      {
+        "id": "a",
+        "text": "SmartSleep"
+      },
+      {
+        "id": "b",
+        "text": "Fitbit"
+      },
+      {
+        "id": "c",
+        "text": "iTBra"
+      },
+      {
+        "id": "d",
+        "text": "Heartguide"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 8 Reading: ''SmartSleep' is a soft headband that helps people fall asleep and tracks sleep patterns.'",
+    "source": "Unidad 2 Clase 8 - Reading Wearable Technologies"
+  },
+  {
+    "id": 1154,
+    "parcial": 2,
+    "clase": 8,
+    "topic": "Reading: Wearables",
+    "question": "How can a user hug someone who lives miles away, according to the Wearables article?",
+    "options": [
+      {
+        "id": "a",
+        "text": "By wearing a smart jacket"
+      },
+      {
+        "id": "b",
+        "text": "By using a pen drive"
+      },
+      {
+        "id": "c",
+        "text": "By wearing smart glasses"
+      },
+      {
+        "id": "d",
+        "text": "By scrolling up a web page"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 8 Reading: 'For example, you can hug someone from miles away with a smart jacket!'",
+    "source": "Unidad 2 Clase 8 - Reading Wearable Technologies"
+  },
+  {
+    "id": 1155,
+    "parcial": 2,
+    "clase": 8,
+    "topic": "Quantifiers (Too much vs Too many)",
+    "question": "There is _____ latency between our server in Virginia and the users in Tokyo.",
+    "options": [
+      {
+        "id": "a",
+        "text": "too much"
+      },
+      {
+        "id": "b",
+        "text": "too many"
+      },
+      {
+        "id": "c",
+        "text": "few"
+      },
+      {
+        "id": "d",
+        "text": "many"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "'Latency' (latencia de red) es un sustantivo incontable. Se utiliza 'too much'.",
+    "source": "Unidad 2 Clase 8 - Quantifiers"
+  },
+  {
     "id": 116,
     "parcial": 2,
+    "clase": 9,
     "topic": "Comparatives & Superlatives",
     "question": "Python is _____ to learn than JavaScript because its syntax is cleaner.",
     "options": [
@@ -437,6 +593,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 117,
     "parcial": 2,
+    "clase": 9,
     "topic": "Comparatives & Superlatives",
     "question": "JavaScript is _____ in the browser and more useful for building interactive websites.",
     "options": [
@@ -464,6 +621,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 118,
     "parcial": 2,
+    "clase": 9,
     "topic": "Comparatives & Superlatives",
     "question": "For many beginners in coding, Python is the _____ language to start with.",
     "options": [
@@ -491,6 +649,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 119,
     "parcial": 2,
+    "clase": 9,
     "topic": "Comparatives & Superlatives",
     "question": "JavaScript is the _____ language for front-end web development in the world.",
     "options": [
@@ -518,6 +677,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 120,
     "parcial": 2,
+    "clase": 9,
     "topic": "Comparatives & Superlatives",
     "question": "This cloud infrastructure is _____ more expensive than hosting on our own hardware.",
     "options": [
@@ -545,6 +705,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 121,
     "parcial": 2,
+    "clase": 9,
     "topic": "Comparatives & Superlatives",
     "question": "This is the most efficient sorting algorithm I have _____ seen.",
     "options": [
@@ -572,6 +733,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 122,
     "parcial": 2,
+    "clase": 9,
     "topic": "Tech Reading: Python vs C",
     "question": "Why is C faster and more efficient than Python?",
     "options": [
@@ -599,6 +761,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 123,
     "parcial": 2,
+    "clase": 9,
     "topic": "Tech Reading: Python vs C",
     "question": "What does it mean that C's syntax is 'less forgiving' than Python's?",
     "options": [
@@ -626,6 +789,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 124,
     "parcial": 2,
+    "clase": 9,
     "topic": "Tech Reading: Java vs Go",
     "question": "Go (Golang) was developed by _____ with an emphasis on simplicity and concurrency.",
     "options": [
@@ -653,6 +817,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 125,
     "parcial": 2,
+    "clase": 9,
     "topic": "Tech Reading: Java vs Go",
     "question": "The ability of a program to run multiple tasks or processes at the same time is called _____.",
     "options": [
@@ -680,6 +845,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 126,
     "parcial": 2,
+    "clase": 9,
     "topic": "Tech Reading: Java vs Go",
     "question": "Both Java and Go provide _____ to reclaim unused memory automatically and avoid memory leaks.",
     "options": [
@@ -705,8 +871,205 @@ export const UNIT3_QUESTIONS = [
     "source": "Unidad 2 Clase 9 - Java vs Go Glossary"
   },
   {
+    "id": 1261,
+    "parcial": 2,
+    "clase": 9,
+    "topic": "Comparatives & Superlatives",
+    "question": "Learning both Python and JavaScript is the _____ choice for a modern web engineer.",
+    "options": [
+      {
+        "id": "a",
+        "text": "smartest"
+      },
+      {
+        "id": "b",
+        "text": "smarter"
+      },
+      {
+        "id": "c",
+        "text": "more smart"
+      },
+      {
+        "id": "d",
+        "text": "most smart"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 9 Grammar: El adjetivo monosílabo 'smart' forma su superlativo como 'the smartest'.",
+    "source": "Unidad 2 Clase 9 - Grammar"
+  },
+  {
+    "id": 1262,
+    "parcial": 2,
+    "clase": 9,
+    "topic": "Comparatives: Not as ... as",
+    "question": "Peter isn't as considerate _____ Marta when conducting code reviews.",
+    "options": [
+      {
+        "id": "a",
+        "text": "as"
+      },
+      {
+        "id": "b",
+        "text": "than"
+      },
+      {
+        "id": "c",
+        "text": "like"
+      },
+      {
+        "id": "d",
+        "text": "that"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "La estructura de comparación de igualdad/desigualdad es '(not) as + adjetivo + as'.",
+    "source": "Unidad 2 Clase 9 - Grammar"
+  },
+  {
+    "id": 1263,
+    "parcial": 2,
+    "clase": 9,
+    "topic": "Superlatives: in vs of",
+    "question": "She is the best software architect _____ our entire development department.",
+    "options": [
+      {
+        "id": "a",
+        "text": "in"
+      },
+      {
+        "id": "b",
+        "text": "of"
+      },
+      {
+        "id": "c",
+        "text": "at"
+      },
+      {
+        "id": "d",
+        "text": "from"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Regla oficial de la Clase 9: después de un superlativo, se utiliza 'in' antes de nombres de lugares o grupos singulares ('in the class', 'in our department').",
+    "source": "Unidad 2 Clase 9 - Grammar"
+  },
+  {
+    "id": 1264,
+    "parcial": 2,
+    "clase": 9,
+    "topic": "Tech Reading: Java vs Go",
+    "question": "Java runs on which platform, making it highly portable across operating systems?",
+    "options": [
+      {
+        "id": "a",
+        "text": "JVM (Java Virtual Machine)"
+      },
+      {
+        "id": "b",
+        "text": "Bare metal exclusively"
+      },
+      {
+        "id": "c",
+        "text": "V8 JavaScript Engine"
+      },
+      {
+        "id": "d",
+        "text": "WebAssembly sandbox"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 9 Reading: 'Java, developed by Sun Microsystems, is object-oriented, verbose, and runs on the JVM, making it highly portable.'",
+    "source": "Unidad 2 Clase 9 - Java vs Go"
+  },
+  {
+    "id": 1265,
+    "parcial": 2,
+    "clase": 9,
+    "topic": "Tech Reading: Python vs C",
+    "question": "Which language is better suited for developing operating systems and game engines requiring maximum hardware control?",
+    "options": [
+      {
+        "id": "a",
+        "text": "C"
+      },
+      {
+        "id": "b",
+        "text": "Python"
+      },
+      {
+        "id": "c",
+        "text": "Ruby"
+      },
+      {
+        "id": "d",
+        "text": "HTML"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 9 Reading: 'C is better suited for building operating systems, game engines and software that requires maximum performance.'",
+    "source": "Unidad 2 Clase 9 - Comparing Python and C"
+  },
+  {
+    "id": 1266,
+    "parcial": 2,
+    "clase": 9,
+    "topic": "Tech Reading: Python vs C",
+    "question": "Python is known for rapid development because its syntax is simple and reads almost like _____.",
+    "options": [
+      {
+        "id": "a",
+        "text": "English"
+      },
+      {
+        "id": "b",
+        "text": "Binary machine code"
+      },
+      {
+        "id": "c",
+        "text": "Mathematical calculus"
+      },
+      {
+        "id": "d",
+        "text": "Assembly instructions"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 9 Reading: 'Python is known for being easy to learn thanks to its simple syntax that reads almost like English.'",
+    "source": "Unidad 2 Clase 9 - Comparing Python and C"
+  },
+  {
+    "id": 1267,
+    "parcial": 2,
+    "clase": 9,
+    "topic": "Tech Reading: Java vs Go",
+    "question": "While Java favors abstraction and inheritance, Go approaches problem-solving through simplicity and _____.",
+    "options": [
+      {
+        "id": "a",
+        "text": "composition"
+      },
+      {
+        "id": "b",
+        "text": "complex polymorphism"
+      },
+      {
+        "id": "c",
+        "text": "line-by-line interpretation"
+      },
+      {
+        "id": "d",
+        "text": "manual garbage deletion"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 9 Reading: 'Java through abstraction and inheritance, Go through composition and simplicity.'",
+    "source": "Unidad 2 Clase 9 - Java vs Go"
+  },
+  {
     "id": 127,
     "parcial": 2,
+    "clase": 10,
     "topic": "Present Perfect Tense",
     "question": "She _____ (work) as a software tester at Globant for three years.",
     "options": [
@@ -734,6 +1097,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 128,
     "parcial": 2,
+    "clase": 10,
     "topic": "Present Perfect Tense",
     "question": "_____ you ever contributed to an open-source project on GitHub?",
     "options": [
@@ -761,6 +1125,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 129,
     "parcial": 2,
+    "clase": 10,
     "topic": "Present Perfect Tense",
     "question": "I can't push my code because I _____ (lost) my SSH private key.",
     "options": [
@@ -788,6 +1153,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 130,
     "parcial": 2,
+    "clase": 10,
     "topic": "Present Perfect: Been vs Gone",
     "question": "A: 'Where is the lead architect?' B: 'She _____ to San Francisco for a conference; she'll return next Monday.'",
     "options": [
@@ -815,6 +1181,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 131,
     "parcial": 2,
+    "clase": 10,
     "topic": "Present Perfect: Been vs Gone",
     "question": "A: 'Your face is so red! Where have you _____?' B: 'I've just _____ out to the server room.'",
     "options": [
@@ -842,6 +1209,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 132,
     "parcial": 2,
+    "clase": 10,
     "topic": "Present Perfect vs Past Simple",
     "question": "Which of the following sentences is grammatically INCORRECT?",
     "options": [
@@ -869,6 +1237,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 133,
     "parcial": 2,
+    "clase": 10,
     "topic": "Present Perfect Time Adverbials",
     "question": "We have _____ finished the sprint backlog, just five minutes ago!",
     "options": [
@@ -896,6 +1265,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 134,
     "parcial": 2,
+    "clase": 10,
     "topic": "Present Perfect Time Adverbials",
     "question": "Have you reviewed the pull request _____? No, not _____.",
     "options": [
@@ -923,8 +1293,65 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 135,
     "parcial": 2,
+    "clase": 10,
     "topic": "English for IT: Writing a CV",
-    "question": "My responsibilities include _____ the company's SQL database and keeping data secure.",
+    "question": "Our team will _____ a mobile application for the new client.",
+    "options": [
+      {
+        "id": "a",
+        "text": "develop"
+      },
+      {
+        "id": "b",
+        "text": "deadline"
+      },
+      {
+        "id": "c",
+        "text": "qualification"
+      },
+      {
+        "id": "d",
+        "text": "degree"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 10 CV Quiz (Q1): 'develop' es el verbo adecuado para crear aplicaciones.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
+  },
+  {
+    "id": 136,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "English for IT: Writing a CV",
+    "question": "I can _____ technical problems and find practical solutions for end users.",
+    "options": [
+      {
+        "id": "a",
+        "text": "achievement"
+      },
+      {
+        "id": "b",
+        "text": "solve"
+      },
+      {
+        "id": "c",
+        "text": "internship"
+      },
+      {
+        "id": "d",
+        "text": "qualifications"
+      }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Clase 10 CV Quiz (Q2): 'solve' significa resolver problemas técnicos.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
+  },
+  {
+    "id": 137,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "English for IT: Writing a CV",
+    "question": "My responsibilities include _____ the company's website regularly.",
     "options": [
       {
         "id": "a",
@@ -944,22 +1371,23 @@ export const UNIT3_QUESTIONS = [
       }
     ],
     "correctAnswer": "a",
-    "explanation": "Clase 10 CV Quiz: 'include' va seguido de gerundio del verbo de acción ('maintaining the database').",
-    "source": "Unidad 3 Clase 10 - Vocabulary Writing a CV"
+    "explanation": "Clase 10 CV Quiz (Q3): 'maintaining' significa mantener y actualizar el sitio web.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
   },
   {
-    "id": 136,
+    "id": 138,
     "parcial": 2,
+    "clase": 10,
     "topic": "English for IT: Writing a CV",
-    "question": "A temporary work placement that provides professional industry experience for students is an _____.",
+    "question": "We need to _____ the software before releasing it to users.",
     "options": [
       {
         "id": "a",
-        "text": "internship"
+        "text": "deadline"
       },
       {
         "id": "b",
-        "text": "qualification"
+        "text": "test"
       },
       {
         "id": "c",
@@ -967,26 +1395,27 @@ export const UNIT3_QUESTIONS = [
       },
       {
         "id": "d",
-        "text": "deadline"
+        "text": "degree"
       }
     ],
-    "correctAnswer": "a",
-    "explanation": "Clase 10 CV Quiz: 'A temporary work placement that provides professional experience is an internship (pasantía).'",
-    "source": "Unidad 3 Clase 10 - Vocabulary Writing a CV"
+    "correctAnswer": "b",
+    "explanation": "Clase 10 CV Quiz (Q4): 'test' significa probar y depurar el software antes del lanzamiento.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
   },
   {
-    "id": 137,
+    "id": 139,
     "parcial": 2,
+    "clase": 10,
     "topic": "English for IT: Writing a CV",
-    "question": "Successfully completing a challenging fullstack web project can be an important _____ to list on your CV.",
+    "question": "I enjoy working with others and _____ on group software projects.",
     "options": [
       {
         "id": "a",
-        "text": "achievement"
+        "text": "collaborating"
       },
       {
         "id": "b",
-        "text": "deadline"
+        "text": "internship"
       },
       {
         "id": "c",
@@ -998,22 +1427,303 @@ export const UNIT3_QUESTIONS = [
       }
     ],
     "correctAnswer": "a",
-    "explanation": "Clase 10 CV Quiz: 'Successfully completing a project is an achievement (logro destacado).'",
-    "source": "Unidad 3 Clase 10 - Vocabulary Writing a CV"
+    "explanation": "Clase 10 CV Quiz (Q5): 'collaborating' es colaborar en proyectos grupales.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
   },
   {
-    "id": 138,
+    "id": 1391,
     "parcial": 2,
+    "clase": 10,
     "topic": "English for IT: Writing a CV",
-    "question": "Certificates and documented evidence of your education and official courses are your _____.",
+    "question": "I want to _____ my English and programming skills through continuous study.",
     "options": [
       {
         "id": "a",
-        "text": "responsibilities"
+        "text": "qualifications"
       },
       {
         "id": "b",
-        "text": "qualifications"
+        "text": "improve"
+      },
+      {
+        "id": "c",
+        "text": "deadline"
+      },
+      {
+        "id": "d",
+        "text": "degree"
+      }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Clase 10 CV Quiz (Q6): 'improve' significa mejorar habilidades.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
+  },
+  {
+    "id": 1392,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "English for IT: Writing a CV",
+    "question": "As a junior developer, I help _____ simple and user-friendly websites.",
+    "options": [
+      {
+        "id": "a",
+        "text": "design"
+      },
+      {
+        "id": "b",
+        "text": "degree"
+      },
+      {
+        "id": "c",
+        "text": "responsibilities"
+      },
+      {
+        "id": "d",
+        "text": "deadline"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 10 CV Quiz (Q7): 'design' significa diseñar páginas web.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
+  },
+  {
+    "id": 1393,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "English for IT: Writing a CV",
+    "question": "I can _____ SQL databases and organize tables efficiently.",
+    "options": [
+      {
+        "id": "a",
+        "text": "manage"
+      },
+      {
+        "id": "b",
+        "text": "achievement"
+      },
+      {
+        "id": "c",
+        "text": "programming languages"
+      },
+      {
+        "id": "d",
+        "text": "degree"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 10 CV Quiz (Q8): 'manage' significa administrar o gestionar bases de datos.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
+  },
+  {
+    "id": 1394,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "English for IT: Writing a CV",
+    "question": "My job is to _____ users who have problems with their computers.",
+    "options": [
+      {
+        "id": "a",
+        "text": "support"
+      },
+      {
+        "id": "b",
+        "text": "internship"
+      },
+      {
+        "id": "c",
+        "text": "qualification"
+      },
+      {
+        "id": "d",
+        "text": "deadline"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 10 CV Quiz (Q9): 'support' significa dar asistencia o soporte técnico a los usuarios.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
+  },
+  {
+    "id": 1395,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "English for IT: Writing a CV",
+    "question": "I _____ small applications using Python in my free time.",
+    "options": [
+      {
+        "id": "a",
+        "text": "deadline"
+      },
+      {
+        "id": "b",
+        "text": "create"
+      },
+      {
+        "id": "c",
+        "text": "work experience"
+      },
+      {
+        "id": "d",
+        "text": "degree"
+      }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Clase 10 CV Quiz (Q10): 'create' significa crear pequeños programas o scripts.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
+  },
+  {
+    "id": 1396,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "English for IT: Writing a CV",
+    "question": "A university certificate in computer science is an example of a _____.",
+    "options": [
+      {
+        "id": "a",
+        "text": "degree"
+      },
+      {
+        "id": "b",
+        "text": "deadline"
+      },
+      {
+        "id": "c",
+        "text": "skill"
+      },
+      {
+        "id": "d",
+        "text": "achievement"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 10 CV Quiz (Q11): 'degree' es un título universitario o de grado.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
+  },
+  {
+    "id": 1397,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "English for IT: Writing a CV",
+    "question": "The final date for completing a sprint or delivering a project is the _____.",
+    "options": [
+      {
+        "id": "a",
+        "text": "achievement"
+      },
+      {
+        "id": "b",
+        "text": "deadline"
+      },
+      {
+        "id": "c",
+        "text": "internship"
+      },
+      {
+        "id": "d",
+        "text": "qualification"
+      }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Clase 10 CV Quiz (Q12): 'deadline' es la fecha límite de entrega.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
+  },
+  {
+    "id": 1398,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "English for IT: Writing a CV",
+    "question": "A temporary work placement that provides professional experience for students is an _____.",
+    "options": [
+      {
+        "id": "a",
+        "text": "internship"
+      },
+      {
+        "id": "b",
+        "text": "qualification"
+      },
+      {
+        "id": "c",
+        "text": "responsibility"
+      },
+      {
+        "id": "d",
+        "text": "deadline"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 10 CV Quiz (Q13): 'internship' es una pasantía formativa profesional.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
+  },
+  {
+    "id": 1399,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "English for IT: Writing a CV",
+    "question": "Python, Java, and C# are examples of _____.",
+    "options": [
+      {
+        "id": "a",
+        "text": "achievements"
+      },
+      {
+        "id": "b",
+        "text": "programming languages"
+      },
+      {
+        "id": "c",
+        "text": "deadlines"
+      },
+      {
+        "id": "d",
+        "text": "internships"
+      }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Clase 10 CV Quiz (Q14): son lenguajes de programación ('programming languages').",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
+  },
+  {
+    "id": 13991,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "English for IT: Writing a CV",
+    "question": "Fixing network, hardware, or software problems through systematic analysis is called _____.",
+    "options": [
+      {
+        "id": "a",
+        "text": "troubleshooting"
+      },
+      {
+        "id": "b",
+        "text": "work experience"
+      },
+      {
+        "id": "c",
+        "text": "qualification"
+      },
+      {
+        "id": "d",
+        "text": "internship"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 10 CV Quiz (Q15): 'troubleshooting' es la resolución y diagnóstico sistemático de fallos técnicos.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
+  },
+  {
+    "id": 13992,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "English for IT: Writing a CV",
+    "question": "The specific tasks you must complete as part of your job are your _____.",
+    "options": [
+      {
+        "id": "a",
+        "text": "degrees"
+      },
+      {
+        "id": "b",
+        "text": "responsibilities"
       },
       {
         "id": "c",
@@ -1025,39 +1735,41 @@ export const UNIT3_QUESTIONS = [
       }
     ],
     "correctAnswer": "b",
-    "explanation": "Clase 10 CV Quiz: 'Certificates and evidence of training are qualifications (títulos y acreditaciones).'",
-    "source": "Unidad 3 Clase 10 - Vocabulary Writing a CV"
+    "explanation": "Clase 10 CV Quiz (Q16): 'responsibilities' son las responsabilidades asignadas.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
   },
   {
-    "id": 139,
+    "id": 13993,
     "parcial": 2,
+    "clase": 10,
     "topic": "English for IT: Writing a CV",
-    "question": "In her resume, what is Martina López's current level of English?",
+    "question": "Successfully completing a difficult fullstack project can be an important _____ on your CV.",
     "options": [
       {
         "id": "a",
-        "text": "Bilingual / Native"
+        "text": "achievement"
       },
       {
         "id": "b",
-        "text": "Elementary to pre-intermediate"
+        "text": "deadline"
       },
       {
         "id": "c",
-        "text": "Advanced C1"
+        "text": "programming language"
       },
       {
         "id": "d",
-        "text": "Proficient C2"
+        "text": "degree"
       }
     ],
-    "correctAnswer": "b",
-    "explanation": "Clase 10 Sample Resume: Martina López indica 'English: Elementary to pre-intermediate'.",
-    "source": "Unidad 3 Clase 10 - Martina Lopez Resume"
+    "correctAnswer": "a",
+    "explanation": "Clase 10 CV Quiz (Q17): 'achievement' es un logro destacado.",
+    "source": "Unidad 3 Clase 10 - Vocabulary English for IT Writing a CV"
   },
   {
     "id": 140,
     "parcial": 2,
+    "clase": 12,
     "topic": "Future: Will vs Going To",
     "question": "‘Look at the console! The server error count is skyrocketing.’ It _____ crash in a minute!",
     "options": [
@@ -1085,6 +1797,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 141,
     "parcial": 2,
+    "clase": 12,
     "topic": "Future: Will vs Going To",
     "question": "I think artificial intelligence _____ assist every software engineer by 2030.",
     "options": [
@@ -1112,6 +1825,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 142,
     "parcial": 2,
+    "clase": 12,
     "topic": "Future: Will vs Going To",
     "question": "‘Sarah said she needs to discuss the database schema with you.’ ‘Oh, I didn’t know. I _____ call her now.’",
     "options": [
@@ -1139,6 +1853,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 143,
     "parcial": 2,
+    "clase": 12,
     "topic": "Future: Will vs Going To",
     "question": "‘Why did you buy that new React course on Udemy?’ ‘Because I _____ build my own portfolio website.’",
     "options": [
@@ -1166,114 +1881,343 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 144,
     "parcial": 2,
+    "clase": 12,
     "topic": "Job Interviews: DOs and DON'Ts",
-    "question": "What is Rule 7 regarding programming languages during an IT interview?",
+    "question": "Why should you research a company before an interview, according to the official text?",
     "options": [
       {
         "id": "a",
-        "text": "Always say you know all technologies to look experienced"
+        "text": "To show that you are interested in the position"
       },
       {
         "id": "b",
-        "text": "Don't lie; if you don't know a language, be honest and explain you are eager to learn it"
+        "text": "To avoid talking about your technical skills"
       },
       {
         "id": "c",
-        "text": "Avoid discussing programming languages altogether"
+        "text": "To learn the interviewer's personal phone number"
       },
       {
         "id": "d",
-        "text": "Argue with the interviewer if they criticize your code"
+        "text": "To skip the live coding test"
       }
     ],
-    "correctAnswer": "b",
-    "explanation": "Clase 12 DOs & DON'Ts: 'Don't lie about your qualifications. If you don't know a language, be honest and explain that you are learning it.'",
+    "correctAnswer": "a",
+    "explanation": "Clase 12 DOs & DON'Ts Quiz (Q1): 'Do your research to show that you are interested in the position.'",
     "source": "Unidad 3 Clase 12 - DOs and DONTs in a job interview"
   },
   {
     "id": 145,
     "parcial": 2,
+    "clase": 12,
     "topic": "Job Interviews: DOs and DON'Ts",
-    "question": "When describing a university programming project during an interview, what should you include?",
+    "question": "Which of the following is an example of an achievement you can mention in an IT job interview?",
     "options": [
       {
         "id": "a",
-        "text": "Only the grade given by the professor"
+        "text": "The number of hours you spend playing video games"
       },
       {
         "id": "b",
-        "text": "Your role, the technologies and tools you used, and the result achieved"
+        "text": "An application you developed for a university project"
       },
       {
         "id": "c",
-        "text": "Complaints about how difficult the assignments were"
+        "text": "A programming language you have never used"
       },
       {
         "id": "d",
-        "text": "A very short yes or no answer"
+        "text": "The vacation trips you took last year"
       }
     ],
     "correctAnswer": "b",
-    "explanation": "Clase 12 DOs & DON'Ts: 'Explain your role, the tools you used, and the result. Give enough information to show what you can do.'",
+    "explanation": "Clase 12 DOs & DON'Ts Quiz (Q2): 'An application you developed for a university project' es un logro excelente para estudiantes.",
     "source": "Unidad 3 Clase 12 - DOs and DONTs in a job interview"
   },
   {
     "id": 146,
     "parcial": 2,
+    "clase": 12,
     "topic": "Job Interviews: DOs and DON'Ts",
-    "question": "According to the interview guide, what helps IT students make a strong positive impression?",
+    "question": "What should you do if an interviewer asks about a programming language you don't know?",
     "options": [
       {
         "id": "a",
-        "text": "Having ten years of professional experience"
+        "text": "Say that you are an expert in it"
       },
       {
         "id": "b",
-        "text": "Technical knowledge, a willingness to learn, and good communication"
+        "text": "Avoid answering every technical question"
       },
       {
         "id": "c",
-        "text": "Memorizing answers from the internet word for word"
+        "text": "Be honest and explain that you are learning it"
       },
       {
         "id": "d",
-        "text": "Refusing to ask any questions at the end"
+        "text": "Criticize the programming language"
+      }
+    ],
+    "correctAnswer": "c",
+    "explanation": "Clase 12 DOs & DON'Ts Quiz (Q3): 'Be honest and explain that you are learning it and want to improve your skills.'",
+    "source": "Unidad 3 Clase 12 - DOs and DONTs in a job interview"
+  },
+  {
+    "id": 1461,
+    "parcial": 2,
+    "clase": 12,
+    "topic": "Job Interviews: DOs and DON'Ts",
+    "question": "What information should you include when describing a university project to an interviewer?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Your role, the tools you used, and the result"
+      },
+      {
+        "id": "b",
+        "text": "Only the name of the teacher who assigned it"
+      },
+      {
+        "id": "c",
+        "text": "The problems other students had with the project"
+      },
+      {
+        "id": "d",
+        "text": "A simple 'yes' or 'no' response"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 12 DOs & DON'Ts Quiz (Q4): 'Don't give very short answers. Explain your role, the tools you used, and the result.'",
+    "source": "Unidad 3 Clase 12 - DOs and DONTs in a job interview"
+  },
+  {
+    "id": 1462,
+    "parcial": 2,
+    "clase": 12,
+    "topic": "Job Interviews: DOs and DON'Ts",
+    "question": "What does the expression 'professional development' refer to in the job interview text?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Getting ready to leave a company"
+      },
+      {
+        "id": "b",
+        "text": "Learning new skills and growing in your career"
+      },
+      {
+        "id": "c",
+        "text": "Writing a CV without any work experience"
+      },
+      {
+        "id": "d",
+        "text": "Retiring from work"
       }
     ],
     "correctAnswer": "b",
-    "explanation": "Clase 12 DOs & DON'Ts: 'Your technical knowledge, willingness to learn, and ability to communicate can help you take your first step into the IT industry.'",
+    "explanation": "Clase 12 DOs & DON'Ts Quiz (Q5): 'Professional development refers to learning new skills and growing in your career.'",
+    "source": "Unidad 3 Clase 12 - DOs and DONTs in a job interview"
+  },
+  {
+    "id": 1463,
+    "parcial": 2,
+    "clase": 12,
+    "topic": "Job Interviews: DOs and DON'Ts",
+    "question": "According to the interview guide, what can help IT students make a good impression?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Having many years of professional experience"
+      },
+      {
+        "id": "b",
+        "text": "Knowing every programming language in existence"
+      },
+      {
+        "id": "c",
+        "text": "Showing technical knowledge, a willingness to learn, and good communication"
+      },
+      {
+        "id": "d",
+        "text": "Arriving exactly at the minute the interview begins"
+      }
+    ],
+    "correctAnswer": "c",
+    "explanation": "Clase 12 DOs & DON'Ts Quiz (Q6): 'Showing technical knowledge, a willingness to learn, and good communication helps students make a good impression.'",
     "source": "Unidad 3 Clase 12 - DOs and DONTs in a job interview"
   },
   {
     "id": 147,
     "parcial": 2,
+    "clase": 12,
     "topic": "Listening: AI Smart Glasses",
-    "question": "What is one typical feature of smart glasses mentioned in the report, besides taking hands-free video?",
+    "question": "Which company's smart glasses are explicitly called 'Ray-Ban smart glasses' in the report?",
     "options": [
       {
         "id": "a",
-        "text": "Listening to music without earbuds"
+        "text": "Meta"
       },
       {
         "id": "b",
-        "text": "Printing code onto paper"
+        "text": "Google"
       },
       {
         "id": "c",
-        "text": "Projecting laser beams"
+        "text": "Xiaomi"
       },
       {
         "id": "d",
-        "text": "Cooking food"
+        "text": "Apple"
       }
     ],
     "correctAnswer": "a",
-    "explanation": "Clase 12 Listening: 'Users typically use smart glasses to listen to music without earbuds, access the AI function, or take videos hands-free.'",
-    "source": "Unidad 3 Clase 12 - Listening AI Smart Glasses"
+    "explanation": "Clase 12 Listening Quiz (Q1): Meta colaboró con Ray-Ban para comercializar los anteojos inteligentes.",
+    "source": "Unidad 3 Clase 12 - Listening Comprehension AI Smart Glasses"
+  },
+  {
+    "id": 1471,
+    "parcial": 2,
+    "clase": 12,
+    "topic": "Listening: AI Smart Glasses",
+    "question": "According to Mark Zuckerberg, what will glasses that see and hear become for us down the road?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A new type of landline telephone"
+      },
+      {
+        "id": "b",
+        "text": "Our main computing devices"
+      },
+      {
+        "id": "c",
+        "text": "Purely fashion accessories with zero utility"
+      },
+      {
+        "id": "d",
+        "text": "Emergency devices for police only"
+      }
+    ],
+    "correctAnswer": "b",
+    "explanation": "Clase 12 Listening: Mark Zuckerberg afirmó que 'glasses that see and hear are going to become our main computing devices.'",
+    "source": "Unidad 3 Clase 12 - Listening Comprehension AI Smart Glasses"
+  },
+  {
+    "id": 1472,
+    "parcial": 2,
+    "clase": 12,
+    "topic": "Listening: AI Smart Glasses",
+    "question": "What is one typical thing that users do with smart glasses, besides taking hands-free video?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Listen to music without earbuds"
+      },
+      {
+        "id": "b",
+        "text": "Shop for groceries automatically"
+      },
+      {
+        "id": "c",
+        "text": "Cook dinner"
+      },
+      {
+        "id": "d",
+        "text": "Fix computer motherboards"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 12 Listening (Q3): 'Users typically use smart glasses to listen to music without earbuds, access AI, or take hands-free video.'",
+    "source": "Unidad 3 Clase 12 - Listening Comprehension AI Smart Glasses"
+  },
+  {
+    "id": 1473,
+    "parcial": 2,
+    "clase": 12,
+    "topic": "Listening: AI Smart Glasses",
+    "question": "Why are so many big tech companies entering the AI glasses market right now?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Because there is intense competition for AI supremacy"
+      },
+      {
+        "id": "b",
+        "text": "Because smartphones have been banned worldwide"
+      },
+      {
+        "id": "c",
+        "text": "Because smart glasses cost less than one dollar"
+      },
+      {
+        "id": "d",
+        "text": "Because users no longer like internet connections"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 12 Listening (Q4): 'Because there's intense competition for AI supremacy now.'",
+    "source": "Unidad 3 Clase 12 - Listening Comprehension AI Smart Glasses"
+  },
+  {
+    "id": 1474,
+    "parcial": 2,
+    "clase": 12,
+    "topic": "Future: Decisions & Offers",
+    "question": "‘This laptop is very heavy.’ ‘Don’t worry, I _____ carry it for you.’",
+    "options": [
+      {
+        "id": "a",
+        "text": "will"
+      },
+      {
+        "id": "b",
+        "text": "am going to"
+      },
+      {
+        "id": "c",
+        "text": "going to"
+      },
+      {
+        "id": "d",
+        "text": "am carrying"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Oferta espontánea de ayuda: se usa 'will' ('I will carry it for you').",
+    "source": "Unidad 3 Clase 12 - Future Will and Going to"
+  },
+  {
+    "id": 1475,
+    "parcial": 2,
+    "clase": 12,
+    "topic": "Future: Predictions",
+    "question": "The conference starts in five minutes and the airport is thirty minutes away. We _____ be late!",
+    "options": [
+      {
+        "id": "a",
+        "text": "are going to"
+      },
+      {
+        "id": "b",
+        "text": "will"
+      },
+      {
+        "id": "c",
+        "text": "would"
+      },
+      {
+        "id": "d",
+        "text": "going to"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Predicción fundamentada en evidencia objetiva visible en el presente: se usa 'are going to'.",
+    "source": "Unidad 3 Clase 12 - Future Will and Going to"
   },
   {
     "id": 148,
     "parcial": 2,
+    "clase": 13,
     "topic": "Basic Connectors (And, But, Or, So, Because)",
     "question": "The production database query was slow, _____ we created an index on the user_id column.",
     "options": [
@@ -1301,6 +2245,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 149,
     "parcial": 2,
+    "clase": 13,
     "topic": "Basic Connectors (And, But, Or, So, Because)",
     "question": "We created an index on the user_id column _____ the query was very slow.",
     "options": [
@@ -1328,6 +2273,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 150,
     "parcial": 2,
+    "clase": 13,
     "topic": "Basic Connectors (And, But, Or, So, Because)",
     "question": "I don't write applications in Ruby _____ PHP.",
     "options": [
@@ -1355,6 +2301,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 151,
     "parcial": 2,
+    "clase": 13,
     "topic": "Basic Connectors (Parallel Structure)",
     "question": "Which sentence satisfies the rule of parallel grammatical structure with connectors?",
     "options": [
@@ -1382,6 +2329,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 152,
     "parcial": 2,
+    "clase": 13,
     "topic": "Reading: OpenAI New Device",
     "question": "How will users interact with the new OpenAI AI device instead of looking at a traditional screen?",
     "options": [
@@ -1409,6 +2357,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 153,
     "parcial": 2,
+    "clase": 13,
     "topic": "Reading: OpenAI New Device",
     "question": "OpenAI bought a design company called _____ to help manufacture real physical hardware.",
     "options": [
@@ -1436,6 +2385,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 154,
     "parcial": 2,
+    "clase": 13,
     "topic": "Reading: OpenAI New Device",
     "question": "A preliminary, first operational version of a device manufactured for testing is a _____.",
     "options": [
@@ -1461,8 +2411,149 @@ export const UNIT3_QUESTIONS = [
     "source": "Unidad 3 Clase 13 - Reading OpenAI Device"
   },
   {
+    "id": 1541,
+    "parcial": 2,
+    "clase": 13,
+    "topic": "Basic Connectors: But",
+    "question": "I studied a lot for the technical exam, _____ I found the algorithmic questions difficult.",
+    "options": [
+      {
+        "id": "a",
+        "text": "but"
+      },
+      {
+        "id": "b",
+        "text": "and"
+      },
+      {
+        "id": "c",
+        "text": "or"
+      },
+      {
+        "id": "d",
+        "text": "so"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "'But' se utiliza para contrastar dos ideas o introducir una dificultad opuesta a lo esperado.",
+    "source": "Unidad 3 Clase 13 - Grammar Connectors"
+  },
+  {
+    "id": 1542,
+    "parcial": 2,
+    "clase": 13,
+    "topic": "Basic Connectors: Subject Omission",
+    "question": "When connecting sentences with the same subject using 'and', what is the recommended rule?",
+    "options": [
+      {
+        "id": "a",
+        "text": "We don't need to repeat the subject ('She got up and left')"
+      },
+      {
+        "id": "b",
+        "text": "We must always repeat the subject three times"
+      },
+      {
+        "id": "c",
+        "text": "We must change the tense of the second verb to future"
+      },
+      {
+        "id": "d",
+        "text": "We cannot connect two verbs with 'and'"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 13 Grammar: 'When we are connecting sentences, we don’t need to repeat the subject (She got up and left).' ",
+    "source": "Unidad 3 Clase 13 - Grammar Connectors"
+  },
+  {
+    "id": 1543,
+    "parcial": 2,
+    "clase": 13,
+    "topic": "Reading: OpenAI New Device",
+    "question": "True or False: The new OpenAI device will be as big as a standard laptop computer.",
+    "options": [
+      {
+        "id": "a",
+        "text": "False (It could be the size of an iPod Shuffle)"
+      },
+      {
+        "id": "b",
+        "text": "True (It is a heavy desktop station)"
+      },
+      {
+        "id": "c",
+        "text": "True (It requires two monitors)"
+      },
+      {
+        "id": "d",
+        "text": "False (It will be larger than a TV)"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 13 Reading Exercise B (Q1): Es falso ('False'); el dispositivo será diminuto, del tamaño de un iPod Shuffle.",
+    "source": "Unidad 3 Clase 13 - Reading OpenAI Device"
+  },
+  {
+    "id": 1544,
+    "parcial": 2,
+    "clase": 13,
+    "topic": "Reading: OpenAI New Device",
+    "question": "According to the reading, when might the commercial production of OpenAI's AI device start?",
+    "options": [
+      {
+        "id": "a",
+        "text": "In 2027"
+      },
+      {
+        "id": "b",
+        "text": "In 2020"
+      },
+      {
+        "id": "c",
+        "text": "In 2050"
+      },
+      {
+        "id": "d",
+        "text": "Next month"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 13 Reading: 'The device is still a prototype, and production may start in 2027.'",
+    "source": "Unidad 3 Clase 13 - Reading OpenAI Device"
+  },
+  {
+    "id": 1545,
+    "parcial": 2,
+    "clase": 13,
+    "topic": "Reading: OpenAI New Device",
+    "question": "How could programmers utilize the OpenAI screenless device away from their desks?",
+    "options": [
+      {
+        "id": "a",
+        "text": "By asking it to explain error messages or suggest Python functions verbally"
+      },
+      {
+        "id": "b",
+        "text": "By playing 3D video games"
+      },
+      {
+        "id": "c",
+        "text": "By replacing their mechanical keyboards"
+      },
+      {
+        "id": "d",
+        "text": "By typing lines of HTML with a stylus"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Clase 13 Reading: 'Coders could ask: Can you explain this error? Or: Please suggest a simple Python function for this problem.'",
+    "source": "Unidad 3 Clase 13 - Reading OpenAI Device"
+  },
+  {
     "id": 155,
     "parcial": 2,
+    "clase": 14,
     "topic": "Adverbs of Manner",
     "question": "He writes clean code _____ so that team members can read it effortlessly.",
     "options": [
@@ -1490,6 +2581,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 156,
     "parcial": 2,
+    "clase": 14,
     "topic": "Adverbs of Manner: Position",
     "question": "Which sentence has the correct adverb placement in English?",
     "options": [
@@ -1517,6 +2609,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 157,
     "parcial": 2,
+    "clase": 14,
     "topic": "Adverbs of Manner vs Adjectives",
     "question": "Which word ending in '-ly' is an ADJECTIVE and CANNOT be used as an adverb of manner?",
     "options": [
@@ -1544,6 +2637,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 158,
     "parcial": 2,
+    "clase": 14,
     "topic": "Adverbs of Manner vs Adjectives",
     "question": "Robert is a _____ developer, and he always solves algorithms _____.",
     "options": [
@@ -1571,6 +2665,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 159,
     "parcial": 2,
+    "clase": 14,
     "topic": "Review of All Tenses",
     "question": "A software engineer usually _____ (start) work at 9 a.m., but today she _____ (work) from home.",
     "options": [
@@ -1598,6 +2693,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 160,
     "parcial": 2,
+    "clase": 14,
     "topic": "Review of All Tenses",
     "question": "In 1998, Sergey Brin and Larry Page _____ (launch) Google after raising $1 million.",
     "options": [
@@ -1625,6 +2721,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 161,
     "parcial": 2,
+    "clase": 14,
     "topic": "Review of All Tenses",
     "question": "We _____ (already / deploy) the microservices, so you can test them now.",
     "options": [
@@ -1652,6 +2749,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 162,
     "parcial": 2,
+    "clase": 14,
     "topic": "Review of All Tenses",
     "question": "‘Look out! The database migration script is dropping all tables!’ It _____ delete everything!",
     "options": [
@@ -1679,6 +2777,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 163,
     "parcial": 2,
+    "clase": 14,
     "topic": "Review of All Tenses",
     "question": "While the server team _____ (install) the new firewall, the power suddenly went out.",
     "options": [
@@ -1706,6 +2805,7 @@ export const UNIT3_QUESTIONS = [
   {
     "id": 164,
     "parcial": 2,
+    "clase": 14,
     "topic": "Review of All Tenses",
     "question": "I don't think quantum computing _____ replace classical silicon chips in the next three years.",
     "options": [
@@ -1728,6 +2828,118 @@ export const UNIT3_QUESTIONS = [
     ],
     "correctAnswer": "a",
     "explanation": "Predicción subjetiva o creencia futura ('I don't think...') requiere 'will'.",
+    "source": "Unidad 3 Clase 14 - Review of all tenses"
+  },
+  {
+    "id": 1641,
+    "parcial": 2,
+    "clase": 14,
+    "topic": "Adverbs of Manner: Irregular",
+    "question": "Sara is a _____ typist; she types _____ on her mechanical keyboard.",
+    "options": [
+      {
+        "id": "a",
+        "text": "fast / fast"
+      },
+      {
+        "id": "b",
+        "text": "fast / fastly"
+      },
+      {
+        "id": "c",
+        "text": "fastly / fast"
+      },
+      {
+        "id": "d",
+        "text": "quick / quick"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "'Fast' es invariable: funciona como adjetivo y como adverbio. 'Fastly' no existe en inglés.",
+    "source": "Unidad 3 Clase 14 - Adverbs of manner"
+  },
+  {
+    "id": 1642,
+    "parcial": 2,
+    "clase": 14,
+    "topic": "Adverbs of Manner: Spelling",
+    "question": "The DevOps engineer solved the configuration conflict _____.",
+    "options": [
+      {
+        "id": "a",
+        "text": "easily"
+      },
+      {
+        "id": "b",
+        "text": "easy"
+      },
+      {
+        "id": "c",
+        "text": "easyli"
+      },
+      {
+        "id": "d",
+        "text": "easyly"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Los adjetivos terminados en consonante + 'y' cambian por '-ily': easy -> easily.",
+    "source": "Unidad 3 Clase 14 - Adverbs of manner"
+  },
+  {
+    "id": 1643,
+    "parcial": 2,
+    "clase": 14,
+    "topic": "Review of All Tenses",
+    "question": "They _____ (not / hear) the alarm because they _____ (listen) to music with headphones.",
+    "options": [
+      {
+        "id": "a",
+        "text": "didn't hear / were listening"
+      },
+      {
+        "id": "b",
+        "text": "weren't hear / listened"
+      },
+      {
+        "id": "c",
+        "text": "didn't heard / were listening"
+      },
+      {
+        "id": "d",
+        "text": "haven't heard / listened"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Past Simple para el evento puntual ('didn't hear') y Past Continuous para la acción en progreso que lo causó ('were listening').",
+    "source": "Unidad 3 Clase 14 - Review of all tenses"
+  },
+  {
+    "id": 1644,
+    "parcial": 2,
+    "clase": 14,
+    "topic": "Review of All Tenses",
+    "question": "I _____ (never / fail) an IT certification exam in my entire life.",
+    "options": [
+      {
+        "id": "a",
+        "text": "have never failed"
+      },
+      {
+        "id": "b",
+        "text": "never failed"
+      },
+      {
+        "id": "c",
+        "text": "am never failing"
+      },
+      {
+        "id": "d",
+        "text": "will never fail"
+      }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Experiencia acumulada en la vida hasta el presente con 'never': Present Perfect 'have never failed'.",
     "source": "Unidad 3 Clase 14 - Review of all tenses"
   }
 ];
