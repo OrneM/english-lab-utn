@@ -1291,6 +1291,438 @@ export const UNIT3_QUESTIONS = [
     "source": "Unidad 3 Clase 10 - Grammar"
   },
   {
+    "id": 1301,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect Tense",
+    "question": "The development team _____ (release) three major production updates so far this sprint.",
+    "options": [
+      { "id": "a", "text": "has released" },
+      { "id": "b", "text": "have released" },
+      { "id": "c", "text": "released" },
+      { "id": "d", "text": "is releasing" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "'The development team' es un sujeto singular que actúa como unidad de software; con 'so far' se utiliza Present Perfect: 'has released'.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1302,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Since vs For)",
+    "question": "Martina has worked as an IT consultant at Globant _____ 2021.",
+    "options": [
+      { "id": "a", "text": "since" },
+      { "id": "b", "text": "for" },
+      { "id": "c", "text": "from" },
+      { "id": "d", "text": "during" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Se utiliza 'since' para indicar el punto de partida específico en el tiempo (un año concreto: 'since 2021').",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1303,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Since vs For)",
+    "question": "We have monitored this Redis cache cluster _____ six consecutive months without any downtime.",
+    "options": [
+      { "id": "a", "text": "for" },
+      { "id": "b", "text": "since" },
+      { "id": "c", "text": "ago" },
+      { "id": "d", "text": "during" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Se utiliza 'for' para expresar la duración de un período o lapso de tiempo ('for six consecutive months').",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1304,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Irregular Participles)",
+    "question": "The software architect has _____ (choose) Go instead of Java for building the high-concurrency microservices.",
+    "options": [
+      { "id": "a", "text": "chosen" },
+      { "id": "b", "text": "chose" },
+      { "id": "c", "text": "choosed" },
+      { "id": "d", "text": "choosen" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "El participio pasado (Past Participle) del verbo irregular 'choose' es 'chosen' (choose -> chose -> chosen).",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1305,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Irregular Participles)",
+    "question": "The database connection has _____ (break) because the connection pool exceeded its memory limit.",
+    "options": [
+      { "id": "a", "text": "broken" },
+      { "id": "b", "text": "broke" },
+      { "id": "c", "text": "breaked" },
+      { "id": "d", "text": "broked" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "El participio pasado del verbo irregular 'break' es 'broken' (break -> broke -> broken).",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1306,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Irregular Participles)",
+    "question": "Our senior backend engineers have _____ (build) a robust RESTful API with automated OAuth2 authentication.",
+    "options": [
+      { "id": "a", "text": "built" },
+      { "id": "b", "text": "builded" },
+      { "id": "c", "text": "build" },
+      { "id": "d", "text": "building" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "El participio pasado del verbo irregular 'build' es 'built' (build -> built -> built).",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1307,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Already vs Yet vs Just)",
+    "question": "The CI/CD build has _____ succeeded; the green checkmark appeared on GitHub five seconds ago!",
+    "options": [
+      { "id": "a", "text": "just" },
+      { "id": "b", "text": "yet" },
+      { "id": "c", "text": "ever" },
+      { "id": "d", "text": "since" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "'Just' se coloca entre el auxiliar have/has y el participio para indicar que una acción acaba de ocurrir hace un instante.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1308,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Already vs Yet vs Just)",
+    "question": "Don't worry about the database migration; I have _____ executed the SQL script in staging.",
+    "options": [
+      { "id": "a", "text": "already" },
+      { "id": "b", "text": "yet" },
+      { "id": "c", "text": "never" },
+      { "id": "d", "text": "still" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "'Already' (ya) se usa en oraciones afirmativas de Present Perfect para indicar que una acción se completó antes del momento presente.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1309,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Already vs Yet vs Just)",
+    "question": "Has the QA lead signed off on the release candidate _____? No, not _____.",
+    "options": [
+      { "id": "a", "text": "yet / yet" },
+      { "id": "b", "text": "already / already" },
+      { "id": "c", "text": "just / yet" },
+      { "id": "d", "text": "since / already" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "'Yet' se usa al final de preguntas y al final de oraciones negativas ('not yet' = todavía no).",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1310,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect: Been vs Gone",
+    "question": "Where is the database administrator? He has _____ to the remote data center to replace a burnt SSD; he won't be back until tomorrow.",
+    "options": [
+      { "id": "a", "text": "gone" },
+      { "id": "b", "text": "been" },
+      { "id": "c", "text": "went" },
+      { "id": "d", "text": "being" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Se usa 'has gone' cuando el sujeto fue a un lugar y TODAVÍA ESTÁ ALLÍ (no ha regresado: 'he won't be back until tomorrow').",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1311,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect: Been vs Gone",
+    "question": "A: 'Have you ever _____ to Silicon Valley?' B: 'Yes, I was there two years ago for Google I/O, but I live in Cordoba now.'",
+    "options": [
+      { "id": "a", "text": "been" },
+      { "id": "b", "text": "gone" },
+      { "id": "c", "text": "went" },
+      { "id": "d", "text": "go" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Se usa 'have you ever been to...' para preguntar si alguien ha visitado un lugar y ya regresó (experiencia de vida).",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1312,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect vs Past Simple",
+    "question": "The development team _____ (push) the hotfix yesterday at 6:00 PM.",
+    "options": [
+      { "id": "a", "text": "pushed" },
+      { "id": "b", "text": "has pushed" },
+      { "id": "c", "text": "have pushed" },
+      { "id": "d", "text": "was pushed" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Con marcadores temporales de pasado cerrado como 'yesterday at 6:00 PM', es OBLIGATORIO usar Past Simple ('pushed'). El Present Perfect está prohibido con 'yesterday'.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1313,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect vs Past Simple",
+    "question": "Our company _____ (hire) five senior React developers this month.",
+    "options": [
+      { "id": "a", "text": "has hired" },
+      { "id": "b", "text": "hired" },
+      { "id": "c", "text": "is hiring" },
+      { "id": "d", "text": "have hired" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "'This month' es un período de tiempo que aún NO ha concluido (tiempo abierto). Con sujeto singular 'Our company', se usa 'has hired'.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1314,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect vs Past Simple",
+    "question": "When _____ you _____ your first internship in tech? In March 2022.",
+    "options": [
+      { "id": "a", "text": "did / start" },
+      { "id": "b", "text": "have / started" },
+      { "id": "c", "text": "has / started" },
+      { "id": "d", "text": "were / start" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Las preguntas que comienzan con 'When' indagan un momento puntual del pasado; por lo tanto, exigen Past Simple ('When did you start...?'), NUNCA Present Perfect.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1315,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect vs Past Simple",
+    "question": "How long _____ you _____ this open-source library? For three years, and we still maintain it.",
+    "options": [
+      { "id": "a", "text": "have / maintained" },
+      { "id": "b", "text": "did / maintain" },
+      { "id": "c", "text": "has / maintained" },
+      { "id": "d", "text": "are / maintaining" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Para acciones que comenzaron en el pasado y continúan en el presente ('and we still maintain it'), se formula la pregunta en Present Perfect: 'How long have you maintained...?'.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1316,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Ever vs Never)",
+    "question": "Have you ever _____ (write) an automated unit test in Jest or PyTest?",
+    "options": [
+      { "id": "a", "text": "written" },
+      { "id": "b", "text": "wrote" },
+      { "id": "c", "text": "write" },
+      { "id": "d", "text": "writting" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "El participio pasado del verbo irregular 'write' es 'written' (write -> wrote -> written). 'Have you ever written...?'",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1317,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Ever vs Never)",
+    "question": "I have _____ worked with COBOL or Fortran; all my experience is in modern web stacks.",
+    "options": [
+      { "id": "a", "text": "never" },
+      { "id": "b", "text": "ever" },
+      { "id": "c", "text": "yet" },
+      { "id": "d", "text": "already" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Para indicar que nunca se ha tenido una experiencia, se utiliza 'never' con el verbo afirmativo: 'I have never worked...'.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1318,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Negative & Auxiliaries)",
+    "question": "The junior developer _____ (not / commit) his local changes to GitHub yet.",
+    "options": [
+      { "id": "a", "text": "hasn't committed" },
+      { "id": "b", "text": "haven't committed" },
+      { "id": "c", "text": "didn't committed" },
+      { "id": "d", "text": "isn't committed" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "'The junior developer' es 3ra persona singular (he/she); la negación en Present Perfect es 'hasn't' + participio 'committed' (duplica la 't').",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1319,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Negative & Auxiliaries)",
+    "question": "We _____ (not / receive) the SSL security certificates from the hosting provider.",
+    "options": [
+      { "id": "a", "text": "haven't received" },
+      { "id": "b", "text": "hasn't received" },
+      { "id": "c", "text": "didn't received" },
+      { "id": "d", "text": "haven't receive" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Con el pronombre 'We', el auxiliar negativo es 'haven't' + participio pasado regular 'received'.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1320,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Irregular Participles)",
+    "question": "The security researchers have _____ (find) a critical zero-day vulnerability in the API gateway.",
+    "options": [
+      { "id": "a", "text": "found" },
+      { "id": "b", "text": "finded" },
+      { "id": "c", "text": "founded" },
+      { "id": "d", "text": "find" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "El participio pasado del verbo irregular 'find' es 'found' (find -> found -> found).",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1321,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Irregular Participles)",
+    "question": "The automation cron job has _____ (run) successfully every midnight this week.",
+    "options": [
+      { "id": "a", "text": "run" },
+      { "id": "b", "text": "ran" },
+      { "id": "c", "text": "runned" },
+      { "id": "d", "text": "running" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "El participio pasado del verbo irregular 'run' es 'run' (run -> ran -> run). 'has run' es la forma correcta.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1322,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Irregular Participles)",
+    "question": "The authentication microservice has _____ (send) the one-time verification passcode to your email.",
+    "options": [
+      { "id": "a", "text": "sent" },
+      { "id": "b", "text": "sended" },
+      { "id": "c", "text": "send" },
+      { "id": "d", "text": "sending" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "El participio pasado de 'send' es 'sent' (send -> sent -> sent). 'has sent' es la opción correcta.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1323,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Irregular Participles)",
+    "question": "The incident response team has _____ (take) the compromised server offline.",
+    "options": [
+      { "id": "a", "text": "taken" },
+      { "id": "b", "text": "took" },
+      { "id": "c", "text": "taked" },
+      { "id": "d", "text": "taking" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "El participio pasado del verbo irregular 'take' es 'taken' (take -> took -> taken).",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1324,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Since vs For)",
+    "question": "The web application has experienced high latency _____ 9:30 AM this morning.",
+    "options": [
+      { "id": "a", "text": "since" },
+      { "id": "b", "text": "for" },
+      { "id": "c", "text": "in" },
+      { "id": "d", "text": "during" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "'9:30 AM this morning' representa un momento puntual exacto de inicio, por lo que requiere la preposición 'since'.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1325,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Short Answers)",
+    "question": "A: 'Have you pushed your code to the staging server?' B: 'Yes, _____.'",
+    "options": [
+      { "id": "a", "text": "I have" },
+      { "id": "b", "text": "I do" },
+      { "id": "c", "text": "I did" },
+      { "id": "d", "text": "I pushed" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Las respuestas cortas afirmativas en Present Perfect responden con el auxiliar correspondiente: 'Yes, I have'.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1326,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Short Answers)",
+    "question": "A: 'Has the QA engineer verified this bug fix?' B: 'No, _____.'",
+    "options": [
+      { "id": "a", "text": "she hasn't" },
+      { "id": "b", "text": "she doesn't" },
+      { "id": "c", "text": "she didn't" },
+      { "id": "d", "text": "she haven't" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "Para la 3ra persona singular en respuesta corta negativa de Present Perfect se responde 'No, she hasn't'.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
+    "id": 1327,
+    "parcial": 2,
+    "clase": 10,
+    "topic": "Present Perfect (Irregular Participles)",
+    "question": "I have _____ (read) the entire official React documentation to prepare for the technical interview.",
+    "options": [
+      { "id": "a", "text": "read" },
+      { "id": "b", "text": "readed" },
+      { "id": "c", "text": "red" },
+      { "id": "d", "text": "reading" }
+    ],
+    "correctAnswer": "a",
+    "explanation": "El participio pasado de 'read' se escribe exactamente igual ('read', pronunciado /red/). 'I have read'.",
+    "source": "Unidad 3 Clase 10 - Grammar Present Perfect"
+  },
+  {
     "id": 135,
     "parcial": 2,
     "clase": 10,

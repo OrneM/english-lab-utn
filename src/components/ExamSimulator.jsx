@@ -55,6 +55,25 @@ function shuffleArray(arr) {
   return result;
 }
 
+// Helper para detectar preguntas de gramática de Present Perfect Tense
+function isPresentPerfectQuestion(q) {
+  if (!q) return false;
+  const topic = (q.topic || '').toLowerCase();
+  const text = (q.question || '').toLowerCase();
+  return topic.includes('present perfect') || 
+         topic.includes('since vs for') || 
+         topic.includes('past participle');
+}
+
+// Normalizar tópico para el desglose de rendimiento unificado
+function getNormalizedTopic(rawTopic) {
+  if (!rawTopic) return 'General';
+  if (rawTopic.toLowerCase().includes('present perfect')) {
+    return 'Present Perfect Tense';
+  }
+  return rawTopic;
+}
+
 export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTargetConfig }) {
   // Configuración
   const [questionCount, setQuestionCount] = useState(20);
@@ -113,14 +132,24 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
       let list = all.filter(q => q.parcial === 2);
       if (selectedClass && selectedClass !== 'all') {
         const clsNum = Number(selectedClass);
-        list = list.filter(q => {
-          if (q.clase) return Number(q.clase) === clsNum;
-          if (q.isAiGenerated) {
-            const detected = detectParcialAndClassFromTopic(q.topic);
-            return detected.clase === clsNum;
-          }
-          return false;
-        });
+        if (clsNum === 9) {
+          // Si el usuario selecciona Clase 9, incluimos las preguntas de Clase 9 y el banco de Present Perfect (Clase 10)
+          // para priorizar 80% Present Perfect Tense tal como fue solicitado oficialmente
+          list = list.filter(q => {
+            if (Number(q.clase) === 9) return true;
+            if (Number(q.clase) === 10 && (isPresentPerfectQuestion(q) || q.isAiGenerated)) return true;
+            return false;
+          });
+        } else {
+          list = list.filter(q => {
+            if (q.clase) return Number(q.clase) === clsNum;
+            if (q.isAiGenerated) {
+              const detected = detectParcialAndClassFromTopic(q.topic);
+              return detected.clase === clsNum;
+            }
+            return false;
+          });
+        }
       }
       return list;
     }
@@ -244,7 +273,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
     }
   };
 
-  // Iniciar Examen con prioridad y barajado de preguntas de IA
+  // Iniciar Examen con prioridad de IA y proporción 80% Present Perfect Tense en Clases 9 y 10
   const handleStartExam = () => {
     soundManager.playClick();
     
@@ -264,24 +293,89 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
 
     let selected = [];
 
-    if (aiQuestionOrder === 'only_ai' && sortedAi.length > 0) {
-      // Modo exclusivo: solo preguntas de IA
-      selected = sortedAi.slice(0, count);
-    } else if (aiQuestionOrder === 'first' && sortedAi.length > 0) {
-      // Las preguntas nuevas de Gemini aparecen PRIMERO (Pregunta 1, 2, 3...)
-      const takeAi = sortedAi.slice(0, count);
-      const remainingCount = count - takeAi.length;
-      const takeStatic = shuffledStatic.slice(0, remainingCount);
-      selected = [...takeAi, ...takeStatic];
-    } else if (aiQuestionOrder === 'mixed' && sortedAi.length > 0) {
-      // Mezcladas: se garantiza que las de IA entran al examen y se barajan junto a las estáticas
-      const takeAi = sortedAi.slice(0, count);
-      const remainingCount = count - takeAi.length;
-      const takeStatic = shuffledStatic.slice(0, remainingCount);
-      selected = shuffleArray([...takeAi, ...takeStatic]);
+    // Priorización de 80% Present Perfect Tense en Clase 9 y Clase 10
+    const isPresentPerfectTarget = (
+      (selectedClass === 9 || selectedClass === '9' || selectedClass === 10 || selectedClass === '10') &&
+      fullQuestionsBank.some(isPresentPerfectQuestion)
+    );
+
+    if (isPresentPerfectTarget && count < totalAvailable) {
+      const ppPool = fullQuestionsBank.filter(isPresentPerfectQuestion);
+      const otherPool = fullQuestionsBank.filter(q => !isPresentPerfectQuestion(q));
+
+      // Proporción matemática: 80% Present Perfect Tense / 20% otros temas (CV, vocabulario o comparativos)
+      let targetPPCount = Math.min(ppPool.length, Math.max(1, Math.round(count * 0.8)));
+      let targetOtherCount = Math.min(otherPool.length, count - targetPPCount);
+
+      if (targetPPCount + targetOtherCount < count && ppPool.length > targetPPCount) {
+        targetPPCount = Math.min(ppPool.length, count - targetOtherCount);
+      }
+      if (targetPPCount + targetOtherCount < count && otherPool.length > targetOtherCount) {
+        targetOtherCount = Math.min(otherPool.length, count - targetPPCount);
+      }
+
+      // Helper para extraer de un sub-pool respetando la preferencia de IA
+      const pickFromSubPool = (pool, n) => {
+        if (n <= 0) return [];
+        const poolAi = pool.filter(q => q.isAiGenerated || q.source?.includes('Gemini'));
+        const poolStatic = pool.filter(q => !q.isAiGenerated && !q.source?.includes('Gemini'));
+        const sortedSubAi = [...poolAi].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        const shuffledSubStatic = shuffleArray(poolStatic);
+
+        if (aiQuestionOrder === 'only_ai' && sortedSubAi.length > 0) {
+          return sortedSubAi.slice(0, n);
+        } else if (aiQuestionOrder === 'first' && sortedSubAi.length > 0) {
+          const takeAi = sortedSubAi.slice(0, n);
+          const rem = n - takeAi.length;
+          return [...takeAi, ...shuffledSubStatic.slice(0, rem)];
+        } else if (aiQuestionOrder === 'mixed' && sortedSubAi.length > 0) {
+          const takeAi = sortedSubAi.slice(0, n);
+          const rem = n - takeAi.length;
+          return shuffleArray([...takeAi, ...shuffledSubStatic.slice(0, rem)]);
+        } else {
+          return shuffleArray(pool).slice(0, n);
+        }
+      };
+
+      const selectedPP = pickFromSubPool(ppPool, targetPPCount);
+      const selectedOther = pickFromSubPool(otherPool, targetOtherCount);
+
+      if (aiQuestionOrder === 'first') {
+        const combinedAi = [
+          ...selectedPP.filter(q => q.isAiGenerated || q.source?.includes('Gemini')),
+          ...selectedOther.filter(q => q.isAiGenerated || q.source?.includes('Gemini'))
+        ];
+        const combinedStatic = shuffleArray([
+          ...selectedPP.filter(q => !q.isAiGenerated && !q.source?.includes('Gemini')),
+          ...selectedOther.filter(q => !q.isAiGenerated && !q.source?.includes('Gemini'))
+        ]);
+        selected = [...combinedAi, ...combinedStatic];
+      } else if (aiQuestionOrder === 'only_ai') {
+        selected = [...selectedPP, ...selectedOther].slice(0, count);
+      } else {
+        selected = shuffleArray([...selectedPP, ...selectedOther]);
+      }
     } else {
-      // Barajado completo estándar
-      selected = shuffleArray(fullQuestionsBank).slice(0, count);
+      // Barajado estándar
+      if (aiQuestionOrder === 'only_ai' && sortedAi.length > 0) {
+        // Modo exclusivo: solo preguntas de IA
+        selected = sortedAi.slice(0, count);
+      } else if (aiQuestionOrder === 'first' && sortedAi.length > 0) {
+        // Las preguntas nuevas de Gemini aparecen PRIMERO (Pregunta 1, 2, 3...)
+        const takeAi = sortedAi.slice(0, count);
+        const remainingCount = count - takeAi.length;
+        const takeStatic = shuffledStatic.slice(0, remainingCount);
+        selected = [...takeAi, ...takeStatic];
+      } else if (aiQuestionOrder === 'mixed' && sortedAi.length > 0) {
+        // Mezcladas: se garantiza que las de IA entran al examen y se barajan junto a las estáticas
+        const takeAi = sortedAi.slice(0, count);
+        const remainingCount = count - takeAi.length;
+        const takeStatic = shuffledStatic.slice(0, remainingCount);
+        selected = shuffleArray([...takeAi, ...takeStatic]);
+      } else {
+        // Barajado completo estándar
+        selected = shuffleArray(fullQuestionsBank).slice(0, count);
+      }
     }
     
     setCurrentQuestions(selected);
@@ -397,7 +491,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
       const isCorrect = userAnswers[q.id] === q.correctAnswer;
       if (isCorrect) correctCount++;
 
-      const topic = q.topic || 'General';
+      const topic = getNormalizedTopic(q.topic);
       if (!topicStats[topic]) {
         topicStats[topic] = { total: 0, correct: 0 };
       }
@@ -489,7 +583,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
         if (isCorrect) aiCorrectCount++;
       }
 
-      const topic = q.topic || 'General';
+      const topic = getNormalizedTopic(q.topic);
       if (!topicStats[topic]) {
         topicStats[topic] = { total: 0, correct: 0 };
       }
@@ -903,6 +997,24 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
                     );
                   })}
                 </div>
+
+                {/* Banner de Prioridad Gramatical 80/20 para Clases 9 y 10 */}
+                {(selectedClass === 9 || selectedClass === '9' || selectedClass === 10 || selectedClass === '10') && (
+                  <div className="p-3.5 rounded-xl bg-gradient-to-r from-purple-500/10 via-indigo-500/10 to-brand-500/10 border border-purple-500/30 flex items-start space-x-3 text-xs animate-fade-in mt-3">
+                    <div className="p-2 rounded-lg bg-purple-500/20 text-purple-600 dark:text-purple-400 font-bold shrink-0 text-sm">
+                      ⚖️ 80/20
+                    </div>
+                    <div className="space-y-1">
+                      <div className="font-extrabold text-slate-800 dark:text-slate-100 flex items-center space-x-2">
+                        <span>Prioridad Gramatical Activa: 80% Present Perfect Tense</span>
+                        <span className="px-2 py-0.5 rounded text-[10px] bg-purple-600 text-white font-mono font-bold">Oficial UTN</span>
+                      </div>
+                      <p className="text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
+                        El <strong>80% de las preguntas</strong> (ej. 8 de cada 10) evalúa exclusivamente la gramática clave de <em>Present Perfect</em> (have/has + participio pasado, since/for, ever/never, just/already/yet, been vs gone y verbos irregulares), y el <strong>20% restante</strong> aborda vocabulario técnico y comprensión de textos.
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
