@@ -39,9 +39,21 @@ import {
 import {
   generateExamQuestionsWithAI,
   getSavedAIQuestions,
+  clearSavedAIQuestions,
+  detectParcialAndClassFromTopic,
   hasGeminiApiKey
 } from '../utils/geminiService';
 import { UNIT3_CLASSES } from '../data/unit3TheoryData';
+
+// Algoritmo de barajado Fisher-Yates sin sesgo estadístico
+function shuffleArray(arr) {
+  const result = [...arr];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
 
 export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTargetConfig }) {
   // Configuración
@@ -51,6 +63,9 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
   const [selectedParcial, setSelectedParcial] = useState('2'); // '2' (2do Parcial) | '1' (1er Parcial) | 'all' (Integral)
   const [selectedClass, setSelectedClass] = useState('all'); // 'all' | 8 | 9 | 10 | 12 | 13 | 14
   
+  // Preferencia de orden para preguntas inéditas de IA: 'first' (al inicio) | 'mixed' (distribuidas) | 'only_ai' (solo IA)
+  const [aiQuestionOrder, setAiQuestionOrder] = useState('first');
+
   // Escuchar configuración enviada desde Navbar u otras vistas
   useEffect(() => {
     if (examTargetConfig && examTargetConfig.key) {
@@ -70,6 +85,23 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
   const [aiGenMessage, setAiGenMessage] = useState(null); // { type: 'success'|'error', text: string }
   const [selectedAITopic, setSelectedAITopic] = useState('all');
 
+  // Sincronizar automáticamente el tema de IA con el Parcial o Clase seleccionada
+  useEffect(() => {
+    if (selectedParcial === '2') {
+      if (selectedClass === 8 || selectedClass === '8') setSelectedAITopic('Cuantificadores (Quantifiers)');
+      else if (selectedClass === 9 || selectedClass === '9') setSelectedAITopic('Comparativos y Superlativos');
+      else if (selectedClass === 10 || selectedClass === '10') setSelectedAITopic('Present Perfect');
+      else if (selectedClass === 12 || selectedClass === '12') setSelectedAITopic('Futuro Will vs Going to');
+      else if (selectedClass === 13 || selectedClass === '13') setSelectedAITopic('Conectores Básicos');
+      else if (selectedClass === 14 || selectedClass === '14') setSelectedAITopic('Adverbios de Modo y Repaso');
+      else setSelectedAITopic('2do Parcial Completo');
+    } else if (selectedParcial === '1') {
+      setSelectedAITopic('Simple Present');
+    } else {
+      setSelectedAITopic('all');
+    }
+  }, [selectedParcial, selectedClass]);
+
   const fullQuestionsBank = useMemo(() => {
     // Evitar duplicados por id
     const map = new Map();
@@ -80,7 +112,15 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
     if (selectedParcial === '2') {
       let list = all.filter(q => q.parcial === 2);
       if (selectedClass && selectedClass !== 'all') {
-        list = list.filter(q => q.clase === Number(selectedClass));
+        const clsNum = Number(selectedClass);
+        list = list.filter(q => {
+          if (q.clase) return Number(q.clase) === clsNum;
+          if (q.isAiGenerated) {
+            const detected = detectParcialAndClassFromTopic(q.topic);
+            return detected.clase === clsNum;
+          }
+          return false;
+        });
       }
       return list;
     }
@@ -89,6 +129,11 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
     }
     return all;
   }, [extraAiQuestions, selectedParcial, selectedClass]);
+
+  // Preguntas de IA presentes dentro del filtro actual
+  const aiQuestionsInScope = useMemo(() => {
+    return fullQuestionsBank.filter(q => q.isAiGenerated || q.source?.includes('Gemini'));
+  }, [fullQuestionsBank]);
 
   // Opciones dinámicas de cantidad de preguntas según el tamaño del banco filtrado
   const questionCountOptions = useMemo(() => {
@@ -158,15 +203,20 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
     setAiGenMessage(null);
 
     try {
+      const targetParcial = selectedParcial === 'all' ? 2 : Number(selectedParcial);
+      const targetClase = selectedClass !== 'all' ? Number(selectedClass) : null;
+
       const newQuestions = await generateExamQuestionsWithAI({
         topic: selectedAITopic,
-        count: 5
+        count: 5,
+        parcial: targetParcial,
+        clase: targetClase
       });
 
       setExtraAiQuestions(getSavedAIQuestions());
       setAiGenMessage({
         type: 'success',
-        text: `¡Se generaron ${newQuestions.length} preguntas inéditas con Gemini y se añadieron al banco!`
+        text: `¡Se generaron ${newQuestions.length} preguntas inéditas con Gemini! Ya están asignadas a este parcial y ordenadas para aparecer primero ✨`
       });
       soundManager.playFanfare();
     } catch (err) {
@@ -181,16 +231,58 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
     }
   };
 
-  // Iniciar Examen
+  const handleClearAIQuestions = () => {
+    if (window.confirm("¿Deseas vaciar las preguntas generadas por Gemini AI y volver al banco estándar?")) {
+      soundManager.playClick();
+      clearSavedAIQuestions();
+      setExtraAiQuestions([]);
+      setAiGenMessage({
+        type: 'success',
+        text: 'Se limpió el banco de preguntas generadas por IA.'
+      });
+      setTimeout(() => setAiGenMessage(null), 3500);
+    }
+  };
+
+  // Iniciar Examen con prioridad y barajado de preguntas de IA
   const handleStartExam = () => {
     soundManager.playClick();
     
-    // Mezclar y seleccionar preguntas del banco completo
-    const shuffled = [...fullQuestionsBank].sort(() => 0.5 - Math.random());
+    // Separar preguntas de IA y estáticas dentro del banco filtrado
+    const aiPool = fullQuestionsBank.filter(q => q.isAiGenerated || q.source?.includes('Gemini'));
+    const staticPool = fullQuestionsBank.filter(q => !q.isAiGenerated && !q.source?.includes('Gemini'));
+
+    // Ordenar preguntas de IA con las más recientes primero
+    const sortedAi = [...aiPool].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    // Barajar estáticas con Fisher-Yates sin sesgo
+    const shuffledStatic = shuffleArray(staticPool);
+
+    const totalAvailable = fullQuestionsBank.length;
     const count = questionCount === 'all' 
-      ? shuffled.length 
-      : Math.min(Number(questionCount) || shuffled.length, shuffled.length);
-    const selected = shuffled.slice(0, count);
+      ? totalAvailable 
+      : Math.min(Number(questionCount) || totalAvailable, totalAvailable);
+
+    let selected = [];
+
+    if (aiQuestionOrder === 'only_ai' && sortedAi.length > 0) {
+      // Modo exclusivo: solo preguntas de IA
+      selected = sortedAi.slice(0, count);
+    } else if (aiQuestionOrder === 'first' && sortedAi.length > 0) {
+      // Las preguntas nuevas de Gemini aparecen PRIMERO (Pregunta 1, 2, 3...)
+      const takeAi = sortedAi.slice(0, count);
+      const remainingCount = count - takeAi.length;
+      const takeStatic = shuffledStatic.slice(0, remainingCount);
+      selected = [...takeAi, ...takeStatic];
+    } else if (aiQuestionOrder === 'mixed' && sortedAi.length > 0) {
+      // Mezcladas: se garantiza que las de IA entran al examen y se barajan junto a las estáticas
+      const takeAi = sortedAi.slice(0, count);
+      const remainingCount = count - takeAi.length;
+      const takeStatic = shuffledStatic.slice(0, remainingCount);
+      selected = shuffleArray([...takeAi, ...takeStatic]);
+    } else {
+      // Barajado completo estándar
+      selected = shuffleArray(fullQuestionsBank).slice(0, count);
+    }
     
     setCurrentQuestions(selected);
     setCurrentIndex(0);
@@ -385,11 +477,17 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
     if (gameState !== 'results' || currentQuestions.length === 0) return null;
 
     let correctCount = 0;
+    let aiQuestionsCount = 0;
+    let aiCorrectCount = 0;
     const topicStats = {};
 
     currentQuestions.forEach(q => {
       const isCorrect = userAnswers[q.id] === q.correctAnswer;
       if (isCorrect) correctCount++;
+      if (q.isAiGenerated || q.source?.includes('Gemini')) {
+        aiQuestionsCount++;
+        if (isCorrect) aiCorrectCount++;
+      }
 
       const topic = q.topic || 'General';
       if (!topicStats[topic]) {
@@ -433,6 +531,8 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
       score,
       gradeStatus,
       topicStats,
+      aiQuestionsCount,
+      aiCorrectCount,
       timeSpent: formatTime(timeSpentSeconds),
       avgTimePerQuestion: Math.round(timeSpentSeconds / total)
     };
@@ -815,7 +915,7 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
                 <span>2. Cantidad de Preguntas</span>
               </label>
               <span className="text-xs text-slate-500 dark:text-slate-400">
-                Banco filtrado: <strong>{fullQuestionsBank.length} preguntas</strong> {extraAiQuestions.length > 0 && <span className="text-cyan-600 dark:text-cyan-400">({extraAiQuestions.length} con IA ✨)</span>}
+                Banco filtrado: <strong>{fullQuestionsBank.length} preguntas</strong> {aiQuestionsInScope.length > 0 && <span className="text-cyan-600 dark:text-cyan-400 font-bold">({aiQuestionsInScope.length} con IA ✨)</span>}
               </span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -935,6 +1035,92 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
                   <AlertCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 flex-shrink-0" />
                 )}
                 <span className="leading-relaxed">{aiGenMessage.text}</span>
+              </div>
+            )}
+
+            {/* Control de Orden y Prioridad de Preguntas de IA */}
+            {aiQuestionsInScope.length > 0 && (
+              <div className="p-3.5 sm:p-4 rounded-xl bg-white/95 dark:bg-slate-900/95 border border-brand-300 dark:border-brand-500/40 space-y-2.5 animate-fade-in shadow-sm">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <span className="text-xs font-black uppercase text-brand-900 dark:text-cyan-300 flex items-center space-x-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-cyan-500 animate-pulse" />
+                    <span>{aiQuestionsInScope.length} pregunta(s) inédita(s) con Gemini en este parcial</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleClearAIQuestions}
+                    className="text-[10px] text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 underline cursor-pointer self-start sm:self-auto"
+                  >
+                    Limpiar banco IA
+                  </button>
+                </div>
+
+                <div className="text-[11px] text-slate-600 dark:text-slate-400 font-medium">
+                  Ubicación de las preguntas generadas en tu simulacro:
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      soundManager.playClick();
+                      setAiQuestionOrder('first');
+                    }}
+                    className={`p-2.5 rounded-xl text-left border transition-all cursor-pointer ${
+                      aiQuestionOrder === 'first'
+                        ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white border-brand-500 shadow-md ring-2 ring-brand-400/40 font-bold'
+                        : 'bg-white dark:bg-slate-950/80 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-brand-400'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-1.5 text-xs font-black">
+                      <Zap className={`w-3.5 h-3.5 ${aiQuestionOrder === 'first' ? 'text-cyan-200' : 'text-amber-500'}`} />
+                      <span>Aparecer Primero</span>
+                    </div>
+                    <span className="text-[10px] font-normal opacity-90 block mt-0.5">
+                      Preguntas 1 a {Math.min(aiQuestionsInScope.length, questionCount === 'all' ? aiQuestionsInScope.length : questionCount)} (Recomendado)
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      soundManager.playClick();
+                      setAiQuestionOrder('mixed');
+                    }}
+                    className={`p-2.5 rounded-xl text-left border transition-all cursor-pointer ${
+                      aiQuestionOrder === 'mixed'
+                        ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white border-brand-500 shadow-md ring-2 ring-brand-400/40 font-bold'
+                        : 'bg-white dark:bg-slate-950/80 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-brand-400'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-1.5 text-xs font-black">
+                      <span>🎲 Bien Mezcladas</span>
+                    </div>
+                    <span className="text-[10px] font-normal opacity-90 block mt-0.5">
+                      Distribuidas por todo el examen
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      soundManager.playClick();
+                      setAiQuestionOrder('only_ai');
+                    }}
+                    className={`p-2.5 rounded-xl text-left border transition-all cursor-pointer ${
+                      aiQuestionOrder === 'only_ai'
+                        ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white border-brand-500 shadow-md ring-2 ring-brand-400/40 font-bold'
+                        : 'bg-white dark:bg-slate-950/80 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-brand-400'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-1.5 text-xs font-black">
+                      <span>✨ Solo Preguntas IA</span>
+                    </div>
+                    <span className="text-[10px] font-normal opacity-90 block mt-0.5">
+                      Examen exclusivo con tus {aiQuestionsInScope.length} preguntas
+                    </span>
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -1191,6 +1377,12 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
           {/* Question Metadata */}
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center space-x-2">
+              {(currentQ.isAiGenerated || currentQ.source?.includes('Gemini')) && (
+                <span className="text-xs font-black uppercase px-2.5 py-1 rounded-lg bg-gradient-to-r from-cyan-500/20 via-brand-500/20 to-indigo-500/20 text-cyan-800 dark:text-cyan-300 border border-cyan-400/50 flex items-center space-x-1 shadow-sm">
+                  <Sparkles className="w-3.5 h-3.5 text-cyan-500 animate-pulse" />
+                  <span>Inédita Gemini AI</span>
+                </span>
+              )}
               {currentQ.clase && (
                 <span className="text-xs font-black uppercase px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30">
                   Clase {currentQ.clase}
@@ -1450,6 +1642,13 @@ export function ExamSimulator({ onNavigateToTheory, onOpenGeminiModal, examTarge
                 '🏆 Examen Integral UTN (Clases 1 a 14)'
               )}
             </div>
+
+            {stats.aiQuestionsCount > 0 && (
+              <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-800 dark:text-cyan-300 border border-cyan-400/30 text-xs font-semibold shadow-sm">
+                <Sparkles className="w-3.5 h-3.5 text-cyan-500 animate-pulse" />
+                <span>Incluyó {stats.aiQuestionsCount} pregunta(s) inédita(s) de Gemini ({stats.aiCorrectCount} correctas)</span>
+              </div>
+            )}
           </div>
 
           {/* Score Numbers */}
